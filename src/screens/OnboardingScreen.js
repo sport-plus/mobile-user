@@ -12,6 +12,8 @@ import {
 } from "react-native";
 import { SLIDES } from "../assets/data/slide";
 import { COLORS, images } from "../constants";
+import TitleName from "../components/TitleName";
+import { ButtonCustom } from "../components";
 
 const { width, height } = Dimensions.get("window");
 
@@ -78,14 +80,7 @@ const OnboardingScreen = ({ navigation }) => {
   const Header = () => {
     return (
       <View className="items-center px-16 mt-5">
-        <View className="flex-row items-center gap-1">
-          <Image source={images.logo_green} className="w-12 h-12" />
-          <Text
-            style={{ fontSize: 40, fontWeight: "900", color: COLORS.primary }}
-          >
-            TheThaoPlus
-          </Text>
-        </View>
+        <TitleName logoHeight={50} logoWidth={50} textSize={38} />
         <Text
           className="text-center mt-1"
           style={{ fontSize: 14, letterSpacing: 0.3 }}
@@ -119,40 +114,21 @@ const OnboardingScreen = ({ navigation }) => {
         {/* Render buttons */}
         <View className="mb-5">
           {currentSlideIndex == SLIDES.length - 1 ? (
-            <View style={{ height: 50 }}>
-              <TouchableOpacity
-                style={styles.btn}
+            <View style={{ height: 50, marginBottom: 20 }}>
+              <ButtonCustom
+                title="GET STARTED"
+                textSize={15}
                 onPress={() => navigation.replace("LoginScreen")}
-              >
-                <Text
-                  style={{
-                    fontWeight: "bold",
-                    fontSize: 15,
-                    color: COLORS.white,
-                  }}
-                >
-                  GET STARTED
-                </Text>
-              </TouchableOpacity>
+              />
             </View>
           ) : (
-            <View className="items-center gap-3">
+            <View className="items-center">
               <View className="flex-row">
-                <TouchableOpacity
-                  activeOpacity={0.8}
+                <ButtonCustom
+                  title="NEXT"
+                  textSize={15}
                   onPress={goToNextSlide}
-                  style={styles.btn}
-                >
-                  <Text
-                    style={{
-                      fontWeight: "bold",
-                      fontSize: 15,
-                      color: COLORS.white,
-                    }}
-                  >
-                    NEXT
-                  </Text>
-                </TouchableOpacity>
+                />
               </View>
               <Text
                 onPress={skip}

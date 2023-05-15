@@ -28,7 +28,6 @@ export default function App() {
 
   useEffect(() => {
     AsyncStorage.getItem("alreadyLaunched").then((value) => {
-      console.log("2", value);
       if (value !== null) {
         setIsFirstLaunch(true);
         AsyncStorage.setItem("alreadyLaunched", "false");
@@ -42,7 +41,7 @@ export default function App() {
     <NativeBaseProvider>
       {isFirstLaunch != null && (
         <NavigationContainer>
-          <Stack.Navigator>
+          <Stack.Navigator initialRouteName="SplashScreen">
             <Stack.Screen
               options={{ headerShown: false }}
               name="SplashScreen"

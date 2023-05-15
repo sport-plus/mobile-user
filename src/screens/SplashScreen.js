@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Flex } from "native-base";
 import { Image, StatusBar, Text } from "react-native";
 import { COLORS, images } from "../constants";
+import TitleName from "../components/TitleName";
 
 const SplashScreen = ({ navigation }) => {
   setTimeout(() => {
@@ -20,12 +21,13 @@ const SplashScreen = ({ navigation }) => {
         hidden={false}
         backgroundColor={COLORS.black}
       />
-      <Flex direction="row" alignItems="center" className="gap-2">
-        <Image source={images.logo_white} className="w-16 h-16" />
-        <Text style={{ fontSize: 40, fontWeight: "900", color: "#fff" }}>
-          TheThaoPlus
-        </Text>
-      </Flex>
+      <TitleName
+        logo={images.logo_white}
+        logoHeight={70}
+        logoWidth={70}
+        textColor="#fff"
+        textSize={40}
+      />
     </Box>
   );
 };
