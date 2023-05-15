@@ -1,9 +1,15 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { useFonts } from "expo-font";
 import React, { useEffect, useState } from "react";
-import { HomeScreen, OnboardingScreen } from "./src/screens";
+import { NativeBaseProvider } from "native-base";
+import {
+  HomeScreen,
+  LoginScreen,
+  OnboardingScreen,
+  RegistrationScreen,
+  SplashScreen,
+} from "./src/screens";
 
 const Stack = createNativeStackNavigator();
 
@@ -33,23 +39,40 @@ export default function App() {
   }, []);
 
   return (
-    isFirstLaunch != null && (
-      <NavigationContainer>
-        <Stack.Navigator>
-          {isFirstLaunch && (
+    <NativeBaseProvider>
+      {isFirstLaunch != null && (
+        <NavigationContainer>
+          <Stack.Navigator>
             <Stack.Screen
               options={{ headerShown: false }}
-              name="OnboardingScreen"
-              component={OnboardingScreen}
+              name="SplashScreen"
+              component={SplashScreen}
             />
-          )}
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="HomeScreen"
-            component={HomeScreen}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    )
+            {isFirstLaunch && (
+              <Stack.Screen
+                options={{ headerShown: false }}
+                name="OnboardingScreen"
+                component={OnboardingScreen}
+              />
+            )}
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="LoginScreen"
+              component={LoginScreen}
+            />
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="RegistrationScreen"
+              component={RegistrationScreen}
+            />
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="HomeScreen"
+              component={HomeScreen}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      )}
+    </NativeBaseProvider>
   );
 }

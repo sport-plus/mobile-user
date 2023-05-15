@@ -78,8 +78,8 @@ const OnboardingScreen = ({ navigation }) => {
   const Header = () => {
     return (
       <View className="items-center px-16 mt-5">
-        <View className="flex-row items-center gap-2">
-          <Image source={images.logo_green} />
+        <View className="flex-row items-center gap-1">
+          <Image source={images.logo_green} className="w-12 h-12" />
           <Text
             style={{ fontSize: 40, fontWeight: "900", color: COLORS.primary }}
           >
@@ -122,7 +122,7 @@ const OnboardingScreen = ({ navigation }) => {
             <View style={{ height: 50 }}>
               <TouchableOpacity
                 style={styles.btn}
-                onPress={() => navigation.replace("HomeScreen")}
+                onPress={() => navigation.replace("LoginScreen")}
               >
                 <Text
                   style={{
