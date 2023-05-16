@@ -16,6 +16,7 @@ import {
   ProfileScreen,
   RegistrationScreen,
   SplashScreen,
+  SportCenterScreen,
 } from "./src/screens";
 
 export default function App() {
@@ -153,6 +154,11 @@ export default function App() {
               options={{ headerShown: false }}
               name="OwnerMain"
               component={OwnerBottomTabs}
+            />
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="SportCenter"
+              component={SportCenterScreen}
             />
           </Stack.Navigator>
         </NavigationContainer>

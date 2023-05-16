@@ -4,9 +4,11 @@ import SplashScreen from "./SplashScreen";
 import LoginScreen from "./LoginScreen";
 import RegistrationScreen from "./RegistrationScreen";
 import ProfileScreen from "./ProfileScreen";
+
 import OwnerHomeScreen from "./owner/OwnerHomeScreen";
 import OwnerSearchScreen from "./owner/OwnerSearchScreen";
 import CreateSportCenterScreen from "./owner/CreateSportCenterScreen";
+import SportCenterScreen from "./owner/SportCenterScreen";
 
 export {
   HomeScreen,
@@ -18,4 +20,5 @@ export {
   OwnerHomeScreen,
   OwnerSearchScreen,
   CreateSportCenterScreen,
+  SportCenterScreen,
 };

@@ -6,6 +6,9 @@ export const slide_3 = require("../assets/images/slide_3.png");
 export const slide_4 = require("../assets/images/slide_4.png");
 export const Facebook = require("../assets/images/Facebook.png");
 export const Google = require("../assets/images/Google.png");
+export const soccer = require("../assets/images/soccer.png");
+export const tennis = require("../assets/images/tennis.jpg");
+export const caulong = require("../assets/images/caulong.jpg");
 
 export default {
   logo_green,
@@ -16,4 +19,7 @@ export default {
   slide_4,
   Google,
   Facebook,
+  soccer,
+  tennis,
+  caulong,
 };

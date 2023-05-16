@@ -43,7 +43,6 @@ const LoginScreen = ({ navigation }) => {
       let userData = await AsyncStorage.getItem("userData");
       if (userData) {
         userData = JSON.parse(userData);
-        console.log(userData);
         if (
           inputs.email == userData.inputs.email &&
           inputs.password == userData.inputs.password
