@@ -1,10 +1,11 @@
-import { AntDesign, Entypo, Ionicons } from "@expo/vector-icons";
+import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NativeBaseProvider } from "native-base";
 import React, { useEffect, useState } from "react";
+import { COLORS } from "./src/constants";
 import {
   CreateSportCenterScreen,
   HomeScreen,
@@ -16,24 +17,12 @@ import {
   RegistrationScreen,
   SplashScreen,
 } from "./src/screens";
-import { COLORS } from "./src/constants";
-import { FontAwesome } from "@expo/vector-icons";
 
 export default function App() {
   const Tab = createBottomTabNavigator();
   const Stack = createNativeStackNavigator();
 
   const [isFirstLaunch, setIsFirstLaunch] = useState(null);
-
-  // const [loaded] = useFonts({
-  //   "Roboto-Black": require("./src/assets/fonts/Roboto-Black.ttf"),
-  //   "Roboto-Bold": require("./src/assets/fonts/Roboto-Bold.ttf"),
-  //   "Roboto-Regular": require("./src/assets/fonts/Roboto-Regular.ttf"),
-  // });
-
-  // if (!loaded) {
-  //   return null;
-  // }
 
   useEffect(() => {
     AsyncStorage.getItem("alreadyLaunched").then((value) => {
@@ -49,8 +38,14 @@ export default function App() {
   function OwnerBottomTabs() {
     return (
       <Tab.Navigator
-        tabBarOptions={{
-          showLabel: false,
+        screenOptions={{
+          tabBarShowLabel: false,
+          tabBarStyle: [
+            {
+              borderTopWidth: 1,
+              borderColor: COLORS.primary,
+            },
+          ],
         }}
       >
         <Tab.Screen

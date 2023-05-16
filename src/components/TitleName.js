@@ -1,11 +1,10 @@
-import { Flex } from "native-base";
 import React from "react";
-import { Image, Text } from "react-native";
+import { Image, Text, View } from "react-native";
 import { COLORS, images } from "../constants";
 
 const TitleName = ({ logo, logoHeight, logoWidth, textColor, textSize }) => {
   return (
-    <Flex direction="row" alignItems="center" className="gap-2">
+    <View className="flex-row items-center gap-2">
       <Image
         source={logo ? logo : images.logo_green}
         style={{
@@ -22,7 +21,7 @@ const TitleName = ({ logo, logoHeight, logoWidth, textColor, textSize }) => {
       >
         TheThaoPlus
       </Text>
-    </Flex>
+    </View>
   );
 };
 

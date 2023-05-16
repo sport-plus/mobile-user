@@ -1,8 +1,7 @@
 import React from "react";
-import { Box, Flex } from "native-base";
-import { Image, StatusBar, Text } from "react-native";
-import { COLORS, images } from "../constants";
+import { StatusBar, View } from "react-native";
 import TitleName from "../components/TitleName";
+import { COLORS, images } from "../constants";
 
 const SplashScreen = ({ navigation }) => {
   setTimeout(() => {
@@ -10,10 +9,8 @@ const SplashScreen = ({ navigation }) => {
   }, 3000);
 
   return (
-    <Box
-      flex={1}
-      alignItems="center"
-      justifyContent="center"
+    <View
+      className="flex-1 items-center justify-center"
       style={{ backgroundColor: COLORS.primary }}
     >
       <StatusBar
@@ -28,7 +25,7 @@ const SplashScreen = ({ navigation }) => {
         textColor="#fff"
         textSize={40}
       />
-    </Box>
+    </View>
   );
 };
 

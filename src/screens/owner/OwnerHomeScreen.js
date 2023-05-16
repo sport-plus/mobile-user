@@ -3,6 +3,8 @@ import React, { useLayoutEffect } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { COLORS } from "../../constants";
+import { Divide } from "../../components";
+import { Box } from "native-base";
 
 const OwnerHomeScreen = ({}) => {
   const navigation = useNavigation();
@@ -19,11 +21,10 @@ const OwnerHomeScreen = ({}) => {
       },
       headerStyle: {
         backgroundColor: COLORS.black,
-        height: 200,
+        height: 60,
         borderBottomColor: "transparent",
         shadowColor: "transparent",
       },
-
       headerRight: () => (
         <Ionicons
           name="notifications-outline"
@@ -36,11 +37,12 @@ const OwnerHomeScreen = ({}) => {
       ),
     });
   }, []);
-  
+
   return (
     <View>
       <StatusBar backgroundColor={COLORS.black} />
-      <Text>OwnerHomeScreen</Text>
+      <Divide />
+      <View></View>
     </View>
   );
 };

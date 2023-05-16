@@ -71,36 +71,36 @@ const LoginScreen = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={{ backgroundColor: COLORS.white, flex: 1 }}>
+    <SafeAreaView className="flex-1 bg-white">
       <Loader visible={loading} />
       <ScrollView>
-        <Box paddingTop={5} paddingX={6}>
-          <Box alignItems="center">
+        <View className="mt-6 px-5">
+          <View className="items-center">
             <TitleName textSize={40} logoHeight={55} logoWidth={55} />
-            <Box className="flex-col gap-1 mt-4">
-              <Text style={styles.title}>Discover, book & enjoy</Text>
-              <Text style={styles.subtitle}>Sports for the healthy life</Text>
-            </Box>
-          </Box>
-          <Box marginY={10}>
-            <Box
-              flexDirection="row"
-              justifyContent="space-between"
-              marginBottom={5}
-            >
+            <View className="flex-col gap-1 mt-4">
+              <Text
+                className="text-[22px] text-center font-extrabold mt-8"
+                style={{ color: COLORS.black }}
+              >
+                Discover, book & enjoy
+              </Text>
+              <Text
+                className="text-[14px] text-center mt-10"
+                style={{ color: COLORS.black }}
+              >
+                Sports for the healthy life
+              </Text>
+            </View>
+          </View>
+          <View className="my-10">
+            <View className="flex-row justify-between mb-5">
               <View style={styles.social}>
-                <Image
-                  source={images.Google}
-                  style={{ width: 30, height: 30 }}
-                />
+                <Image className="w-8 h-8" source={images.Google} />
               </View>
               <View style={styles.social}>
-                <Image
-                  source={images.Facebook}
-                  style={{ width: 30, height: 30 }}
-                />
+                <Image className="w-8 h-8" source={images.Facebook} />
               </View>
-            </Box>
+            </View>
             <Input
               onChangeText={(text) => handleOnchange(text, "email")}
               onFocus={() => handleError(null, "email")}
@@ -132,58 +132,38 @@ const LoginScreen = ({ navigation }) => {
             />
             <ButtonCustom title="Log In" onPress={validate} />
             <Text
-              onPress={() => navigation.navigate("HomeScreen")}
+              className="text-[15px] text-right font-bold"
               style={{
                 color: COLORS.primary,
-                fontWeight: "bold",
-                textAlign: "right",
-                fontSize: 15,
               }}
+              onPress={() => navigation.navigate("HomeScreen")}
             >
               Forgot password?
             </Text>
             <Flex marginTop={8}>
               <Text
+                className="text-[16px] text-center font-bold mb-10"
                 onPress={() => navigation.navigate("RegistrationScreen")}
                 style={{
                   color: COLORS.black,
-                  fontWeight: "bold",
-                  textAlign: "center",
-                  fontSize: 16,
-                  marginBottom: 40,
                 }}
               >
                 Don't have an account?
                 <Text style={{ color: COLORS.primary }}> Sign up</Text>
               </Text>
               <Text
+                className="text-[15px] text-center leading-5"
                 style={{
                   color: COLORS.black,
-                  textAlign: "center",
-                  fontSize: 15,
-                  lineHeight: 23,
                 }}
               >
                 By creating a new account, you agree with our{" "}
-                <Text
-                  style={{
-                    fontWeight: "bold",
-                  }}
-                >
-                  Terms & Conditions
-                </Text>{" "}
-                and{" "}
-                <Text
-                  style={{
-                    fontWeight: "bold",
-                  }}
-                >
-                  Privacy Policy
-                </Text>
+                <Text className="font-bold">Terms & Conditions</Text> and{" "}
+                <Text className="font-bold">Privacy Policy</Text>
               </Text>
             </Flex>
-          </Box>
-        </Box>
+          </View>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -192,25 +172,12 @@ const LoginScreen = ({ navigation }) => {
 export default LoginScreen;
 
 const styles = StyleSheet.create({
-  subtitle: {
-    color: COLORS.black,
-    fontSize: 16,
-    marginTop: 10,
-    textAlign: "center",
-  },
-  title: {
-    color: COLORS.black,
-    fontSize: 24,
-    fontWeight: "800",
-    textAlign: "center",
-    marginTop: 10,
-  },
   social: {
     backgroundColor: COLORS.light,
     paddingHorizontal: 20,
     paddingVertical: 15,
     borderRadius: 10,
     alignItems: "center",
-    width: 160,
+    width: 170,
   },
 });

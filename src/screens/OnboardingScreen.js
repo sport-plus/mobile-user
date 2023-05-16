@@ -7,13 +7,12 @@ import {
   StatusBar,
   StyleSheet,
   Text,
-  TouchableOpacity,
-  View,
+  View
 } from "react-native";
 import { SLIDES } from "../assets/data/slide";
-import { COLORS, images } from "../constants";
-import TitleName from "../components/TitleName";
 import { ButtonCustom } from "../components";
+import TitleName from "../components/TitleName";
+import { COLORS } from "../constants";
 
 const { width, height } = Dimensions.get("window");
 

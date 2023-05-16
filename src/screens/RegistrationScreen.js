@@ -4,7 +4,7 @@ import {
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Box, Flex, Radio, Stack } from "native-base";
+import { Flex, Radio, Stack } from "native-base";
 import React, { useState } from "react";
 import {
   Alert,
@@ -13,6 +13,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  View,
 } from "react-native";
 import { ButtonCustom, Input, Loader, TitleName } from "../components";
 import { COLORS } from "../constants";
@@ -89,15 +90,20 @@ const RegistrationScreen = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={{ backgroundColor: COLORS.white, flex: 1 }}>
+    <SafeAreaView className="flex-1 bg-white">
       <Loader visible={loading} />
       <ScrollView>
-        <Box paddingTop={5} paddingX={6}>
-          <Box alignItems="center">
+        <View className="mt-6 px-5">
+          <View className="items-center">
             <TitleName textSize={40} logoHeight={55} logoWidth={55} />
-            <Text style={styles.title}>Sign Up</Text>
-          </Box>
-          <Box marginY={10}>
+            <Text
+              className="text-[24px] text-center font-extrabold mt-3"
+              style={{ color: COLORS.black }}
+            >
+              Sign Up
+            </Text>
+          </View>
+          <View className="my-10">
             <Input
               onChangeText={(text) => handleOnchange(text, "fullname")}
               onFocus={() => handleError(null, "fullname")}
@@ -155,7 +161,7 @@ const RegistrationScreen = ({ navigation }) => {
               error={errors.password}
               password
             />
-            <Flex flexDirection="row" alignItems="center">
+            <View className="flex-row items-center">
               <Text style={styles.label}>You are</Text>
               <Radio.Group
                 name="roleUser"
@@ -187,51 +193,33 @@ const RegistrationScreen = ({ navigation }) => {
                   </Radio>
                 </Stack>
               </Radio.Group>
-            </Flex>
+            </View>
 
             <ButtonCustom title="Sign up" onPress={validate} />
-            <Flex marginTop={8}>
+            <View className="mt-5">
               <Text
+                className="text-[16px] text-center font-bold mb-10"
                 onPress={() => navigation.navigate("LoginScreen")}
                 style={{
                   color: COLORS.black,
-                  fontWeight: "bold",
-                  textAlign: "center",
-                  fontSize: 16,
-                  marginBottom: 40,
                 }}
               >
                 Already have account?
                 <Text style={{ color: COLORS.primary }}> Sign in</Text>
               </Text>
               <Text
+                className="text-[15px] text-center leading-5"
                 style={{
                   color: COLORS.black,
-                  textAlign: "center",
-                  fontSize: 15,
-                  lineHeight: 23,
                 }}
               >
                 By creating a new account, you agree with our{" "}
-                <Text
-                  style={{
-                    fontWeight: "bold",
-                  }}
-                >
-                  Terms & Conditions
-                </Text>{" "}
-                and{" "}
-                <Text
-                  style={{
-                    fontWeight: "bold",
-                  }}
-                >
-                  Privacy Policy
-                </Text>
+                <Text className="font-bold">Terms & Conditions</Text> and{" "}
+                <Text className="font-bold">Privacy Policy</Text>
               </Text>
-            </Flex>
-          </Box>
-        </Box>
+            </View>
+          </View>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -240,13 +228,6 @@ const RegistrationScreen = ({ navigation }) => {
 export default RegistrationScreen;
 
 const styles = StyleSheet.create({
-  title: {
-    color: COLORS.black,
-    fontSize: 24,
-    fontWeight: "800",
-    textAlign: "center",
-    marginTop: 10,
-  },
   label: {
     marginVertical: 5,
     fontSize: 14,
