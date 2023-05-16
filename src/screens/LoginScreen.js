@@ -48,7 +48,7 @@ const LoginScreen = ({ navigation }) => {
           inputs.email == userData.inputs.email &&
           inputs.password == userData.inputs.password
         ) {
-          navigation.navigate("HomeScreen");
+          navigation.navigate("OwnerMain");
           AsyncStorage.setItem(
             "userData",
             JSON.stringify({ ...userData, loggedIn: true })
@@ -132,7 +132,7 @@ const LoginScreen = ({ navigation }) => {
             />
             <ButtonCustom title="Log In" onPress={validate} />
             <Text
-              onPress={() => navigation.navigate("RegistrationScreen")}
+              onPress={() => navigation.navigate("HomeScreen")}
               style={{
                 color: COLORS.primary,
                 fontWeight: "bold",
