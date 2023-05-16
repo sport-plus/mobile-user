@@ -4,6 +4,7 @@ const { width, height } = Dimensions.get("window");
 export const COLORS = {
   // base colors
   primary: "#00C187", // Green
+  lightPrimary: "#7adabd", // Green
   secondary: "#606d87", // Gray
 
   // colors
@@ -12,7 +13,14 @@ export const COLORS = {
   lightGray: "#e2e6ef",
   gray: "#BEC1D2",
   grayDark: "#6E80B0",
+  red: "red",
+  blue: "#5D5FEE",
+  lightGrey: "#F8F8FA",
+  grey: "#BABBC3",
+  light: "#F3F4FB",
+  darkBlue: "#7978B5",
 };
+
 export const SIZES = {
   // global sizes
   base: 8,
@@ -35,6 +43,7 @@ export const SIZES = {
   width,
   height,
 };
+
 export const FONTS = {
   largeTitle: {
     fontFamily: "Roboto-Black",
