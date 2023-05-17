@@ -7,7 +7,7 @@ import {
   StatusBar,
   StyleSheet,
   Text,
-  View
+  View,
 } from "react-native";
 import { SLIDES } from "../assets/data/slide";
 import { ButtonCustom } from "../components";
@@ -117,6 +117,8 @@ const OnboardingScreen = ({ navigation }) => {
               <ButtonCustom
                 title="GET STARTED"
                 textSize={15}
+                borderRadius={5}
+                marginVertical={20}
                 onPress={() => navigation.replace("LoginScreen")}
               />
             </View>
@@ -126,6 +128,8 @@ const OnboardingScreen = ({ navigation }) => {
                 <ButtonCustom
                   title="NEXT"
                   textSize={15}
+                  borderRadius={5}
+                  marginVertical={20}
                   onPress={goToNextSlide}
                 />
               </View>

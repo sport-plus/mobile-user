@@ -1,10 +1,4 @@
-import {
-  AntDesign,
-  Entypo,
-  FontAwesome5,
-  Ionicons,
-  Octicons,
-} from "@expo/vector-icons";
+import { AntDesign, Entypo, Ionicons, Octicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { Divider } from "native-base";
 import React, { useLayoutEffect, useState } from "react";
@@ -16,8 +10,8 @@ import {
   ModalTitle,
   SlideAnimation,
 } from "react-native-modals";
-import { listSportCenters } from "../../assets/data/listSportCenter";
-import { ButtonCustom, SportCenterItem } from "../../components";
+import { listSportField } from "../../assets/data/listSportField";
+import { ButtonCustom, SportFieldItem } from "../../components";
 import { COLORS } from "../../constants";
 
 const filters = [
@@ -31,7 +25,7 @@ const filters = [
   },
 ];
 
-const SportCenterScreen = () => {
+const ListSportFieldScreen = () => {
   const navigation = useNavigation();
 
   const [modalVisibile, setModalVisibile] = useState(false);
@@ -40,7 +34,7 @@ const SportCenterScreen = () => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: true,
-      title: "Sport Field",
+      title: "Sport Center",
       headerTitleAlign: "center",
       headerTitleStyle: {
         fontSize: 25,
@@ -68,15 +62,11 @@ const SportCenterScreen = () => {
           name="arrowleft"
           size={24}
           color="white"
-          onPress={() => navigation.navigate("OwnerMain")}
+          onPress={() => navigation.navigate("SportCenter")}
         />
       ),
     });
   }, []);
-
-  // const searchPlaces = data?.filter(
-  //   (item) => item.place === route.params.place
-  // );
 
   return (
     <SafeAreaView className="flex-1 bg-[#20224A] relative">
@@ -95,18 +85,6 @@ const SportCenterScreen = () => {
               <Ionicons name="filter" size={22} color={COLORS.primary} />
               <Text className="text-[15px] font-semibold">Filter</Text>
             </Pressable>
-            <Divider backgroundColor={COLORS.primary} width={0.5} height={6} />
-            <Pressable
-              className="flex-row items-center space-x-2"
-              onPress={() => navigation.navigate("Map")}
-            >
-              <FontAwesome5
-                name="map-marker-alt"
-                size={22}
-                color={COLORS.primary}
-              />
-              <Text className="text-[15px] font-semibold">Map</Text>
-            </Pressable>
           </Pressable>
           <View
             className="w-full h-12 opacity-30 rounded-lg absolute"
@@ -116,10 +94,10 @@ const SportCenterScreen = () => {
 
         <View className="flex-1 mt-5">
           <FlatList
-            data={listSportCenters}
-            keyExtractor={(sportCenter) => sportCenter.id}
-            renderItem={(sportCenter) => {
-              return <SportCenterItem sportCenter={sportCenter.item} />;
+            data={listSportField}
+            keyExtractor={(sportField) => sportField.id}
+            renderItem={(sportField) => {
+              return <SportFieldItem sportField={sportField.item} />;
             }}
             showsVerticalScrollIndicator={false}
           ></FlatList>
@@ -169,8 +147,8 @@ const SportCenterScreen = () => {
                   onPress={() => setSelectedFilter(item.filter)}
                 >
                   {/* {selectedFilter.includes(item.filter) ? (
-                    <FontAwesome name="circle" size={18} color="green" />
-                  ) : ( */}
+                  <FontAwesome name="circle" size={18} color="green" />
+                ) : ( */}
                   <Entypo name="circle" size={17} color="black" />
                   {/* )} */}
 
@@ -187,4 +165,4 @@ const SportCenterScreen = () => {
   );
 };
 
-export default SportCenterScreen;
+export default ListSportFieldScreen;

@@ -9,6 +9,8 @@ export const Google = require("../assets/images/Google.png");
 export const soccer = require("../assets/images/soccer.png");
 export const tennis = require("../assets/images/tennis.jpg");
 export const caulong = require("../assets/images/caulong.jpg");
+export const sanBong = require("../assets/images/sanBong.jpg");
+export const iconSportField = require("../assets/images/iconSportField.png");
 
 export default {
   logo_green,
@@ -22,4 +24,6 @@ export default {
   soccer,
   tennis,
   caulong,
+  sanBong,
+  iconSportField,
 };

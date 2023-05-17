@@ -10,6 +10,7 @@ const Input = ({
   icon,
   error,
   password,
+  borderColor,
   onFocus = () => {},
   ...props
 }) => {
@@ -23,7 +24,9 @@ const Input = ({
         style={[
           style.inputContainer,
           {
-            borderColor: error
+            borderColor: borderColor
+              ? borderColor
+              : error
               ? COLORS.red
               : isFocused
               ? COLORS.primary

@@ -103,7 +103,7 @@ const RegistrationScreen = ({ navigation }) => {
               Sign Up
             </Text>
           </View>
-          <View className="my-10">
+          <View className="mb-10">
             <Input
               onChangeText={(text) => handleOnchange(text, "fullname")}
               onFocus={() => handleError(null, "fullname")}
@@ -195,7 +195,12 @@ const RegistrationScreen = ({ navigation }) => {
               </Radio.Group>
             </View>
 
-            <ButtonCustom title="Sign up" onPress={validate} />
+            <ButtonCustom
+              title="Sign up"
+              borderRadius={5}
+              marginVertical={20}
+              onPress={validate}
+            />
             <View className="mt-5">
               <Text
                 className="text-[16px] text-center font-bold mb-10"

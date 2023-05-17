@@ -25,10 +25,10 @@ const ButtonCustom = ({
         width: width ? width : "100%",
         backgroundColor: backgroundColor ? backgroundColor : COLORS.primary,
         marginHorizontal: marginHorizontal ? marginHorizontal : 0,
-        marginVertical: marginVertical ? marginVertical : 20,
+        marginVertical: marginVertical ? marginVertical : 0,
         justifyContent: "center",
         alignItems: "center",
-        borderRadius: borderRadius ? borderRadius : 5,
+        borderRadius: borderRadius ? borderRadius : 0,
         borderWidth: borderWidth ? borderWidth : 0,
         borderColor: borderColor ? borderColor : COLORS.primary,
       }}

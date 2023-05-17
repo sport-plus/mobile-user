@@ -3,7 +3,6 @@ import React from "react";
 import { COLORS } from "../constants";
 
 const Divide = ({ height, backgroundColor, radius, width }) => {
-  console.log(radius);
   return (
     <View
       style={{

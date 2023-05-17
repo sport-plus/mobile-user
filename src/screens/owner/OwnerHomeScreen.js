@@ -1,13 +1,6 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
-import {
-  Entypo,
-  Feather,
-  FontAwesome5,
-  Foundation,
-  Ionicons,
-} from "@expo/vector-icons";
+import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useNavigation } from "@react-navigation/native";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import {
   Image,
   SafeAreaView,
@@ -18,91 +11,12 @@ import {
   View,
 } from "react-native";
 import Swiper from "react-native-swiper";
+import { ListManager } from "../../assets/data/listManager";
 import { Divide } from "../../components";
 import { COLORS, images } from "../../constants";
 
-const listManager = [
-  {
-    id: "1",
-    name: "Sport Center",
-    icon: <Entypo name="sports-club" size={28} color={COLORS.primary} />,
-    onFress: () => navigation.n,
-  },
-  {
-    id: "2",
-    name: "Booking Management",
-    icon: (
-      <Foundation name="clipboard-notes" size={28} color={COLORS.primary} />
-    ),
-  },
-  {
-    id: "3",
-    name: "Booking Calendar",
-    icon: <Feather name="calendar" size={28} color={COLORS.primary} />,
-  },
-  {
-    id: "4",
-    name: "Customer Information",
-    icon: <Feather name="users" size={28} color={COLORS.primary} />,
-  },
-  {
-    id: "5",
-    name: "Statistics",
-    icon: <Ionicons name="stats-chart" size={28} color={COLORS.primary} />,
-  },
-  {
-    id: "6",
-    name: "Services",
-    icon: <Feather name="flag" size={28} color={COLORS.primary} />,
-  },
-];
-
 const OwnerHomeScreen = ({ navigation }) => {
-  const navigationHear = useNavigation();
-  const currentDay = new Date();
-
   const [userData, setUserData] = useState();
-
-  const listManager = [
-    {
-      id: "1",
-      name: "Sport Center",
-      icon: <Entypo name="sports-club" size={28} color={COLORS.primary} />,
-      onFress: () => navigation.navigate("SportCenter"),
-    },
-    {
-      id: "2",
-      name: "Booking Management",
-      icon: (
-        <Foundation name="clipboard-notes" size={28} color={COLORS.primary} />
-      ),
-      onFress: () => navigation.navigate("SportCenter"),
-    },
-    {
-      id: "3",
-      name: "Booking Calendar",
-      icon: <Feather name="calendar" size={28} color={COLORS.primary} />,
-      onFress: () => navigation.navigate("SportCenter"),
-    },
-    {
-      id: "4",
-      name: "Customer Information",
-      icon: <Feather name="users" size={28} color={COLORS.primary} />,
-      onFress: () => navigation.navigate("SportCenter"),
-    },
-    {
-      id: "5",
-      name: "Statistics",
-      icon: <Ionicons name="stats-chart" size={28} color={COLORS.primary} />,
-      onFress: () => navigation.navigate("SportCenter"),
-    },
-    {
-      id: "6",
-      name: "Services",
-      icon: <Feather name="flag" size={28} color={COLORS.primary} />,
-      onFress: () => navigation.navigate("SportCenter"),
-    },
-  ];
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -145,8 +59,6 @@ const OwnerHomeScreen = ({ navigation }) => {
     loadUser();
   }, []);
 
-  console.log(userData);
-
   return (
     <SafeAreaView className="bg-white flex-1">
       <StatusBar backgroundColor={COLORS.black} />
@@ -184,7 +96,7 @@ const OwnerHomeScreen = ({ navigation }) => {
       </View>
 
       {/* Date - Time */}
-      <View className="mt-28 mb-8 px-9">
+      <View className="mt-28 mb-7 px-9">
         <View
           className="bg-[#F5F8FE] p-5 rounded-2xl flex-row items-center space-x-4"
           style={{ elevation: 5 }}
@@ -196,22 +108,29 @@ const OwnerHomeScreen = ({ navigation }) => {
             <Text className="text-[18px] text-green-500 font-semibold">
               Supplier
             </Text>
-            <Text className="text-[22px] font-semibold">Tran Phu Son</Text>
+            <Text className="text-[22px] font-semibold">
+              {userData?.inputs.fullname}
+            </Text>
           </View>
         </View>
       </View>
 
-      <View className="px-9 flex-row flex-wrap gap-5">
-        {listManager.map((item) => (
-          <TouchableOpacity
-            key={item.id}
-            className="bg-[#F5F8FE] px-4 py-5 rounded-2xl flex-row items-center space-x-3 "
-            style={{ elevation: 5, width: 150 }}
-            onPress={() => navigation.navigate("SportCenter")}
-          >
-            {item.icon}
-            <Text className="text-[15px] font-semibold">{item.name}</Text>
-          </TouchableOpacity>
+      <View className="px-8 flex-row flex-wrap gap-5">
+        {ListManager.map((item) => (
+          <View key={item.id}>
+            <TouchableOpacity
+              className="h-20 bg-[#F5F8FE] px-4 py-2 rounded-2xl flex-row items-center space-x-2 z-10"
+              style={{ elevation: 3, width: 150 }}
+              onPress={() => navigation.navigate(item.path)}
+            >
+              {item.icon}
+              <Text className="text-[15px] font-semibold">{item.name}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              className="h-20 opacity-30 rounded-2xl absolute top-1 left-1"
+              style={{ backgroundColor: COLORS.primary, width: 150 }}
+            />
+          </View>
         ))}
       </View>
     </SafeAreaView>

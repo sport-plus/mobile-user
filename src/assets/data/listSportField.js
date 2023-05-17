@@ -1,0 +1,60 @@
+import { images } from "../../constants";
+
+export const listSportField = [
+  {
+    id: "1",
+    name: "Artificial football field 1",
+    image: images.sanBong,
+    category: "7 x 7",
+    price: "300.000",
+    status: true,
+  },
+  {
+    id: "2",
+    name: "Artificial football field 1",
+    image: images.sanBong,
+    category: "7 x 7",
+    price: "300.000",
+    status: false,
+  },
+  {
+    id: "3",
+    name: "Artificial football field 1",
+    image: images.sanBong,
+    category: "7 x 7",
+    price: "300.000",
+    status: true,
+  },
+  {
+    id: "4",
+    name: "Artificial football field 1",
+    image: images.sanBong,
+    category: "7 x 7",
+    price: "300.000",
+    status: false,
+  },
+  {
+    id: "5",
+    name: "Artificial football field 1",
+    image: images.sanBong,
+    category: "7 x 7",
+    price: "300.000",
+    status: true,
+  },
+  {
+    id: "6",
+    name: "Artificial football field 1",
+    image: images.sanBong,
+    category: "7 x 7",
+    price: "300.000",
+    status: true,
+  },
+  {
+    id: "7",
+    name: "Artificial football field 1",
+    image: images.sanBong,
+    category: "7 x 7",
+    price: "300.000",
+    status: true,
+  },
+];

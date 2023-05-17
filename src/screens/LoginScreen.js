@@ -129,7 +129,12 @@ const LoginScreen = ({ navigation }) => {
               error={errors.password}
               password
             />
-            <ButtonCustom title="Log In" onPress={validate} />
+            <ButtonCustom
+              title="Log In"
+              borderRadius={5}
+              marginVertical={20}
+              onPress={validate}
+            />
             <Text
               className="text-[15px] text-right font-bold"
               style={{

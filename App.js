@@ -1,4 +1,4 @@
-import { FontAwesome, Ionicons } from "@expo/vector-icons";
+import { FontAwesome, Ionicons, AntDesign } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
@@ -7,17 +7,26 @@ import { NativeBaseProvider } from "native-base";
 import React, { useEffect, useState } from "react";
 import { COLORS } from "./src/constants";
 import {
+  BookingCalendarScreen,
+  BookingManagerScreen,
   CreateSportCenterScreen,
+  CustomerInformationScreen,
   HomeScreen,
+  ListSportFieldScreen,
   LoginScreen,
+  MapScreen,
   OnboardingScreen,
   OwnerHomeScreen,
   OwnerSearchScreen,
   ProfileScreen,
   RegistrationScreen,
+  ServiceScreen,
   SplashScreen,
   SportCenterScreen,
+  SportFieldDetailScreen,
+  StatisticScreen,
 } from "./src/screens";
+import { ModalPortal } from "react-native-modals";
 
 export default function App() {
   const Tab = createBottomTabNavigator();
@@ -86,9 +95,9 @@ export default function App() {
             tabBarLabel: "Add New",
             headerShown: false,
             tabBarIcon: ({ focused }) => (
-              <Ionicons
-                name="ios-add-circle"
-                size={28}
+              <AntDesign
+                name="pluscircle"
+                size={24}
                 color={focused ? COLORS.primary : COLORS.black}
               />
             ),
@@ -114,55 +123,98 @@ export default function App() {
   }
 
   return (
-    <NativeBaseProvider>
-      {isFirstLaunch != null && (
-        <NavigationContainer>
-          <Stack.Navigator initialRouteName="SplashScreen">
-            {/* Authenticate */}
-            <Stack.Screen
-              options={{ headerShown: false }}
-              name="SplashScreen"
-              component={SplashScreen}
-            />
-            {isFirstLaunch && (
+    <>
+      <NativeBaseProvider>
+        {isFirstLaunch != null && (
+          <NavigationContainer>
+            <Stack.Navigator initialRouteName="SplashScreen">
+              {/* Authenticate */}
               <Stack.Screen
                 options={{ headerShown: false }}
-                name="OnboardingScreen"
-                component={OnboardingScreen}
+                name="SplashScreen"
+                component={SplashScreen}
               />
-            )}
-            <Stack.Screen
-              options={{ headerShown: false }}
-              name="LoginScreen"
-              component={LoginScreen}
-            />
-            <Stack.Screen
-              options={{ headerShown: false }}
-              name="RegistrationScreen"
-              component={RegistrationScreen}
-            />
+              {isFirstLaunch && (
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="OnboardingScreen"
+                  component={OnboardingScreen}
+                />
+              )}
+              <Stack.Screen
+                options={{ headerShown: false }}
+                name="LoginScreen"
+                component={LoginScreen}
+              />
+              <Stack.Screen
+                options={{ headerShown: false }}
+                name="RegistrationScreen"
+                component={RegistrationScreen}
+              />
+              <Stack.Screen
+                options={{ headerShown: false }}
+                name="Map"
+                component={MapScreen}
+              />
 
-            {/* User */}
-            <Stack.Screen
-              options={{ headerShown: false }}
-              name="HomeScreen"
-              component={HomeScreen}
-            />
+              {/* User */}
+              <Stack.Screen
+                options={{ headerShown: false }}
+                name="HomeScreen"
+                component={HomeScreen}
+              />
 
-            {/* Owner */}
-            <Stack.Screen
-              options={{ headerShown: false }}
-              name="OwnerMain"
-              component={OwnerBottomTabs}
-            />
-            <Stack.Screen
-              options={{ headerShown: false }}
-              name="SportCenter"
-              component={SportCenterScreen}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
-      )}
-    </NativeBaseProvider>
+              {/* Owner */}
+              <Stack.Screen
+                options={{ headerShown: false }}
+                name="OwnerMain"
+                component={OwnerBottomTabs}
+              />
+              <Stack.Screen
+                options={{ headerShown: false }}
+                name="SportCenter"
+                component={SportCenterScreen}
+              />
+              <Stack.Screen
+                options={{ headerShown: false }}
+                name="ListSportField"
+                component={ListSportFieldScreen}
+              />
+              <Stack.Screen
+                options={{ headerShown: false }}
+                name="SportFieldDetail"
+                component={SportFieldDetailScreen}
+              />
+              <Stack.Screen
+                options={{ headerShown: false }}
+                name="BookingManager"
+                component={BookingManagerScreen}
+              />
+              <Stack.Screen
+                options={{ headerShown: false }}
+                name="BookingCalendar"
+                component={BookingCalendarScreen}
+              />
+              <Stack.Screen
+                options={{ headerShown: false }}
+                name="CustomerInformation"
+                component={CustomerInformationScreen}
+              />
+              <Stack.Screen
+                options={{ headerShown: false }}
+                name="Statistic"
+                component={StatisticScreen}
+              />
+              <Stack.Screen
+                options={{ headerShown: false }}
+                name="Service"
+                component={ServiceScreen}
+              />
+            </Stack.Navigator>
+          </NavigationContainer>
+        )}
+      </NativeBaseProvider>
+      <ModalPortal />
+    </>
   );
 }
