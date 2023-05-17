@@ -27,3 +27,10 @@ export default {
   sanBong,
   iconSportField,
 };
+
+export {default as bell} from '../assets/images/bell.png'
+export {default as home_image} from '../assets/images/home_image.png'
+export {default as union} from '../assets/images/Union.png'
+export {default as term} from '../assets/images/Terms.png'
+export {default as soccer_field} from '../assets/images/soccer-field.png'
+export {default as field} from '../assets/images/field.png'

@@ -1,5 +1,5 @@
 import ButtonCustom from "./ButtonCustom";
-import Input from "./Input";
+import Input from "./input";
 import TitleName from "./TitleName";
 import Loader from "./Loader";
 import Divide from "./Divide";

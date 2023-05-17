@@ -129,11 +129,11 @@ export default function App() {
           <NavigationContainer>
             <Stack.Navigator initialRouteName="SplashScreen">
               {/* Authenticate */}
-              <Stack.Screen
+              {/* <Stack.Screen
                 options={{ headerShown: false }}
                 name="SplashScreen"
                 component={SplashScreen}
-              />
+              /> */}
               {isFirstLaunch && (
                 <Stack.Screen
                   options={{ headerShown: false }}
