@@ -7,7 +7,7 @@ import {
 } from 'react-native-heroicons/outline';
 import SCRow from '../components/SCRow';
 
-const SportCenterScreen = () => {
+const SportCenterUserScreen = () => {
   return (
     <SafeAreaView className="relative pb-8">
       {/* Appbar */}
@@ -80,4 +80,4 @@ const SportCenterScreen = () => {
   );
 };
 
-export default SportCenterScreen;
+export default SportCenterUserScreen;
