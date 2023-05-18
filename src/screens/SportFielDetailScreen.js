@@ -16,7 +16,7 @@ import {AntDesign, Entypo, FontAwesome5, Ionicons, Octicons} from '@expo/vector-
 import {useNavigation} from '@react-navigation/native'
 import {FontAwesome} from '@expo/vector-icons'
 import {Feather} from '@expo/vector-icons'
-import {Divide} from '../components'
+import {ButtonCustom, Divide} from '../components'
 const {width, height} = Dimensions.get('window')
 
 import {TabView, SceneMap} from 'react-native-tab-view'
@@ -55,11 +55,13 @@ const FirstRoute = () => (
       <Image source={camera} size={24} />
       <Text className="text-base">Camera</Text>
     </View>
+
+    <ButtonCustom height={36} borderRadius={12} title='Book' marginVertical={6}/>
   </View>
 )
 
 const SecondRoute = () => (
-  <ScrollView className=" px-3">
+  <ScrollView className="px-3">
     <View className="mb-3 mt-3 px-1">
       <View className="flex-row mb-1">
         <StarIcon size={18} color={'#00C187'} />
