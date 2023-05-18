@@ -1,12 +1,13 @@
 import ButtonCustom from "./ButtonCustom";
-import Input from "./Input";
-import TitleName from "./TitleName";
-import Loader from "./Loader";
 import Divide from "./Divide";
+import Input from "./Input";
+import Loader from "./Loader";
+import TitleName from "./TitleName";
 
+import ReviewItem from "./ReviewItem";
+import SearchResult from "./SearchResult";
 import SportCenterItem from "./SportCenterItem";
 import SportFieldItem from "./SportFieldItem";
-import SearchResult from "./SearchResult";
 
 export {
   ButtonCustom,
@@ -17,4 +18,5 @@ export {
   SportCenterItem,
   SearchResult,
   SportFieldItem,
+  ReviewItem,
 };
