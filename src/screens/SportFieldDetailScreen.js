@@ -24,41 +24,50 @@ import {Box, Center, NativeBaseProvider, useColorModeValue} from 'native-base'
 import {camera, car, house, shirt, shop} from '../constants/images'
 import {ClockIcon, StarIcon, UserCircleIcon} from 'react-native-heroicons/outline'
 
-const FirstRoute = () => (
-  <View className="mt-2">
-    <Text className="mt-1 mb-2 text-[18px] font-bold px-1">Facilities</Text>
-    <View className="flex-row justify-between px-4">
-      <View className="flex-row space-x-1 items-center">
-        <Image source={car} size={24} />
-        <Text className="text-base">Parking sport</Text>
+const FirstRoute = () => {
+  const navigation = useNavigation()
+  return (
+    <View className="mt-2">
+      <Text className="mt-1 mb-2 text-[18px] font-bold px-1">Facilities</Text>
+      <View className="flex-row justify-between px-4">
+        <View className="flex-row space-x-1 items-center">
+          <Image source={car} size={24} />
+          <Text className="text-base">Parking sport</Text>
+        </View>
+
+        <View className="flex-row space-x-1 items-center">
+          <Image source={shop} size={24} />
+          <Text className="text-base">Water shop </Text>
+        </View>
       </View>
 
-      <View className="flex-row space-x-1 items-center">
-        <Image source={shop} size={24} />
-        <Text className="text-base">Water shop </Text>
+      <View className="flex-row justify-between mt-3 px-4">
+        <View className="flex-row space-x-1 items-center">
+          <Image source={shirt} size={24} />
+          <Text className="text-base">Changing rooms</Text>
+        </View>
+
+        <View className="flex-row space-x-1 items-center">
+          <Image source={house} size={24} />
+          <Text className="text-base">Waiting area</Text>
+        </View>
       </View>
+
+      <View className="flex-row mt-3 px-4 space-x-1 items-center">
+        <Image source={camera} size={24} />
+        <Text className="text-base">Camera</Text>
+      </View>
+
+      <ButtonCustom
+        height={36}
+        borderRadius={12}
+        title="Book"
+        marginVertical={6}
+        onPress={() => navigation.navigate('BookingScreen')}
+      />
     </View>
-
-    <View className="flex-row justify-between mt-3 px-4">
-      <View className="flex-row space-x-1 items-center">
-        <Image source={shirt} size={24} />
-        <Text className="text-base">Changing rooms</Text>
-      </View>
-
-      <View className="flex-row space-x-1 items-center">
-        <Image source={house} size={24} />
-        <Text className="text-base">Waiting area</Text>
-      </View>
-    </View>
-
-    <View className="flex-row mt-3 px-4 space-x-1 items-center">
-      <Image source={camera} size={24} />
-      <Text className="text-base">Camera</Text>
-    </View>
-
-    <ButtonCustom height={36} borderRadius={12} title='Book' marginVertical={6}/>
-  </View>
-)
+  )
+}
 
 const SecondRoute = () => (
   <ScrollView className="px-3">
@@ -209,7 +218,7 @@ const SportFieldDetailScreen = () => {
               name="arrowleft"
               size={24}
               color="white"
-              onPress={() => navigation.navigate('ListSportField')}
+              onPress={() => navigation.navigate('FieldScreen')}
             />
           </View>
           <View className="bg-[#00C187] w-10 h-10 rounded-full flex items-center justify-center opacity-80">
@@ -225,7 +234,7 @@ const SportFieldDetailScreen = () => {
         {/* <ScrollView showsVerticalScrollIndicator={false} className="space-y-2"> */}
         <Text className="text-[20px] font-bold tracking-wide">Artificial football field 1</Text>
         <View className="flex-row items-center justify-between">
-          <View className="flex-row items-center space-x-1 mb-2 mt-2 space-x-2">
+          <View className="flex-row items-center mb-2 mt-2 space-x-2">
             <Feather name="phone" size={22} color={COLORS.primary} />
             <Text className="text-[16px]">0914360736</Text>
           </View>

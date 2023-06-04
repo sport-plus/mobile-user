@@ -1,6 +1,9 @@
 import React from "react";
 import { Text, TouchableOpacity } from "react-native";
 import { COLORS } from "../constants";
+import {useNavigation} from '@react-navigation/native'
+import { typeOf } from "react-is";
+
 
 const ButtonCustom = ({
   title,
@@ -16,6 +19,7 @@ const ButtonCustom = ({
   textColor,
   textSize,
 }) => {
+  const navigation = useNavigation();
   return (
     <TouchableOpacity
       onPress={onPress}

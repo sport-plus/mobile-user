@@ -2,10 +2,14 @@ import { View, Text, TouchableOpacity, Image } from 'react-native';
 import React from 'react';
 import { field, soccer_field } from '../constants/images';
 import { CheckCircleIcon } from 'react-native-heroicons/outline';
+import { useNavigation } from '@react-navigation/native';
+
 
 const FieldRow = ({ name, available, size, price }) => {
+  const navigation = useNavigation()
+
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={() => navigation.navigate('SportFieldDetail')}>
       <View className="p-3 flex-row bg-white mx-4 mt-3 rounded-2xl space-x-4 relative">
         <Image source={field} className="w-24 h-24" />
         <View>

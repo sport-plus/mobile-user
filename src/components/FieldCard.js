@@ -1,13 +1,14 @@
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import React from 'react';
 import { MapPinIcon, StarIcon } from 'react-native-heroicons/outline';
+import { images } from '../constants';
 
 const FieldCard = ({ name, address, rating, distance, availableSlot, imgUrl }) => {
   return (
     <TouchableOpacity className="bg-white mr-3 shadow">
       <Image
         source={{
-          uri: imgUrl,
+          uri: 'https://yousport.vn/Media/Articles/080321051105526/nhung-mat-san-bong-da-pho-bien-nhat-hien-nay-banner.jpg'
         }}
         className="h-24 w-52 rounded-sm"
       />

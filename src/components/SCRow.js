@@ -2,10 +2,14 @@ import { View, Text, Image, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { ArrowRightIcon, StarIcon } from 'react-native-heroicons/outline';
 import { field, soccer_field } from '../constants/images';
+import {useNavigation} from '@react-navigation/native'
+
 
 const SCRow = ({ name, address, rating, distance, available }) => {
+  const navigation = useNavigation()
+
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={() => navigation.navigate('FieldScreen')}>
       <View className="p-3 flex-row bg-white mx-4 mt-3 rounded-2xl space-x-4 relative">
         <Image source={field} className="w-24 h-24" />
         <View>

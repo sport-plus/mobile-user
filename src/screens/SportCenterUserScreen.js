@@ -1,19 +1,20 @@
-import { View, Text, SafeAreaView, TextInput, ScrollView } from 'react-native';
-import React from 'react';
-import {
-  ArrowLeftIcon,
-  BellIcon,
-  MagnifyingGlassIcon,
-} from 'react-native-heroicons/outline';
-import SCRow from '../components/SCRow';
+import {View, Text, SafeAreaView, TextInput, ScrollView, TouchableOpacity} from 'react-native'
+import React from 'react'
+import {ArrowLeftIcon, BellIcon, MagnifyingGlassIcon} from 'react-native-heroicons/outline'
+import SCRow from '../components/SCRow'
+import {useNavigation} from '@react-navigation/native'
 
 const SportCenterUserScreen = () => {
+  const navigation = useNavigation()
+
   return (
     <SafeAreaView className="relative pb-8">
       {/* Appbar */}
       <View className="bg-black w-full h-44 rounded-b-3xl">
         <View className="mt-10 flex-row items-center justify-between px-8">
-          <ArrowLeftIcon size={24} color="#fff" />
+          <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')}>
+            <ArrowLeftIcon size={24} color="#fff" />
+          </TouchableOpacity>
           <Text className="text-white font-bold text-lg">Sport Center</Text>
           <BellIcon size={24} color="#fff" />
         </View>
@@ -29,7 +30,6 @@ const SportCenterUserScreen = () => {
         <Text className="px-5 mt-4 font-bold text-lg">Near hear</Text>
         <ScrollView>
           <SCRow
-            title="Near here"
             name="Lotee Football Stadium"
             address="District 1, HCM"
             rating="4.5"
@@ -38,7 +38,6 @@ const SportCenterUserScreen = () => {
           />
 
           <SCRow
-            title="Near here"
             name="Lotee Football Stadium"
             address="District 1, HCM"
             rating="4.5"
@@ -49,7 +48,6 @@ const SportCenterUserScreen = () => {
           <Text className="px-5 mt-4 font-bold text-lg">Another</Text>
 
           <SCRow
-            title="Near here"
             name="Lotee Football Stadium"
             address="District 1, HCM"
             rating="4.5"
@@ -58,7 +56,6 @@ const SportCenterUserScreen = () => {
           />
 
           <SCRow
-            title="Near here"
             name="Lotee Football Stadium"
             address="District 1, HCM"
             rating="4.5"
@@ -67,7 +64,6 @@ const SportCenterUserScreen = () => {
           />
 
           <SCRow
-            title="Near here"
             name="Lotee Football Stadium"
             address="District 1, HCM"
             rating="4.5"
@@ -77,7 +73,7 @@ const SportCenterUserScreen = () => {
         </ScrollView>
       </View>
     </SafeAreaView>
-  );
-};
+  )
+}
 
-export default SportCenterUserScreen;
+export default SportCenterUserScreen

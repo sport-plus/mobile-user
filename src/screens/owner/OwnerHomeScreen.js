@@ -5,7 +5,6 @@ import {
   Image,
   SafeAreaView,
   StatusBar,
-  StyleSheet,
   Text,
   TouchableOpacity,
   View,
@@ -138,5 +137,3 @@ const OwnerHomeScreen = ({ navigation }) => {
 };
 
 export default OwnerHomeScreen;
-
-const styles = StyleSheet.create({});

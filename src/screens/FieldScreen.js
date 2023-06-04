@@ -20,7 +20,7 @@ const FieldScreen = () => {
       <View className="bg-black w-full h-44 rounded-b-3xl">
         <View className="mt-10 flex-row items-center justify-between px-8">
           <TouchableOpacity
-            onPress={() => navigation.navigate('SportCenterScreen')}
+            onPress={() => navigation.navigate('SportCenter')}
           >
             <ArrowLeftIcon size={24} color="#fff" />
           </TouchableOpacity>
