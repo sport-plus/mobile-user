@@ -17,6 +17,9 @@ import {Box, Flex} from 'native-base'
 import {useNavigation} from '@react-navigation/native'
 import {useDispatch} from 'react-redux'
 import {LoginUser} from '../services/auth/authSlice'
+import {signInWithEmailAndPassword, onAuthStateChanged} from 'firebase/auth'
+import {auth, db} from '../firebase/firebase-config'
+import {addDoc, collection} from 'firebase/firestore'
 
 const LoginScreen = () => {
   const [inputs, setInputs] = useState({email: '', password: ''})
@@ -38,7 +41,20 @@ const LoginScreen = () => {
       isValid = false
     }
     if (isValid) {
-      login()
+      handleLogin()
+    }
+  }
+
+  const handleLogin = async () => {
+    setLoading(true)
+    const cred = await signInWithEmailAndPassword(auth, inputs.email, inputs.password)
+    console.log(auth.currentUser)
+    if (cred) {
+      navigation.navigate('OwnerMain')
+      setLoading(false)
+    } else {
+      Alert.alert('Error', 'User does not exist')
+      setLoading(false)
     }
   }
 

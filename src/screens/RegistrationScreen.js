@@ -1,93 +1,120 @@
-import {
-  FontAwesome,
-  FontAwesome5,
-  MaterialCommunityIcons,
-} from "@expo/vector-icons";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Flex, Radio, Stack } from "native-base";
-import React, { useState } from "react";
-import {
-  Alert,
-  Keyboard,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
-import { ButtonCustom, Input, Loader, TitleName } from "../components";
-import { COLORS } from "../constants";
+import {FontAwesome, FontAwesome5, MaterialCommunityIcons} from '@expo/vector-icons'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import {Flex, Radio, Stack} from 'native-base'
+import React, {useState} from 'react'
+import {Alert, Keyboard, SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native'
+import {ButtonCustom, Input, Loader, TitleName} from '../components'
+import {COLORS} from '../constants'
+import {createUserWithEmailAndPassword, onAuthStateChanged, updateProfile} from 'firebase/auth'
+import {auth, db} from '../firebase/firebase-config'
+import {addDoc, collection} from 'firebase/firestore'
 
-const RegistrationScreen = ({ navigation }) => {
+const RegistrationScreen = ({navigation}) => {
   const [inputs, setInputs] = useState({
-    fullname: "",
-    email: "",
-    phone: "",
-    password: "",
-  });
-  const [role, setRole] = useState("user");
-  const [errors, setErrors] = useState({});
-  const [loading, setLoading] = useState(false);
+    fullname: '',
+    email: '',
+    phone: '',
+    password: '',
+  })
+  const [role, setRole] = useState('user')
+  const [errors, setErrors] = useState({})
+  const [loading, setLoading] = useState(false)
+  const [userInfo, setUserInfo] = useState('')
 
   const validate = () => {
-    Keyboard.dismiss();
-    let isValid = true;
+    Keyboard.dismiss()
+    let isValid = true
 
     if (!inputs.email) {
-      handleError("Please input email", "email");
-      isValid = false;
+      handleError('Please input email', 'email')
+      isValid = false
     } else if (!inputs.email.match(/\S+@\S+\.\S+/)) {
-      handleError("Please input a valid email", "email");
-      isValid = false;
+      handleError('Please input a valid email', 'email')
+      isValid = false
     }
 
     if (!inputs.fullname) {
-      handleError("Please input fullname", "fullname");
-      isValid = false;
+      handleError('Please input fullname', 'fullname')
+      isValid = false
     }
 
     if (!inputs.phone) {
-      handleError("Please input phone number", "phone");
-      isValid = false;
+      handleError('Please input phone number', 'phone')
+      isValid = false
     }
 
     if (!inputs.password) {
-      handleError("Please input password", "password");
-      isValid = false;
+      handleError('Please input password', 'password')
+      isValid = false
     } else if (inputs.password.length < 5) {
-      handleError("Min password length of 5", "password");
-      isValid = false;
+      handleError('Min password length of 5', 'password')
+      isValid = false
     }
 
     if (isValid) {
-      register();
+      handleSignUp()
     }
-  };
+  }
 
   const register = () => {
-    setLoading(true);
+    setLoading(true)
     setTimeout(() => {
       const newUser = {
         inputs: inputs,
         role: role,
-      };
-      try {
-        setLoading(false);
-        AsyncStorage.setItem("userData", JSON.stringify(newUser));
-        navigation.navigate("LoginScreen");
-      } catch (error) {
-        Alert.alert("Error", "Something went wrong");
       }
-    }, 2000);
-  };
+      try {
+        setLoading(false)
+        AsyncStorage.setItem('userData', JSON.stringify(newUser))
+        navigation.navigate('LoginScreen')
+      } catch (error) {
+        Alert.alert('Error', 'Something went wrong')
+      }
+    }, 2000)
+  }
+
+  // Firebase
+  onAuthStateChanged(auth, (currentUser) => {
+    if (currentUser) {
+      setUserInfo(currentUser)
+    } else {
+      setUserInfo('')
+    }
+  })
+
+  const handleSignUp = async () => {
+    setLoading(true)
+    try {
+      // credentials
+      const cred = await createUserWithEmailAndPassword(auth, inputs.email, inputs.password)
+      await updateProfile(auth.currentUser, {
+        displayName: inputs.fullname,
+      })
+      const userRef = collection(db, 'users')
+      await addDoc(userRef, {
+        email: inputs.email,
+        password: inputs.password,
+        id: cred.user.uid,
+        phone: inputs.phone,
+        role,
+        name: inputs.fullname,
+      })
+      setLoading(false)
+      navigation.navigate('LoginScreen')
+    } catch (error) {
+      console.log(error)
+      Alert.alert('Error', 'Something went wrong')
+      setLoading(false)
+    }
+  }
 
   const handleOnchange = (text, input) => {
-    setInputs((prevState) => ({ ...prevState, [input]: text }));
-  };
+    setInputs((prevState) => ({...prevState, [input]: text}))
+  }
 
   const handleError = (error, input) => {
-    setErrors((prevState) => ({ ...prevState, [input]: error }));
-  };
+    setErrors((prevState) => ({...prevState, [input]: error}))
+  }
 
   return (
     <SafeAreaView className="flex-1 bg-white">
@@ -98,64 +125,40 @@ const RegistrationScreen = ({ navigation }) => {
             <TitleName textSize={40} logoHeight={55} logoWidth={55} />
             <Text
               className="text-[24px] text-center font-extrabold mt-3"
-              style={{ color: COLORS.black }}
+              style={{color: COLORS.black}}
             >
               Sign Up
             </Text>
           </View>
           <View className="mb-10">
             <Input
-              onChangeText={(text) => handleOnchange(text, "fullname")}
-              onFocus={() => handleError(null, "fullname")}
-              icon={
-                <FontAwesome5
-                  name="user-alt"
-                  size={22}
-                  color={COLORS.lightPrimary}
-                />
-              }
+              onChangeText={(text) => handleOnchange(text, 'fullname')}
+              onFocus={() => handleError(null, 'fullname')}
+              icon={<FontAwesome5 name="user-alt" size={22} color={COLORS.lightPrimary} />}
               lable="Fullname"
               placeholder="Enter your fullname"
               error={errors.fullname}
             />
             <Input
-              onChangeText={(text) => handleOnchange(text, "phone")}
-              onFocus={() => handleError(null, "phone")}
-              icon={
-                <MaterialCommunityIcons
-                  name="phone"
-                  size={24}
-                  color={COLORS.lightPrimary}
-                />
-              }
+              onChangeText={(text) => handleOnchange(text, 'phone')}
+              onFocus={() => handleError(null, 'phone')}
+              icon={<MaterialCommunityIcons name="phone" size={24} color={COLORS.lightPrimary} />}
               lable="phone"
               placeholder="Enter your phone"
               error={errors.phone}
             />
             <Input
-              onChangeText={(text) => handleOnchange(text, "email")}
-              onFocus={() => handleError(null, "email")}
-              icon={
-                <MaterialCommunityIcons
-                  name="email"
-                  size={24}
-                  color={COLORS.lightPrimary}
-                />
-              }
+              onChangeText={(text) => handleOnchange(text, 'email')}
+              onFocus={() => handleError(null, 'email')}
+              icon={<MaterialCommunityIcons name="email" size={24} color={COLORS.lightPrimary} />}
               lable="Email"
               placeholder="Enter your email"
               error={errors.email}
             />
             <Input
-              onChangeText={(text) => handleOnchange(text, "password")}
-              onFocus={() => handleError(null, "password")}
-              icon={
-                <FontAwesome
-                  name="lock"
-                  size={24}
-                  color={COLORS.lightPrimary}
-                />
-              }
+              onChangeText={(text) => handleOnchange(text, 'password')}
+              onFocus={() => handleError(null, 'password')}
+              icon={<FontAwesome name="lock" size={24} color={COLORS.lightPrimary} />}
               lable="Password"
               placeholder="Enter your password"
               error={errors.password}
@@ -169,17 +172,17 @@ const RegistrationScreen = ({ navigation }) => {
                 accessibilityLabel="pick a role"
                 value={role}
                 onChange={(nextValue) => {
-                  setRole(nextValue);
+                  setRole(nextValue)
                 }}
               >
                 <Stack
                   direction={{
-                    base: "row",
-                    md: "row",
+                    base: 'row',
+                    md: 'row',
                   }}
                   alignItems={{
-                    base: "flex-start",
-                    md: "center",
+                    base: 'flex-start',
+                    md: 'center',
                   }}
                   space={4}
                   w="75%"
@@ -195,22 +198,17 @@ const RegistrationScreen = ({ navigation }) => {
               </Radio.Group>
             </View>
 
-            <ButtonCustom
-              title="Sign up"
-              borderRadius={5}
-              marginVertical={20}
-              onPress={validate}
-            />
+            <ButtonCustom title="Sign up" borderRadius={5} marginVertical={20} onPress={validate} />
             <View className="mt-5">
               <Text
                 className="text-[16px] text-center font-bold mb-10"
-                onPress={() => navigation.navigate("LoginScreen")}
+                onPress={() => navigation.navigate('LoginScreen')}
                 style={{
                   color: COLORS.black,
                 }}
               >
                 Already have account?
-                <Text style={{ color: COLORS.primary }}> Sign in</Text>
+                <Text style={{color: COLORS.primary}}> Sign in</Text>
               </Text>
               <Text
                 className="text-[15px] text-center leading-5"
@@ -218,8 +216,8 @@ const RegistrationScreen = ({ navigation }) => {
                   color: COLORS.black,
                 }}
               >
-                By creating a new account, you agree with our{" "}
-                <Text className="font-bold">Terms & Conditions</Text> and{" "}
+                By creating a new account, you agree with our{' '}
+                <Text className="font-bold">Terms & Conditions</Text> and{' '}
                 <Text className="font-bold">Privacy Policy</Text>
               </Text>
             </View>
@@ -227,10 +225,10 @@ const RegistrationScreen = ({ navigation }) => {
         </View>
       </ScrollView>
     </SafeAreaView>
-  );
-};
+  )
+}
 
-export default RegistrationScreen;
+export default RegistrationScreen
 
 const styles = StyleSheet.create({
   label: {
@@ -239,4 +237,4 @@ const styles = StyleSheet.create({
     color: COLORS.grey,
     marginRight: 20,
   },
-});
+})
