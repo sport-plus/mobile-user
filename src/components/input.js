@@ -1,24 +1,25 @@
-import React, { useState } from "react";
-import { StyleSheet, Text, TextInput, View } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { MaterialIcons } from "@expo/vector-icons";
-import { COLORS } from "../constants";
-import { Flex } from "native-base";
+import React, {useState} from 'react'
+import {StyleSheet, Text, TextInput, View} from 'react-native'
+import {Ionicons} from '@expo/vector-icons'
+import {MaterialIcons} from '@expo/vector-icons'
+import {COLORS} from '../constants'
+import {Flex} from 'native-base'
 
 const Input = ({
   lable,
   icon,
   error,
   password,
+  width,
   borderColor,
   onFocus = () => {},
   ...props
 }) => {
-  const [hidePassword, setHidePassword] = useState(password);
-  const [isFocused, setIsFocused] = useState(false);
+  const [hidePassword, setHidePassword] = useState(password)
+  const [isFocused, setIsFocused] = useState(false)
 
   return (
-    <View style={{ height: 90, marginBottom: 20 }}>
+    <View style={{height: 90, marginBottom: 20, width: width}}>
       <Text style={style.label}>{lable}</Text>
       <View
         style={[
@@ -31,22 +32,22 @@ const Input = ({
               : isFocused
               ? COLORS.primary
               : COLORS.light,
-            alignItems: "center",
+            alignItems: 'center',
           },
         ]}
       >
-        {icon}
+        <View className="mr-2">{icon}</View>
         <TextInput
           secureTextEntry={hidePassword}
           autoCorrect={false}
           onFocus={() => {
-            onFocus();
-            setIsFocused(true);
+            onFocus()
+            setIsFocused(true)
           }}
           onBlur={() => {
-            setIsFocused(false);
+            setIsFocused(false)
           }}
-          style={{ color: COLORS.black, flex: 1, marginLeft: 5 }}
+          style={{color: COLORS.black, flex: 1, marginLeft: 5}}
           {...props}
         />
         {password && (
@@ -71,11 +72,11 @@ const Input = ({
       </View>
 
       {error && (
-        <Flex flexDirection="row" alignItems="center" style={{ height: 30 }}>
+        <Flex flexDirection="row" alignItems="center" style={{height: 30}}>
           <MaterialIcons name="error-outline" size={18} color="red" />
           <Text
             style={{
-              color: "red",
+              color: 'red',
               fontSize: 12,
               marginLeft: 4,
             }}
@@ -85,10 +86,10 @@ const Input = ({
         </Flex>
       )}
     </View>
-  );
-};
+  )
+}
 
-export default Input;
+export default Input
 
 const style = StyleSheet.create({
   label: {
@@ -99,9 +100,9 @@ const style = StyleSheet.create({
   inputContainer: {
     height: 55,
     backgroundColor: COLORS.light,
-    flexDirection: "row",
+    flexDirection: 'row',
     paddingHorizontal: 15,
     borderWidth: 1,
     borderRadius: 10,
   },
-});
+})

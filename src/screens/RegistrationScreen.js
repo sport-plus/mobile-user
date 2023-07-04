@@ -1,6 +1,6 @@
 import {FontAwesome, FontAwesome5, MaterialCommunityIcons} from '@expo/vector-icons'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import {Flex, Radio, Stack} from 'native-base'
+import {Box, CheckIcon, Flex, Radio, Select, Stack} from 'native-base'
 import React, {useState} from 'react'
 import {Alert, Keyboard, SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native'
 import {ButtonCustom, Input, Loader, TitleName} from '../components'
@@ -11,10 +11,13 @@ import {addDoc, collection} from 'firebase/firestore'
 
 const RegistrationScreen = ({navigation}) => {
   const [inputs, setInputs] = useState({
-    fullname: '',
+    lastName: '',
+    firstName: '',
     email: '',
     phone: '',
     password: '',
+    gender: '',
+    YOB: '',
   })
   const [role, setRole] = useState('user')
   const [errors, setErrors] = useState({})
@@ -33,8 +36,13 @@ const RegistrationScreen = ({navigation}) => {
       isValid = false
     }
 
-    if (!inputs.fullname) {
-      handleError('Please input fullname', 'fullname')
+    if (!inputs.firstName) {
+      handleError('Please input first name', 'firstName')
+      isValid = false
+    }
+
+    if (!inputs.lastName) {
+      handleError('Please input fullname', 'lastName')
       isValid = false
     }
 
@@ -131,22 +139,74 @@ const RegistrationScreen = ({navigation}) => {
             </Text>
           </View>
           <View className="mb-10">
-            <Input
-              onChangeText={(text) => handleOnchange(text, 'fullname')}
-              onFocus={() => handleError(null, 'fullname')}
-              icon={<FontAwesome5 name="user-alt" size={22} color={COLORS.lightPrimary} />}
-              lable="Fullname"
-              placeholder="Enter your fullname"
-              error={errors.fullname}
-            />
+            <View className="flex-row justify-between">
+              <Input
+                onChangeText={(text) => handleOnchange(text, 'firstName')}
+                onFocus={() => handleError(null, 'firstName')}
+                icon={<FontAwesome5 name="user-alt" size={20} color={COLORS.lightPrimary} />}
+                lable="First Name"
+                placeholder="First name"
+                width={160}
+                error={errors.firstName}
+              />
+              <Input
+                onChangeText={(text) => handleOnchange(text, 'lastName')}
+                onFocus={() => handleError(null, 'lastName')}
+                icon={<FontAwesome5 name="user-alt" size={20} color={COLORS.lightPrimary} />}
+                lable="Last Name"
+                width={160}
+                placeholder="Last name"
+                error={errors.lastName}
+              />
+            </View>
             <Input
               onChangeText={(text) => handleOnchange(text, 'phone')}
               onFocus={() => handleError(null, 'phone')}
               icon={<MaterialCommunityIcons name="phone" size={24} color={COLORS.lightPrimary} />}
-              lable="phone"
+              lable="Phone"
               placeholder="Enter your phone"
               error={errors.phone}
             />
+
+            <View className="flex-row items-center justify-between">
+              <View>
+                <Text className="-mt-4 text-[#b4b4b8]">Gender</Text>
+
+                <Box w={200} maxW="160" marginTop={1}>
+                  <Select
+                    selectedValue={inputs.gender}
+                    minWidth="100"
+                    fontSize={16}
+                    color={'#b4b4b8'}
+                    backgroundColor={'#f3f4fb'}
+                    borderColor={'#f3f3fb'}
+                    borderRadius={8}
+                    height={52}
+                    onValueChange={(text) => handleOnchange(text, 'gender')}
+                    placeholder="Enter Gender"
+                    _selectedItem={{
+                      bg: '#ccc',
+                      endIcon: <CheckIcon size="5" />,
+                    }}
+                  >
+                    <Select.Item label="Male" value="male" />
+                    <Select.Item label="Female" value="female" />
+                    <Select.Item label="Others" value="others" />
+                  </Select>
+                </Box>
+              </View>
+
+              <Input
+                onChangeText={(text) => handleOnchange(text, 'YOB')}
+                onFocus={() => handleError(null, 'YOB')}
+                icon={<MaterialCommunityIcons name="cake" size={24} color={COLORS.lightPrimary} />}
+                lable="YOB"
+                width={164}
+                placeholder="Enter your YOB"
+                error={errors.phone}
+              />
+            </View>
+
             <Input
               onChangeText={(text) => handleOnchange(text, 'email')}
               onFocus={() => handleError(null, 'email')}
