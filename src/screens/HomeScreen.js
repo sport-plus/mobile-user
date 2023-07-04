@@ -44,8 +44,8 @@ const HomeScreen = () => {
           <Image source={union} className="w-6 h-6 absolute left-2 bottom-3" />
         </View>
         <View className="absolute left-16 top-4">
-          <Text className="font-bold text-[20px]">15 May 2023</Text>
-          <Text className="left-44 bottom-7 font-bold text-black text-[20px]">Monday</Text>
+          <Text className="font-bold text-[20px]">10 June 2023</Text>
+          <Text className="left-44 bottom-7 font-bold text-black text-[20px]">Saturday</Text>
           <View className="w-1 h-8 bg-[#00C187] left-36 bottom-14"></View>
         </View>
       </View>

@@ -2,7 +2,7 @@ import {View, Text, TouchableOpacity} from 'react-native'
 import React from 'react'
 import {CalendarDaysIcon, ClockIcon} from 'react-native-heroicons/outline'
 import {Divide} from '../components'
-import { AlertDialog, Button } from 'native-base'
+import {AlertDialog, Button} from 'native-base'
 import {useNavigation} from '@react-navigation/native'
 
 const BookingItem = () => {
@@ -14,15 +14,18 @@ const BookingItem = () => {
   const navigation = useNavigation()
 
   return (
-    <TouchableOpacity onPress={() => navigation.navigate('BookingDetailScreen')} className="border p-4 rounded-xl border-gray-500 mt-8">
+    <TouchableOpacity
+      onPress={() => navigation.navigate('BookingDetailScreen')}
+      className="border p-4 rounded-xl border-gray-500 mt-8"
+    >
       <View className="flex-row items-center space-x-8 pb-4">
         <View className="flex-row space-x-1 items-center">
           <CalendarDaysIcon size={20} color={'#000'} />
-          <Text className="font-bold text-base">Nov.11, 2022</Text>
+          <Text className="font-bold text-base">June.10, 2022</Text>
         </View>
         <View className="flex-row space-x-1 items-center">
           <ClockIcon size={20} color={'#000'} />
-          <Text className="font-bold text-base">10:30</Text>
+          <Text className="font-bold text-base">18:00</Text>
         </View>
         <View className="bg-[#e6e6ea] w-20 h-10 items-center justify-center rounded-lg">
           <Text>Pending</Text>
@@ -31,10 +34,10 @@ const BookingItem = () => {
 
       <Divide height={1} />
 
-      <View className='flex-row justify-between pt-4'>
+      <View className="flex-row justify-between pt-4">
         <View>
-          <Text className='text-gray-500'>177 Nguyen Xi, Binh Thanh, tp HCM</Text>
-          <Text className='font-bold text-base mt-1'>Lotee Football Stadium</Text>
+          <Text className="text-gray-500">124 Hoang Huu Nam, 9 Dis, HCM City</Text>
+          <Text className="font-bold text-base mt-1">Lotee Football Stadium</Text>
         </View>
 
         <View>
@@ -45,9 +48,7 @@ const BookingItem = () => {
             <AlertDialog.Content>
               <AlertDialog.CloseButton />
               <AlertDialog.Header>Cancel booking</AlertDialog.Header>
-              <AlertDialog.Body>
-                Are you sure to cancel this booking?
-              </AlertDialog.Body>
+              <AlertDialog.Body>Are you sure to cancel this booking?</AlertDialog.Body>
               <AlertDialog.Footer>
                 <Button.Group space={2}>
                   <Button

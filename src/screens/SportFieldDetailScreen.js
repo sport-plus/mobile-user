@@ -21,11 +21,12 @@ const {width, height} = Dimensions.get('window')
 
 import {TabView, SceneMap} from 'react-native-tab-view'
 import {Box, Center, NativeBaseProvider, useColorModeValue} from 'native-base'
-import {camera, car, house, shirt, shop} from '../constants/images'
+import {camera, car, house, sanBong1, shirt, shop} from '../constants/images'
 import {ClockIcon, StarIcon, UserCircleIcon} from 'react-native-heroicons/outline'
 
 const FirstRoute = () => {
   const navigation = useNavigation()
+
   return (
     <View className="mt-2">
       <Text className="mt-1 mb-2 text-[18px] font-bold px-1">Facilities</Text>
@@ -57,14 +58,6 @@ const FirstRoute = () => {
         <Image source={camera} size={24} />
         <Text className="text-base">Camera</Text>
       </View>
-
-      <ButtonCustom
-        height={36}
-        borderRadius={12}
-        title="Book"
-        marginVertical={6}
-        onPress={() => navigation.navigate('BookingScreen')}
-      />
     </View>
   )
 }
@@ -136,8 +129,12 @@ const renderScene = SceneMap({
   third: ThirdRoute,
 })
 
-const SportFieldDetailScreen = () => {
+const SportFieldDetailScreen = ({route}) => {
   const navigation = useNavigation()
+  let value
+  if (route.params.value) {
+    value = route.params.value
+  }
 
   const [index, setIndex] = React.useState(0)
   const [routes] = React.useState([
@@ -206,9 +203,7 @@ const SportFieldDetailScreen = () => {
       <View>
         <View className="h-60">
           <Swiper loop autoplay activeDotColor={COLORS.black}>
-            <Image source={images.soccer} className="w-full h-full" />
-            <Image source={images.tennis} className=" w-full h-full" />
-            <Image source={images.caulong} className=" w-full h-full" />
+            <Image source={value?.imgUrl} className="w-full h-full" />
           </Swiper>
         </View>
 
@@ -218,7 +213,7 @@ const SportFieldDetailScreen = () => {
               name="arrowleft"
               size={24}
               color="white"
-              onPress={() => navigation.navigate('FieldScreen')}
+              onPress={() => navigation.navigate('FieldScreen', {value: 'Lotee Football Stadium'})}
             />
           </View>
           <View className="bg-[#00C187] w-10 h-10 rounded-full flex items-center justify-center opacity-80">
@@ -232,7 +227,7 @@ const SportFieldDetailScreen = () => {
         style={{top: 220}}
       >
         {/* <ScrollView showsVerticalScrollIndicator={false} className="space-y-2"> */}
-        <Text className="text-[20px] font-bold tracking-wide">Artificial football field 1</Text>
+        <Text className="text-[20px] font-bold tracking-wide">{value?.name}</Text>
         <View className="flex-row items-center justify-between">
           <View className="flex-row items-center mb-2 mt-2 space-x-2">
             <Feather name="phone" size={22} color={COLORS.primary} />
@@ -240,13 +235,13 @@ const SportFieldDetailScreen = () => {
           </View>
           <View className="flex-row items-center space-x-1 mb-2">
             <FontAwesome name="star" size={22} color={COLORS.yellow} />
-            <Text className="text-[16px]">5</Text>
+            <Text className="text-[16px]">4.8</Text>
           </View>
         </View>
         <View className="flex-row items-center justify-between mb-2">
           <View className="flex-row items-center space-x-2">
             <Image source={images.iconSportField} className="w-8 h-8" />
-            <Text className="text-[16px]">7 x 7</Text>
+            <Text className="text-[16px]">{value?.size}</Text>
           </View>
           <Text
             className="text-[18px] text-right font-bold"
@@ -254,18 +249,18 @@ const SportFieldDetailScreen = () => {
               color: '#000',
             }}
           >
-            300.000 VND<Text className="text-gray-400">/hour</Text>
+            {value?.price} VND<Text className="text-gray-400">/hour</Text>
           </Text>
         </View>
         <Divide backgroundColor="grey" height={2} />
         <View className="flex-row gap-2 mb-4 mt-2 space-x-4">
           <View className="w-20 h-20">
-            <Image source={images.sanBong} className="rounded-lg w-full h-full" />
+            <Image source={value?.imgUrl} className="rounded-lg w-full h-full" />
           </View>
 
           <View className="space-y-3" style={{width: width - 120}}>
             <Text className="text-[16px] text-gray-500 font-bold tracking-wide">
-              177 Nguyen Xi, Binh Thanh, tp Ho Chi Minh
+              124 Hoang Huu Nam, 9 District, Ho Chi Minh City
             </Text>
             <Text className="text-[14px] text-blue-400 font-bold tracking-wide">Open on map</Text>
           </View>
@@ -288,6 +283,15 @@ const SportFieldDetailScreen = () => {
           />
         </NativeBaseProvider>
       </View>
+      <ButtonCustom
+        height={36}
+        width={200}
+        borderRadius={12}
+        title="Book"
+        marginVertical={458}
+        marginHorizontal={100}
+        onPress={() => navigation.navigate('BookingScreen', {value})}
+      />
     </SafeAreaView>
   )
 }

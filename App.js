@@ -1,16 +1,13 @@
 import {FontAwesome, Ionicons, AntDesign} from '@expo/vector-icons'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 import {NavigationContainer} from '@react-navigation/native'
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
 import {NativeBaseProvider} from 'native-base'
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import {COLORS} from './src/constants'
 import {
-  CreateSportCenterScreen,
   HomeScreen,
   LoginScreen,
-  OnboardingScreen,
   OwnerSearchScreen,
   ProfileScreen,
   RegistrationScreen,
@@ -34,25 +31,12 @@ import GetHelpScreen from './src/screens/GetHelpScreen'
 import NotificationProfileScreen from './src/screens/NotificationProfileScreen'
 import EditProfileScreen from './src/screens/EditProfileScreen'
 import {Provider} from 'react-redux'
-import { store } from './src/services/configStore'
-import { registerRootComponent } from 'expo';
+import {store} from './src/services/configStore'
+import {registerRootComponent} from 'expo'
 
 export default function App() {
   const Tab = createBottomTabNavigator()
   const Stack = createNativeStackNavigator()
-
-  const [isFirstLaunch, setIsFirstLaunch] = useState(null)
-
-  useEffect(() => {
-    AsyncStorage.getItem('alreadyLaunched').then((value) => {
-      if (value !== null) {
-        setIsFirstLaunch(true)
-        AsyncStorage.setItem('alreadyLaunched', 'false')
-      } else {
-        setIsFirstLaunch(false)
-      }
-    })
-  }, [])
 
   function UserBottomTabs() {
     return (
@@ -96,21 +80,6 @@ export default function App() {
           }}
         />
         <Tab.Screen
-          name="OwnerAddNew"
-          component={CreateSportCenterScreen}
-          options={{
-            tabBarLabel: 'Add New',
-            headerShown: false,
-            tabBarIcon: ({focused}) => (
-              <AntDesign
-                name="pluscircle"
-                size={24}
-                color={focused ? COLORS.primary : COLORS.black}
-              />
-            ),
-          }}
-        />
-        <Tab.Screen
           name="Profile"
           component={ProfileScreen}
           options={{
@@ -133,148 +102,133 @@ export default function App() {
     <>
       <Provider store={store}>
         <NativeBaseProvider>
-          {isFirstLaunch != null && (
-            <NavigationContainer>
-              <Stack.Navigator initialRouteName="SplashScreen">
-                {/* Authenticate */}
-                {/* <Stack.Screen
-                options={{ headerShown: false }}
-                name="SplashScreen"
-                component={SplashScreen}
-              /> */}
-                {isFirstLaunch && (
-                  <Stack.Screen
-                    options={{headerShown: false}}
-                    name="OnboardingScreen"
-                    component={OnboardingScreen}
-                  />
-                )}
-                <Stack.Screen
-                  options={{headerShown: false}}
-                  name="LoginScreen"
-                  component={LoginScreen}
-                />
-                <Stack.Screen
-                  options={{headerShown: false}}
-                  name="RegistrationScreen"
-                  component={RegistrationScreen}
-                />
+          <NavigationContainer>
+            <Stack.Navigator initialRouteName="LoginScreen">
+              <Stack.Screen
+                options={{headerShown: false}}
+                name="LoginScreen"
+                component={LoginScreen}
+              />
+              <Stack.Screen
+                options={{headerShown: false}}
+                name="RegistrationScreen"
+                component={RegistrationScreen}
+              />
 
-                <Stack.Screen
-                  options={{headerShown: false}}
-                  name="HomeScreen"
-                  component={HomeScreen}
-                />
+              <Stack.Screen
+                options={{headerShown: false}}
+                name="HomeScreen"
+                component={HomeScreen}
+              />
 
-                <Stack.Screen
-                  options={{headerShown: false}}
-                  name="OwnerMain"
-                  component={UserBottomTabs}
-                />
-                <Stack.Screen
-                  options={{headerShown: false}}
-                  name="SportCenter"
-                  component={SportCenterUserScreen}
-                />
+              <Stack.Screen
+                options={{headerShown: false}}
+                name="OwnerMain"
+                component={UserBottomTabs}
+              />
+              <Stack.Screen
+                options={{headerShown: false}}
+                name="SportCenter"
+                component={SportCenterUserScreen}
+              />
 
-                <Stack.Screen
-                  options={{headerShown: false}}
-                  name="SportFieldDetail"
-                  component={SportFieldDetailScreen}
-                />
+              <Stack.Screen
+                options={{headerShown: false}}
+                name="SportFieldDetail"
+                component={SportFieldDetailScreen}
+              />
 
-                <Stack.Screen
-                  options={{headerShown: false}}
-                  name="FieldScreen"
-                  component={FieldScreen}
-                />
+              <Stack.Screen
+                options={{headerShown: false}}
+                name="FieldScreen"
+                component={FieldScreen}
+              />
 
-                <Stack.Screen
-                  options={{headerShown: false}}
-                  name="BookingScreen"
-                  component={BookingUserScreen}
-                />
+              <Stack.Screen
+                options={{headerShown: false}}
+                name="BookingScreen"
+                component={BookingUserScreen}
+              />
 
-                <Stack.Screen
-                  options={{headerShown: false}}
-                  name="BookingReviewScreen"
-                  component={BookingReviewScreen}
-                />
+              <Stack.Screen
+                options={{headerShown: false}}
+                name="BookingReviewScreen"
+                component={BookingReviewScreen}
+              />
 
-                <Stack.Screen
-                  options={{headerShown: false}}
-                  name="MyBookingScreen"
-                  component={MyBookingScreen}
-                />
+              <Stack.Screen
+                options={{headerShown: false}}
+                name="MyBookingScreen"
+                component={MyBookingScreen}
+              />
 
-                <Stack.Screen
-                  options={{headerShown: false}}
-                  name="BookingSuccessScreen"
-                  component={BookingSuccessScreen}
-                />
+              <Stack.Screen
+                options={{headerShown: false}}
+                name="BookingSuccessScreen"
+                component={BookingSuccessScreen}
+              />
 
-                <Stack.Screen
-                  options={{headerShown: false}}
-                  name="BookingDetailScreen"
-                  component={BookingDetailScreen}
-                />
+              <Stack.Screen
+                options={{headerShown: false}}
+                name="BookingDetailScreen"
+                component={BookingDetailScreen}
+              />
 
-                <Stack.Screen
-                  options={{headerShown: false}}
-                  name="NotificationScreen"
-                  component={NotificationScreen}
-                />
+              <Stack.Screen
+                options={{headerShown: false}}
+                name="NotificationScreen"
+                component={NotificationScreen}
+              />
 
-                <Stack.Screen
-                  options={{headerShown: false}}
-                  name="ForgotPasswordScreen"
-                  component={ForgotPasswordScreen}
-                />
+              <Stack.Screen
+                options={{headerShown: false}}
+                name="ForgotPasswordScreen"
+                component={ForgotPasswordScreen}
+              />
 
-                <Stack.Screen
-                  options={{headerShown: false}}
-                  name="ResetPasswordScreen"
-                  component={ResetPasswordScreen}
-                />
+              <Stack.Screen
+                options={{headerShown: false}}
+                name="ResetPasswordScreen"
+                component={ResetPasswordScreen}
+              />
 
-                <Stack.Screen
-                  options={{headerShown: false}}
-                  name="ChangePasswordScreen"
-                  component={ChangePasswordScreen}
-                />
+              <Stack.Screen
+                options={{headerShown: false}}
+                name="ChangePasswordScreen"
+                component={ChangePasswordScreen}
+              />
 
-                <Stack.Screen
-                  options={{headerShown: false}}
-                  name="ChangeLanguageScreen"
-                  component={ChangeLanguageScreen}
-                />
+              <Stack.Screen
+                options={{headerShown: false}}
+                name="ChangeLanguageScreen"
+                component={ChangeLanguageScreen}
+              />
 
-                <Stack.Screen
-                  options={{headerShown: false}}
-                  name="GetHelpScreen"
-                  component={GetHelpScreen}
-                />
+              <Stack.Screen
+                options={{headerShown: false}}
+                name="GetHelpScreen"
+                component={GetHelpScreen}
+              />
 
-                <Stack.Screen
-                  options={{headerShown: false}}
-                  name="NotificationProfileScreen"
-                  component={NotificationProfileScreen}
-                />
+              <Stack.Screen
+                options={{headerShown: false}}
+                name="NotificationProfileScreen"
+                component={NotificationProfileScreen}
+              />
 
-                <Stack.Screen
-                  options={{headerShown: false}}
-                  name="ProfileScreen"
-                  component={ProfileScreen}
-                />
+              <Stack.Screen
+                options={{headerShown: false}}
+                name="ProfileScreen"
+                component={ProfileScreen}
+              />
 
-                <Stack.Screen
-                  options={{headerShown: false}}
-                  name="EditProfileScreen"
-                  component={EditProfileScreen}
-                />
-              </Stack.Navigator>
-            </NavigationContainer>
-          )}
+              <Stack.Screen
+                options={{headerShown: false}}
+                name="EditProfileScreen"
+                component={EditProfileScreen}
+              />
+            </Stack.Navigator>
+          </NavigationContainer>
         </NativeBaseProvider>
         <ModalPortal />
       </Provider>
@@ -282,4 +236,4 @@ export default function App() {
   )
 }
 
-registerRootComponent(App);
+registerRootComponent(App)

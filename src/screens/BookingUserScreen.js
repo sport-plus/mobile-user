@@ -27,16 +27,20 @@ const times = [
 
 const hours = ['1:00', '1:30', '2:00', '2:30', '3:00', '3:30', '4:00', '4:30']
 
-const BookingUserScreen = () => {
+const BookingUserScreen = ({route}) => {
   const navigation = useNavigation()
   const [hour, setHour] = React.useState('')
+  const [day, setDay] = React.useState('')
+  const [time, setTime] = React.useState('')
+  const [month, setMonth] = React.useState('')
+  const {value} = route.params
 
   return (
     <SafeAreaView>
       {/* Appbar */}
       <View className="bg-black w-full h-44 rounded-b-3xl">
         <View className="mt-10 flex-row items-center justify-between px-8">
-          <TouchableOpacity onPress={() => navigation.navigate('SportFieldDetail')}>
+          <TouchableOpacity onPress={() => navigation.navigate('SportFieldDetail', {value})}>
             <ArrowLeftIcon size={24} color="#fff" />
           </TouchableOpacity>
           <Text className="text-white font-bold text-lg">Sport Center</Text>
@@ -48,6 +52,7 @@ const BookingUserScreen = () => {
       <ScrollView className="bg-[#ECF3FF] w-full h-full -mt-20 rounded-tl-3xl rounded-tr-3xl">
         <Calendar
           markingType="custom"
+          onDayPress={(day) => setDay(day.dateString)}
           style={{borderTopLeftRadius: 30, borderTopRightRadius: 30}}
         />
 
@@ -58,9 +63,9 @@ const BookingUserScreen = () => {
 
         <ScrollView className="w-full h-44 pt-2 bg-white">
           <View className="flex-row flex-wrap mx-1">
-            {times.map((time, index) => (
-              <TimeItem value={time} key={index} />
-            ))}
+            {times.map((time, index) => {
+              return <TimeItem value={time} key={index} />
+            })}
           </View>
         </ScrollView>
 
@@ -93,11 +98,17 @@ const BookingUserScreen = () => {
           </Box>
         </View>
 
-        <View className='px-10 bg-white py-4'>
-          <ButtonCustom title="Book" borderRadius={14} onPress={() => navigation.navigate('BookingReviewScreen')}/>
+        <View className="px-10 bg-white py-4">
+          <ButtonCustom
+            title="Book"
+            borderRadius={14}
+            onPress={() =>
+              navigation.navigate('BookingReviewScreen', {value: value, hour: hour, day: day})
+            }
+          />
         </View>
 
-        <Divide/>
+        <Divide />
       </ScrollView>
     </SafeAreaView>
   )

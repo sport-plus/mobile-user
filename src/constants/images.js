@@ -1,16 +1,16 @@
-export const logo_green = require("../assets/images/logo_green.png");
-export const logo_white = require("../assets/images/logo_white.png");
-export const slide_1 = require("../assets/images/slide_1.png");
-export const slide_2 = require("../assets/images/slide_2.png");
-export const slide_3 = require("../assets/images/slide_3.png");
-export const slide_4 = require("../assets/images/slide_4.png");
-export const Facebook = require("../assets/images/Facebook.png");
-export const Google = require("../assets/images/Google.png");
-export const soccer = require("../assets/images/soccer.png");
-export const tennis = require("../assets/images/tennis.jpg");
-export const caulong = require("../assets/images/caulong.jpg");
-export const sanBong = require("../assets/images/sanBong.jpg");
-export const iconSportField = require("../assets/images/iconSportField.png");
+export const logo_green = require('../assets/images/logo_green.png')
+export const logo_white = require('../assets/images/logo_white.png')
+export const slide_1 = require('../assets/images/slide_1.png')
+export const slide_2 = require('../assets/images/slide_2.png')
+export const slide_3 = require('../assets/images/slide_3.png')
+export const slide_4 = require('../assets/images/slide_4.png')
+export const Facebook = require('../assets/images/Facebook.png')
+export const Google = require('../assets/images/Google.png')
+export const soccer = require('../assets/images/soccer.png')
+export const tennis = require('../assets/images/tennis.jpg')
+export const caulong = require('../assets/images/caulong.jpg')
+export const sanBong = require('../assets/images/sanBong.jpg')
+export const iconSportField = require('../assets/images/iconSportField.png')
 
 export default {
   logo_green,
@@ -26,7 +26,7 @@ export default {
   caulong,
   sanBong,
   iconSportField,
-};
+}
 
 export {default as bell} from '../assets/images/bell.png'
 export {default as home_image} from '../assets/images/home_image.png'
@@ -49,3 +49,9 @@ export {default as ticket_fill} from '../assets/images/Ticket_fill.png'
 export {default as divide} from '../assets/images/divide.png'
 export {default as left} from '../assets/images/left.png'
 export {default as right} from '../assets/images/right.png'
+export {default as sanBong1} from '../assets/images/sanBong1.jpg'
+export {default as sanBong2} from '../assets/images/sanBong2.jpg'
+export {default as sanBong3} from '../assets/images/sanBong3.jpg'
+export {default as sanBong4} from '../assets/images/sanBong4.jpg'
+export {default as sanBong5} from '../assets/images/sanBong5.jpg'
+export {default as sanBong6} from '../assets/images/sanBong6.jpg'

@@ -3,6 +3,7 @@ import React from 'react'
 import {ArrowLeftIcon, BellIcon, MagnifyingGlassIcon} from 'react-native-heroicons/outline'
 import SCRow from '../components/SCRow'
 import {useNavigation} from '@react-navigation/native'
+import {sanBong1, sanBong2, sanBong3, sanBong4, sanBong5, sanBong6} from '../constants/images'
 
 const SportCenterUserScreen = () => {
   const navigation = useNavigation()
@@ -31,36 +32,58 @@ const SportCenterUserScreen = () => {
         <ScrollView>
           <SCRow
             name="Lotee Football Stadium"
-            address="District 1, HCM"
+            address="District 9, HCM"
             rating="4.5"
             available="10 Available Today"
             distance="1.4"
+            imgUrl={sanBong1}
           />
 
           <SCRow
-            name="Lotee Football Stadium"
-            address="District 1, HCM"
+            name="KSPO Football Stadium"
+            address="District 2, HCM"
             rating="4.5"
-            available="10 Available Today"
-            distance="1.4"
+            available="12 Available Today"
+            distance="8"
+            imgUrl={sanBong2}
           />
 
           <Text className="px-5 mt-4 font-bold text-lg">Another</Text>
 
           <SCRow
-            name="Lotee Football Stadium"
+            name="Jamsil Football Stadium"
             address="District 1, HCM"
             rating="4.5"
-            available="10 Available Today"
-            distance="1.4"
+            available=" 9 Available Today"
+            distance="12"
+            imgUrl={sanBong3}
           />
 
           <SCRow
-            name="Lotee Football Stadium"
-            address="District 1, HCM"
+            name="Cao Hung Football Stadium"
+            address="District 4, HCM"
             rating="4.5"
-            available="10 Available Today"
-            distance="1.4"
+            available=" 8 Available Today"
+            distance="14"
+            imgUrl={sanBong4}
+          />
+
+          <SCRow
+            name="Lam Son Football Stadium"
+            address="District 3, HCM"
+            rating="4.8"
+            available=" 2 Available Today"
+            distance="12"
+            imgUrl={sanBong5}
+          />
+
+          <SCRow
+            name="Celadon Football Stadium"
+            address="District 10, HCM"
+            rating="4.5"
+            available=" 9 Available Today"
+            distance="10"
+            imgUrl={sanBong6}
           />
 
           <SCRow

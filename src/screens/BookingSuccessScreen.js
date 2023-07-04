@@ -43,12 +43,12 @@ const BookingSuccessScreen = () => {
 
         <View className="flex-row items-center self-center space-x-2 -mt-12">
           <Image source={ticket_fill} />
-          <Text className="tracking-widest text-[18px] font-bold">Artificial football field 3</Text>
+          <Text className="tracking-widest text-[18px] font-bold">Santiago Bernabeu</Text>
         </View>
 
         <Text className="mt-6 px-4 text-sm text-gray-600">Date & time</Text>
         <View className="flex-row px-4 justify-between">
-          <Text className="text-[18px]">Feb, 20, 2023 | 19: 00</Text>
+          <Text className="text-[18px]">June, 10, 2023 | 18: 00</Text>
           <View className="bg-[#e6e6ea] w-20 h-10 items-center -mt-3 justify-center rounded-lg">
             <Text>Pending</Text>
           </View>
@@ -63,7 +63,7 @@ const BookingSuccessScreen = () => {
           </View>
           <View className="flex-row space-x-2 mt-1">
             <MapPinIcon size={24} color="#00C187" />
-            <Text className="text-gray-600">177 Nguyen Xi, Binh Thanh, tp HCM</Text>
+            <Text className="text-gray-600">124 Hoang Huu Nam, 9 District, Ho Chi Minh City</Text>
           </View>
           <View className="flex-row space-x-2 ml-1 mt-1">
             <PhoneIcon size={24} color="#00C187" />
@@ -83,22 +83,25 @@ const BookingSuccessScreen = () => {
 
           <View className="flex-row items-center mt-1">
             <Text className="text-orange-500 text-base">Pay before: </Text>
-            <Text className="text-base to-gray-400">18:00 - Feb.20 2023</Text>
+            <Text className="text-base to-gray-400">18:00 - June.10 2023</Text>
           </View>
 
           <View className="flex-row justify-end space-x-2 mt-4 pb-2 items-center">
             <Image source={vector} />
-            <Text className="text-[20px] font-bold">200.000 VND</Text>
+            <Text className="text-[20px] font-bold">700.000 VND</Text>
           </View>
         </View>
 
-        <View className="flex-row mt-4">
-          <TouchableOpacity onPress={() => navigation.navigate('MyBookingScreen')} className="bg-[#33cd9f] w-44 rounded-bl-3xl items-center justify-center">
-            <Text className='text-white font-bold text-[20px]'>MY BOOKING</Text>
+        <View className="flex-row mt-4 ">
+          <TouchableOpacity
+            onPress={() => navigation.navigate('MyBookingScreen')}
+            className="bg-[#33cd9f] w-[344] h-14 rounded-bl-3xl rounded-br-3xl items-center justify-center"
+          >
+            <Text className="text-white font-bold text-[20px]">MY BOOKING</Text>
           </TouchableOpacity>
-          <TouchableOpacity className="bg-[#00C187] w-[168] h-14 rounded-br-3xl items-center justify-center">
-            <Text className='text-white font-bold text-[20px]'>PAY NOW</Text>
-          </TouchableOpacity>
+          {/* <TouchableOpacity className="bg-[#00C187] w-[168] h-14 rounded-br-3xl items-center justify-center">
+            <Text className="text-white font-bold text-[20px]">PAY NOW</Text>
+          </TouchableOpacity> */}
         </View>
       </ScrollView>
     </SafeAreaView>
