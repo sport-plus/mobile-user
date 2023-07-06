@@ -8,6 +8,8 @@ import {COLORS} from '../constants'
 import {createUserWithEmailAndPassword, onAuthStateChanged, updateProfile} from 'firebase/auth'
 import {auth, db} from '../firebase/firebase-config'
 import {addDoc, collection} from 'firebase/firestore'
+import {RegisterUser} from '../services/auth/authSlice'
+import {useDispatch} from 'react-redux'
 
 const RegistrationScreen = ({navigation}) => {
   const [inputs, setInputs] = useState({
@@ -18,13 +20,15 @@ const RegistrationScreen = ({navigation}) => {
     password: '',
     gender: '',
     YOB: '',
+    role: '646f193ecb8a74dfafdf1359',
   })
   const [role, setRole] = useState('user')
   const [errors, setErrors] = useState({})
   const [loading, setLoading] = useState(false)
   const [userInfo, setUserInfo] = useState('')
+  const dispatch = useDispatch()
 
-  const validate = () => {
+  const validate = async () => {
     Keyboard.dismiss()
     let isValid = true
 
@@ -60,25 +64,29 @@ const RegistrationScreen = ({navigation}) => {
     }
 
     if (isValid) {
-      handleSignUp()
+      console.log('inputs:', inputs)
+      await register()
     }
   }
 
-  const register = () => {
-    setLoading(true)
-    setTimeout(() => {
-      const newUser = {
-        inputs: inputs,
-        role: role,
-      }
-      try {
-        setLoading(false)
-        AsyncStorage.setItem('userData', JSON.stringify(newUser))
-        navigation.navigate('LoginScreen')
-      } catch (error) {
-        Alert.alert('Error', 'Something went wrong')
-      }
-    }, 2000)
+  let newUserOptions = {
+    email: inputs.email,
+    password: inputs.password,
+    phone: inputs.phone,
+    role: '646f193ecb8a74dfafdf1359',
+    firstname: inputs.firstName,
+    lastname: inputs.lastName,
+    YOB: inputs.YOB,
+    gender: inputs.gender,
+  }
+
+  const register = async () => {
+    const newUser = {
+      navigation,
+      newUserOptions,
+    }
+
+    dispatch(RegisterUser(newUser))
   }
 
   // Firebase
@@ -89,32 +97,6 @@ const RegistrationScreen = ({navigation}) => {
       setUserInfo('')
     }
   })
-
-  const handleSignUp = async () => {
-    setLoading(true)
-    try {
-      // credentials
-      const cred = await createUserWithEmailAndPassword(auth, inputs.email, inputs.password)
-      await updateProfile(auth.currentUser, {
-        displayName: inputs.fullname,
-      })
-      const userRef = collection(db, 'users')
-      await addDoc(userRef, {
-        email: inputs.email,
-        password: inputs.password,
-        id: cred.user.uid,
-        phone: inputs.phone,
-        role,
-        name: inputs.fullname,
-      })
-      setLoading(false)
-      navigation.navigate('LoginScreen')
-    } catch (error) {
-      console.log(error)
-      Alert.alert('Error', 'Something went wrong')
-      setLoading(false)
-    }
-  }
 
   const handleOnchange = (text, input) => {
     setInputs((prevState) => ({...prevState, [input]: text}))

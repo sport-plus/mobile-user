@@ -1,9 +1,6 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { loginUserThunk, logoutThunk } from './authThunk';
-// import { toast } from 'react-toastify';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
-// const getUserfromLocalStorage = AsyncStorage.getItem('userInfo') ? JSON.parse(AsyncStorage.getItem('userInfo')) : null;
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
+import {registerUserThunk} from './authThunk'
+import {ToastAndroid} from 'react-native'
 
 const initialState = {
   user: '',
@@ -12,51 +9,39 @@ const initialState = {
   isError: false,
   isSuccess: false,
   message: '',
-};
+}
 
-export const LoginUser = createAsyncThunk('auth/LoginUser', loginUserThunk);
-// export const logoutAccount = createAsyncThunk('auth/Logout', logoutThunk);
+export const RegisterUser = createAsyncThunk('auth/RegisterUser', registerUserThunk)
 
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    setMessageSuccess: (state, action) => {
+      state.message = action.payload
+      ToastAndroid.show(state.message)
+    },
+  },
   extraReducers: (builder) => {
     builder
-      .addCase(LoginUser.pending, (state) => {
-        state.isLoading = true;
+      .addCase(RegisterUser.pending, (state) => {
+        state.isLoading = true
       })
-      .addCase(LoginUser.fulfilled, (state, action) => {
-        console.log(action.payload);
-        state.isLoading = false;
-        state.isError = false;
-        state.isSuccess = true;
-        state.user = action.payload?.user;
-        state.token = action.payload?.token;
-        state.message = 'success';
+      .addCase(RegisterUser.fulfilled, (state, action) => {
+        console.log(action.payload)
+        state.isLoading = false
+        state.isError = false
+        state.isSuccess = true
       })
-      .addCase(LoginUser.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.isSuccess = false;
-        state.message = action.payload;
+      .addCase(RegisterUser.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.isSuccess = false
+        ToastAndroid.show(action.payload?.data.message)
+        console.log('register user rejected')
       })
-      // .addCase(logoutAccount.pending, (state) => {
-      //   state.isLoading = true;
-      // })
-      // .addCase(logoutAccount.fulfilled, (state) => {
-      //   state.isLoading = false;
-      //   state.isError = false;
-      //   state.isSuccess = true;
-      //   state.user = '';
-      //   toast.success('Logout Successfully');
-      // })
-      // .addCase(logoutAccount.rejected, (state) => {
-      //   state.isLoading = false;
-      //   state.isError = true;
-      //   state.isSuccess = false;
-      // });
   },
-});
+})
 
-export default authSlice.reducer;
+export const {setMessageSuccess} = authSlice.actions
+export default authSlice.reducer
