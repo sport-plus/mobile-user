@@ -19,7 +19,6 @@ import {useDispatch} from 'react-redux'
 import {LoginUser} from '../services/auth/authSlice'
 import {signInWithEmailAndPassword, onAuthStateChanged} from 'firebase/auth'
 import {auth, db} from '../firebase/firebase-config'
-import {addDoc, collection} from 'firebase/firestore'
 
 const LoginScreen = () => {
   const [inputs, setInputs] = useState({email: '', password: ''})
@@ -41,50 +40,18 @@ const LoginScreen = () => {
       isValid = false
     }
     if (isValid) {
-      handleLogin()
-    }
-  }
-
-  const handleLogin = async () => {
-    setLoading(true)
-    const cred = await signInWithEmailAndPassword(auth, inputs.email, inputs.password)
-    console.log(auth.currentUser)
-    if (cred) {
-      navigation.navigate('OwnerMain')
-      setLoading(false)
-    } else {
-      Alert.alert('Error', 'User does not exist')
-      setLoading(false)
+      login()
     }
   }
 
   const login = () => {
-    setLoading(true)
-    setTimeout(async () => {
-      setLoading(false)
-      let userData = await AsyncStorage.getItem('userData')
-      if (userData) {
-        userData = JSON.parse(userData)
-        if (inputs.email == userData.inputs.email && inputs.password == userData.inputs.password) {
-          navigation.navigate('OwnerMain')
-          AsyncStorage.setItem('userData', JSON.stringify({...userData, loggedIn: true}))
-        } else {
-          Alert.alert('Error', 'Invalid Details')
-        }
-      } else {
-        Alert.alert('Error', 'User does not exist')
-      }
-    }, 2000)
+    const params = {
+      navigation,
+      user: inputs,
+    }
+
+    dispatch(LoginUser(params))
   }
-
-  // const login = () => {
-  //   const params= {
-  //     navigation,
-  //     inputs
-  //   }
-
-  //   dispatch(LoginUser(params))
-  // }
 
   const handleOnchange = (text, input) => {
     setInputs((prevState) => ({...prevState, [input]: text}))
