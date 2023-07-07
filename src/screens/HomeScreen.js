@@ -6,12 +6,33 @@ import images, {logo_white, soccer_field, term, union} from '../constants/images
 import {BellIcon} from 'react-native-heroicons/outline'
 import {useNavigation} from '@react-navigation/native'
 import Swiper from 'react-native-swiper'
+import {useEffect} from 'react'
+import {useDispatch, useSelector} from 'react-redux'
+import {getAllSports} from '../services/sport/sportSlice'
+import {FlatList} from 'react-native'
+import {useState} from 'react'
 
 const HomeScreen = () => {
   const navigation = useNavigation()
+  const dispatch = useDispatch()
+  const {sports} = useSelector((state) => state.sport)
+  const [sportsList, setSportsList] = useState(sports)
 
   const bookAfield = () => {
     return navigation.navigate('SportCenter')
+  }
+
+  useEffect(() => {
+    dispatch(getAllSports())
+  }, [])
+
+  const renderItem = ({item}) => {
+    return (
+      <TouchableOpacity className="w-28 h-28 my-2 bg-[#e7e8ea] shadow-lg shadow-gray-500 items-center justify-center mx-2 rounded-xl">
+        <Image source={{uri: item.image}} className="w-20 h-20" />
+        <Text className="mb-2 text-base">{item.name}</Text>
+      </TouchableOpacity>
+    )
   }
 
   return (
@@ -59,8 +80,15 @@ const HomeScreen = () => {
         <ButtonWithIcon icon={soccer_field} title={'Book a field'} onPress={bookAfield} />
       </View>
 
-      {/* Featured Field Row */}
-      <FeaturedRow title={'Featured Field'} />
+      {/* Sport List */}
+      <View className="w-full mt-4 ml-1">
+        <FlatList
+          data={sportsList}
+          renderItem={renderItem}
+          numColumns={3}
+          keyExtractor={(item) => item._id}
+        />
+      </View>
     </SafeAreaView>
   )
 }
