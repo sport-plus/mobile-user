@@ -24,7 +24,7 @@ const HomeScreen = () => {
 
   useEffect(() => {
     dispatch(getAllSports())
-  }, [])
+  }, [dispatch])
 
   const renderItem = ({item}) => {
     return (

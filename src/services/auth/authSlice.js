@@ -3,14 +3,12 @@ import {loginUserThunk, registerUserThunk} from './authThunk'
 import {ToastAndroid} from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-const userfromAsyncStorage = AsyncStorage.getItem('userInfo')
-  ? AsyncStorage.getItem('userInfo')
-  : ''
-
-console.log('user:', userfromAsyncStorage)
+// const userfromAsyncStorage = AsyncStorage.getItem('userInfo')
+//   ? AsyncStorage.getItem('userInfo')
+//   : ''
 
 const initialState = {
-  user: userfromAsyncStorage ? userfromAsyncStorage : '',
+  user: {},
   token: null,
   isLoading: false,
   isError: false,
@@ -41,13 +39,11 @@ const authSlice = createSlice({
         state.isError = true
         state.isSuccess = false
         ToastAndroid.show(action.payload?.data.message)
-        console.log('register user rejected')
       })
       .addCase(LoginUser.pending, (state) => {
         state.isLoading = true
       })
       .addCase(LoginUser.fulfilled, (state, action) => {
-        console.log('login user success', action.payload)
         state.isLoading = false
         state.isError = false
         state.isSuccess = true

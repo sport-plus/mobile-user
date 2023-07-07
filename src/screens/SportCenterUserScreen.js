@@ -1,12 +1,53 @@
-import {View, Text, SafeAreaView, TextInput, ScrollView, TouchableOpacity} from 'react-native'
-import React from 'react'
-import {ArrowLeftIcon, BellIcon, MagnifyingGlassIcon} from 'react-native-heroicons/outline'
-import SCRow from '../components/SCRow'
+import {View, Text, SafeAreaView, TextInput, TouchableOpacity, Image, FlatList} from 'react-native'
+import React, {useEffect} from 'react'
+import {
+  ArrowLeftIcon,
+  BellIcon,
+  MagnifyingGlassIcon,
+  StarIcon,
+} from 'react-native-heroicons/outline'
 import {useNavigation} from '@react-navigation/native'
-import {sanBong1, sanBong2, sanBong3, sanBong4, sanBong5, sanBong6} from '../constants/images'
+import {useDispatch, useSelector} from 'react-redux'
+import {getAllSportCenters} from '../services/sportCenter/sportCenterSlice'
+import {useState} from 'react'
 
 const SportCenterUserScreen = () => {
   const navigation = useNavigation()
+  const dispatch = useDispatch()
+  const {sportCenters} = useSelector((state) => state.sportCenter)
+  const [sportCentersList, setSportCentersList] = useState(sportCenters)
+
+  useEffect(() => {
+    dispatch(getAllSportCenters())
+  }, [])
+
+  const limit = (string, length, end = '...') => {
+    return string.length < length ? string : string.substring(0, length) + end
+  }
+
+  const renderItem = ({item}) => {
+    return (
+      item.status === true && (
+        <TouchableOpacity onPress={() => navigation.navigate('FieldScreen', {value: item.name})}>
+          <View className="p-3 mx-4 my-2 flex-row bg-white rounded-xl space-x-4">
+            <View className="w-28 h-28 items-center justify-center">
+              <Image source={{uri: item.image}} resizeMethod="scale" className="w-28 h-28" />
+            </View>
+            <View className="w-full">
+              <Text className="text-[18px] w-52 font-bold tracking-widest">{item.name}</Text>
+              <Text className="font-bold w-52 text-[#9f9d9d] mt-2">{limit(item.address, 26)}</Text>
+              <View className="flex-row items-center mt-2 space-x-1">
+                <StarIcon color={'green'} opacity={0.5} size={22} />
+                <Text className="text-black text-xs">{item.totalrating}</Text>
+              </View>
+            </View>
+
+            {/* <View className="w-full h-[0.3] absolute bottom-7 mb-3 bg-black"></View> */}
+          </View>
+        </TouchableOpacity>
+      )
+    )
+  }
 
   return (
     <SafeAreaView className="relative pb-8">
@@ -28,72 +69,13 @@ const SportCenterUserScreen = () => {
           <TextInput placeholder="Enter something" keyboardType="default" />
         </View>
 
-        <Text className="px-5 mt-4 font-bold text-lg">Near hear</Text>
-        <ScrollView>
-          <SCRow
-            name="Lotee Football Stadium"
-            address="District 9, HCM"
-            rating="4.5"
-            available="10 Available Today"
-            distance="1.4"
-            imgUrl={sanBong1}
+        <View className="flex-1 w-full mt-4">
+          <FlatList
+            data={sportCentersList}
+            renderItem={renderItem}
+            keyExtractor={(item) => item._id}
           />
-
-          <SCRow
-            name="KSPO Football Stadium"
-            address="District 2, HCM"
-            rating="4.5"
-            available="12 Available Today"
-            distance="8"
-            imgUrl={sanBong2}
-          />
-
-          <Text className="px-5 mt-4 font-bold text-lg">Another</Text>
-
-          <SCRow
-            name="Jamsil Football Stadium"
-            address="District 1, HCM"
-            rating="4.5"
-            available=" 9 Available Today"
-            distance="12"
-            imgUrl={sanBong3}
-          />
-
-          <SCRow
-            name="Cao Hung Football Stadium"
-            address="District 4, HCM"
-            rating="4.5"
-            available=" 8 Available Today"
-            distance="14"
-            imgUrl={sanBong4}
-          />
-
-          <SCRow
-            name="Lam Son Football Stadium"
-            address="District 3, HCM"
-            rating="4.8"
-            available=" 2 Available Today"
-            distance="12"
-            imgUrl={sanBong5}
-          />
-
-          <SCRow
-            name="Celadon Football Stadium"
-            address="District 10, HCM"
-            rating="4.5"
-            available=" 9 Available Today"
-            distance="10"
-            imgUrl={sanBong6}
-          />
-
-          <SCRow
-            name="Lotee Football Stadium"
-            address="District 1, HCM"
-            rating="4.5"
-            available="10 Available Today"
-            distance="1.4"
-          />
-        </ScrollView>
+        </View>
       </View>
     </SafeAreaView>
   )
