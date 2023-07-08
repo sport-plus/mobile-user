@@ -1,4 +1,13 @@
-import {View, Text, SafeAreaView, TextInput, TouchableOpacity, Image, FlatList} from 'react-native'
+import {
+  View,
+  Text,
+  SafeAreaView,
+  TextInput,
+  TouchableOpacity,
+  Image,
+  FlatList,
+  ActivityIndicator,
+} from 'react-native'
 import React, {useEffect} from 'react'
 import {
   ArrowLeftIcon,
@@ -11,15 +20,23 @@ import {useDispatch, useSelector} from 'react-redux'
 import {getAllSportCenters} from '../services/sportCenter/sportCenterSlice'
 import {useState} from 'react'
 
-const SportCenterUserScreen = () => {
+const SportCenterUserScreen = ({route}) => {
   const navigation = useNavigation()
   const dispatch = useDispatch()
-  const {sportCenters} = useSelector((state) => state.sportCenter)
+  const {sportCenters, isLoading} = useSelector((state) => state.sportCenter)
+  const {id} = route.params || ''
   const [sportCentersList, setSportCentersList] = useState(sportCenters)
 
   useEffect(() => {
     dispatch(getAllSportCenters())
-  }, [])
+  }, [dispatch])
+
+  useEffect(() => {
+    if (id) {
+      const sportCentersBySport = sportCentersList.filter((item) => item.sport._id === id)
+      setSportCentersList(sportCentersBySport)
+    }
+  }, [id])
 
   const limit = (string, length, end = '...') => {
     return string.length < length ? string : string.substring(0, length) + end
@@ -28,7 +45,7 @@ const SportCenterUserScreen = () => {
   const renderItem = ({item}) => {
     return (
       item.status === true && (
-        <TouchableOpacity onPress={() => navigation.navigate('FieldScreen', {value: item.name})}>
+        <TouchableOpacity onPress={() => navigation.navigate('FieldScreen', {id: item._id})}>
           <View className="p-3 mx-4 my-2 flex-row bg-white rounded-xl space-x-4">
             <View className="w-28 h-28 items-center justify-center">
               <Image source={{uri: item.image}} resizeMethod="scale" className="w-28 h-28" />
@@ -70,11 +87,17 @@ const SportCenterUserScreen = () => {
         </View>
 
         <View className="flex-1 w-full mt-4">
-          <FlatList
-            data={sportCentersList}
-            renderItem={renderItem}
-            keyExtractor={(item) => item._id}
-          />
+          {isLoading ? (
+            <ActivityIndicator className="mt-14" size="large" color="#00ff00" />
+          ) : sportCentersList.length > 0 ? (
+            <FlatList
+              data={sportCentersList}
+              renderItem={renderItem}
+              keyExtractor={(item) => item._id}
+            />
+          ) : (
+            <Text>Nothing</Text>
+          )}
         </View>
       </View>
     </SafeAreaView>

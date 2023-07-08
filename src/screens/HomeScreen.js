@@ -1,7 +1,14 @@
-import {View, Text, SafeAreaView, Image, StatusBar, TouchableOpacity} from 'react-native'
+import {
+  View,
+  Text,
+  SafeAreaView,
+  Image,
+  StatusBar,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native'
 import React from 'react'
 import ButtonWithIcon from '../components/ButtonWithIcon'
-import FeaturedRow from '../components/FeaturedRow'
 import images, {logo_white, soccer_field, term, union} from '../constants/images'
 import {BellIcon} from 'react-native-heroicons/outline'
 import {useNavigation} from '@react-navigation/native'
@@ -15,7 +22,7 @@ import {useState} from 'react'
 const HomeScreen = () => {
   const navigation = useNavigation()
   const dispatch = useDispatch()
-  const {sports} = useSelector((state) => state.sport)
+  const {sports, isLoading} = useSelector((state) => state.sport)
   const [sportsList, setSportsList] = useState(sports)
 
   const bookAfield = () => {
@@ -28,7 +35,10 @@ const HomeScreen = () => {
 
   const renderItem = ({item}) => {
     return (
-      <TouchableOpacity className="w-28 h-28 my-2 bg-[#e7e8ea] shadow-lg shadow-gray-500 items-center justify-center mx-2 rounded-xl">
+      <TouchableOpacity
+        onPress={() => navigation.navigate('SportCenter', {id: item._id})}
+        className="w-28 h-28 my-2 bg-[#e7e8ea] shadow-lg shadow-gray-500 items-center justify-center mx-2 rounded-xl"
+      >
         <Image source={{uri: item.image}} className="w-20 h-20" />
         <Text className="mb-2 text-base">{item.name}</Text>
       </TouchableOpacity>
@@ -82,12 +92,16 @@ const HomeScreen = () => {
 
       {/* Sport List */}
       <View className="w-full mt-4 ml-1">
-        <FlatList
-          data={sportsList}
-          renderItem={renderItem}
-          numColumns={3}
-          keyExtractor={(item) => item._id}
-        />
+        {isLoading ? (
+          <ActivityIndicator className="mt-14" size="large" color="#00ff00" />
+        ) : (
+          <FlatList
+            data={sportsList}
+            renderItem={renderItem}
+            numColumns={3}
+            keyExtractor={(item) => item._id}
+          />
+        )}
       </View>
     </SafeAreaView>
   )

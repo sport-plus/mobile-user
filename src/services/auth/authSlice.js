@@ -2,7 +2,7 @@ import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
 import {loginUserThunk, registerUserThunk} from './authThunk'
 import {ToastAndroid} from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-
+// import Toast from 'react-native-toast-message'
 // const userfromAsyncStorage = AsyncStorage.getItem('userInfo')
 //   ? AsyncStorage.getItem('userInfo')
 //   : ''
@@ -56,7 +56,7 @@ const authSlice = createSlice({
         state.isError = true
         state.isSuccess = false
         state.message = action.payload
-        // toast.error(action.payload)
+        ToastAndroid.show(action.payload)
       })
   },
 })

@@ -19,7 +19,6 @@ export const registerUserThunk = async (params, thunkAPI) => {
 export const loginUserThunk = async (params, thunkAPI) => {
   try {
     const res = await axiosClient.post(`/user/login`, params.user)
-    console.log('res: ', res)
     await AsyncStorage.setItem('accessToken', JSON.stringify(res.token))
     await AsyncStorage.setItem('refreshToken', JSON.stringify(res.user?.refreshToken))
     // const userAsyncStorage = {

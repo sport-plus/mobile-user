@@ -24,14 +24,12 @@ const sportCenterSlice = createSlice({
         state.isLoading = true
       })
       .addCase(getAllSportCenters.fulfilled, (state, action) => {
-        console.log('success:', action.payload)
         state.isLoading = false
         state.isError = false
         state.isSuccess = true
         state.sportCenters = [...action.payload?.listSportCenter]
       })
       .addCase(getAllSportCenters.rejected, (state) => {
-        console.log('rejected:')
         state.isLoading = false
         state.isError = true
         state.isSuccess = false

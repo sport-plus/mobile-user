@@ -3,13 +3,60 @@ import React from 'react'
 import {ArrowLeftIcon, BellIcon} from 'react-native-heroicons/outline'
 import FieldRow from '../components/FieldRow'
 import {useNavigation} from '@react-navigation/native'
-import {sanBong1, sanBong2, sanBong3, sanBong4, sanBong5, sanBong6} from '../constants/images'
+import {
+  sanBong1,
+  sanBong2,
+  sanBong3,
+  sanBong4,
+  sanBong5,
+  sanBong6,
+  soccer_field,
+} from '../constants/images'
+import {useDispatch, useSelector} from 'react-redux'
+import {useEffect} from 'react'
+import {getAllSportFields} from '../services/sportField/sportFieldSlice'
+import {useState} from 'react'
+import {FlatList} from 'react-native'
+import {Image} from 'react-native'
 
 const FieldScreen = ({route}) => {
   const navigation = useNavigation()
-  let value
-  if (route.params.value) {
-    value = route.params.value
+  const dispatch = useDispatch()
+  const {sportFieldsList: sportFields, isLoading} = useSelector((state) => state.sportField)
+  const [sportFieldsList, setSportFieldsList] = useState(sportFields)
+  const {id} = route.params
+
+  useEffect(() => {
+    dispatch(getAllSportFields())
+  }, [dispatch])
+
+  const sportFieldsListFiltered = sportFieldsList.filter((field) => field.sportCenter === id)
+
+  const renderItem = ({item}) => {
+    return (
+      <TouchableOpacity onPress={() => navigation.navigate('SportFieldDetail')}>
+        <View className="p-3 flex-row bg-white mx-4 mt-3 rounded-2xl space-x-4 relative">
+          <Image source={sanBong1} className="w-24 h-24" />
+          <View>
+            <Text className="text-[18px] font-bold tracking-widest">{'Sport Field'}</Text>
+            {/* <View className="flex-row space-x-1 items-center mt-3">
+          <CheckCircleIcon size={24} color={'#00C187'} />
+          <Text className="text-[16px] text-black">{available}</Text>
+        </View> */}
+            <View className="flex-row items-center justify-between">
+              <View className="flex-row items-center space-x-1 mt-3">
+                <Image source={soccer_field} className="w-7 h-7" />
+                <Text>{item.fieldType}</Text>
+              </View>
+
+              <Text className="mt-3 ml-10">
+                <Text className="font-bold">{'200'} VND</Text>/hour
+              </Text>
+            </View>
+          </View>
+        </View>
+      </TouchableOpacity>
+    )
   }
 
   return (
@@ -20,69 +67,31 @@ const FieldScreen = ({route}) => {
           <TouchableOpacity onPress={() => navigation.navigate('SportCenter')}>
             <ArrowLeftIcon size={24} color="#fff" />
           </TouchableOpacity>
-          <Text className="text-white font-bold text-lg">{value}</Text>
+          <Text className="text-white font-bold text-lg">{id}</Text>
           <BellIcon size={24} color="#fff" />
         </View>
       </View>
 
       <View className="bg-[#ECF3FF] w-full h-full -mt-20 rounded-tl-3xl rounded-tr-3xl">
-        <ScrollView>
-          <FieldRow
-            name="Santiago Bernabeu"
-            available="Available"
-            size="7x7"
-            price="350.000"
-            imgUrl={sanBong1}
-          />
-
-          <FieldRow
-            name="Old Trafford"
-            available="Available"
-            size="5x5"
-            price="250.000"
-            imgUrl={sanBong2}
-          />
-
-          <FieldRow
-            name="Camp Nou"
-            available="Available"
-            size="11x11"
-            price="500.000"
-            imgUrl={sanBong3}
-          />
-
-          <FieldRow
-            name="Allianz Arena"
-            available="Available"
-            size="7x7"
-            price="320.000"
-            imgUrl={sanBong4}
-          />
-
-          <FieldRow
-            name="San Siro"
-            available="Available"
-            size="7x7"
-            price="350.000"
-            imgUrl={sanBong5}
-          />
-
-          <FieldRow
-            name="Wembley"
-            available="Available"
-            size="7x7"
-            price="300.000"
-            imgUrl={sanBong6}
-          />
-
-          <FieldRow
-            name="Wembley"
-            available="Available"
-            size="7x7"
-            price="300.000"
-            imgUrl={sanBong6}
-          />
-        </ScrollView>
+        {/* Favorites List */}
+        {isLoading ? (
+          <Text>Loading</Text>
+        ) : (
+          <>
+            {sportFieldsListFiltered.length > 0 ? (
+              <FlatList
+                data={sportFieldsListFiltered}
+                renderItem={renderItem}
+                keyExtractor={(item) => item._id}
+              />
+            ) : (
+              <View className="flex ml-24 mt-10">
+                <Text className="ml-12 text-2xl font-bold tracking-widest">No Results</Text>
+                <Text className="-ml-6 text-base mt-2">You don't have any favorite item here!</Text>
+              </View>
+            )}
+          </>
+        )}
       </View>
     </SafeAreaView>
   )
