@@ -9,7 +9,7 @@ import {
   Animated,
   Pressable,
 } from 'react-native'
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import Swiper from 'react-native-swiper'
 import {COLORS, images} from '../constants'
 import {AntDesign, Entypo, FontAwesome5, Ionicons, Octicons} from '@expo/vector-icons'
@@ -23,10 +23,10 @@ import {TabView, SceneMap} from 'react-native-tab-view'
 import {Box, Center, NativeBaseProvider, useColorModeValue} from 'native-base'
 import {camera, car, house, sanBong1, shirt, shop} from '../constants/images'
 import {ClockIcon, StarIcon, UserCircleIcon} from 'react-native-heroicons/outline'
+import {useDispatch, useSelector} from 'react-redux'
+import {getSportCenterDetail} from '../services/sportCenter/sportCenterSlice'
 
 const FirstRoute = () => {
-  const navigation = useNavigation()
-
   return (
     <View className="mt-2">
       <Text className="mt-1 mb-2 text-[18px] font-bold px-1">Facilities</Text>
@@ -131,10 +131,16 @@ const renderScene = SceneMap({
 
 const SportFieldDetailScreen = ({route}) => {
   const navigation = useNavigation()
-  let value
-  if (route.params.value) {
-    value = route.params.value
-  }
+  const {sportCenterDetail: detail} = useSelector((state) => state.sportCenter)
+  const [sportCenterDetail, setSportCenterDetail] = useState(detail)
+  const {id} = route.params || ''
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (id) {
+      dispatch(getSportCenterDetail(id))
+    }
+  }, [id])
 
   const [index, setIndex] = React.useState(0)
   const [routes] = React.useState([
@@ -179,7 +185,6 @@ const SportFieldDetailScreen = ({route}) => {
             >
               <Pressable
                 onPress={() => {
-                  console.log(i)
                   setIndex(i)
                 }}
               >
@@ -203,7 +208,7 @@ const SportFieldDetailScreen = ({route}) => {
       <View>
         <View className="h-60">
           <Swiper loop autoplay activeDotColor={COLORS.black}>
-            <Image source={value?.imgUrl} className="w-full h-full" />
+            <Image source={{uri: sportCenterDetail.image}} className="w-full h-full" />
           </Swiper>
         </View>
 
@@ -213,7 +218,7 @@ const SportFieldDetailScreen = ({route}) => {
               name="arrowleft"
               size={24}
               color="white"
-              onPress={() => navigation.navigate('FieldScreen', {value: 'Lotee Football Stadium'})}
+              onPress={() => navigation.navigate('SportCenter')}
             />
           </View>
           <View className="bg-[#00C187] w-10 h-10 rounded-full flex items-center justify-center opacity-80">
@@ -226,8 +231,7 @@ const SportFieldDetailScreen = ({route}) => {
         className="flex-1 bg-[#ECF3FF] absolute w-full h-full rounded-t-3xl p-5"
         style={{top: 220}}
       >
-        {/* <ScrollView showsVerticalScrollIndicator={false} className="space-y-2"> */}
-        <Text className="text-[20px] font-bold tracking-wide">{value?.name}</Text>
+        <Text className="text-[20px] font-bold tracking-wide">{sportCenterDetail.name}</Text>
         <View className="flex-row items-center justify-between">
           <View className="flex-row items-center mb-2 mt-2 space-x-2">
             <Feather name="phone" size={22} color={COLORS.primary} />
@@ -235,13 +239,13 @@ const SportFieldDetailScreen = ({route}) => {
           </View>
           <View className="flex-row items-center space-x-1 mb-2">
             <FontAwesome name="star" size={22} color={COLORS.yellow} />
-            <Text className="text-[16px]">4.8</Text>
+            <Text className="text-[16px]">{sportCenterDetail.totalrating}</Text>
           </View>
         </View>
-        <View className="flex-row items-center justify-between mb-2">
+        {/* <View className="flex-row items-center justify-between mb-2">
           <View className="flex-row items-center space-x-2">
             <Image source={images.iconSportField} className="w-8 h-8" />
-            <Text className="text-[16px]">{value?.size}</Text>
+            <Text className="text-[16px]">'aaaa'</Text>
           </View>
           <Text
             className="text-[18px] text-right font-bold"
@@ -249,20 +253,20 @@ const SportFieldDetailScreen = ({route}) => {
               color: '#000',
             }}
           >
-            {value?.price} VND<Text className="text-gray-400">/hour</Text>
+            aaaaVND<Text className="text-gray-400">/hour</Text>
           </Text>
-        </View>
+        </View> */}
         <Divide backgroundColor="grey" height={2} />
         <View className="flex-row gap-2 mb-4 mt-2 space-x-4">
           <View className="w-20 h-20">
-            <Image source={value?.imgUrl} className="rounded-lg w-full h-full" />
+            <Image source={{uri: sportCenterDetail.image}} className="rounded-lg w-full h-full" />
           </View>
 
           <View className="space-y-3" style={{width: width - 120}}>
             <Text className="text-[16px] text-gray-500 font-bold tracking-wide">
-              124 Hoang Huu Nam, 9 District, Ho Chi Minh City
+              {sportCenterDetail.address}
             </Text>
-            <Text className="text-[14px] text-blue-400 font-bold tracking-wide">Open on map</Text>
+            {/* <Text className="text-[14px] text-blue-400 font-bold tracking-wide">Open on map</Text> */}
           </View>
         </View>
         <Divide backgroundColor="grey" height={2} />
@@ -290,7 +294,7 @@ const SportFieldDetailScreen = ({route}) => {
         title="Book"
         marginVertical={458}
         marginHorizontal={100}
-        onPress={() => navigation.navigate('BookingScreen', {value})}
+        onPress={() => navigation.navigate('BookingScreen')}
       />
     </SafeAreaView>
   )

@@ -45,7 +45,7 @@ const SportCenterUserScreen = ({route}) => {
   const renderItem = ({item}) => {
     return (
       item.status === true && (
-        <TouchableOpacity onPress={() => navigation.navigate('FieldScreen', {id: item._id})}>
+        <TouchableOpacity onPress={() => navigation.navigate('SportFieldDetail', {id: item._id})}>
           <View className="p-3 mx-4 my-2 flex-row bg-white rounded-xl space-x-4">
             <View className="w-28 h-28 items-center justify-center">
               <Image source={{uri: item.image}} resizeMethod="scale" className="w-28 h-28" />

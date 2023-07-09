@@ -14,3 +14,17 @@ export const getAllSportCentersThunk = async (_, thunkAPI) => {
     }
   }
 }
+
+export const getAllSportCentersDetailThunk = async (id, thunkAPI) => {
+  const accessToken = await AsyncStorage.getItem('accessToken')
+  if (accessToken) {
+    axiosClient.setHeaderAuth(JSON.parse(accessToken))
+    try {
+      const response = await axiosClient.getByUrl(`/sport-center/${id}`)
+      return response
+    } catch (error) {
+      console.log('sport center detail error thunk: ', error)
+      return thunkAPI.rejectWithValue(error)
+    }
+  }
+}

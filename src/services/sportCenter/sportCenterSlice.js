@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
-import {getAllSportCentersThunk} from './sportCenterThunk'
+import {getAllSportCentersDetailThunk, getAllSportCentersThunk} from './sportCenterThunk'
 
 const initialState = {
   isLoading: false,
@@ -7,11 +7,17 @@ const initialState = {
   isSuccess: false,
   message: '',
   sportCenters: [],
+  sportCenterDetail: {},
 }
 
 export const getAllSportCenters = createAsyncThunk(
   'sport/get-all-sports-center',
   getAllSportCentersThunk
+)
+
+export const getSportCenterDetail = createAsyncThunk(
+  'sport/get-sports-center-detail',
+  getAllSportCentersDetailThunk
 )
 
 const sportCenterSlice = createSlice({
@@ -30,6 +36,20 @@ const sportCenterSlice = createSlice({
         state.sportCenters = [...action.payload?.listSportCenter]
       })
       .addCase(getAllSportCenters.rejected, (state) => {
+        state.isLoading = false
+        state.isError = true
+        state.isSuccess = false
+      })
+      .addCase(getSportCenterDetail.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(getSportCenterDetail.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isError = false
+        state.isSuccess = true
+        state.sportCenterDetail = {...action.payload?.getSportCenter}
+      })
+      .addCase(getSportCenterDetail.rejected, (state) => {
         state.isLoading = false
         state.isError = true
         state.isSuccess = false
