@@ -10,7 +10,7 @@ import {
 import React from 'react'
 import ButtonWithIcon from '../components/ButtonWithIcon'
 import images, {logo_white, soccer_field, term, union} from '../constants/images'
-import {BellIcon} from 'react-native-heroicons/outline'
+import {BellIcon, MapPinIcon, StarIcon} from 'react-native-heroicons/outline'
 import {useNavigation} from '@react-navigation/native'
 import Swiper from 'react-native-swiper'
 import {useEffect} from 'react'
@@ -18,20 +18,25 @@ import {useDispatch, useSelector} from 'react-redux'
 import {getAllSports} from '../services/sport/sportSlice'
 import {FlatList} from 'react-native'
 import {useState} from 'react'
+import {getAllSportCenters} from '../services/sportCenter/sportCenterSlice'
+import {ScrollView} from 'react-native'
 
 const HomeScreen = () => {
   const navigation = useNavigation()
   const dispatch = useDispatch()
   const {sports, isLoading} = useSelector((state) => state.sport)
-  const [sportsList, setSportsList] = useState(sports)
-
-  const bookAfield = () => {
-    return navigation.navigate('SportCenter')
-  }
+  const {sportCenters, isLoading: loading} = useSelector((state) => state.sportCenter)
+  const sportCenterFeatured = sportCenters.filter((sport) => sport.totalrating >= '4')
 
   useEffect(() => {
     dispatch(getAllSports())
-  }, [dispatch])
+    dispatch(getAllSportCenters())
+  }, [])
+  console.log(sports)
+
+  const limit = (string, length, end = '...') => {
+    return string.length < length ? string : string.substring(0, length) + end
+  }
 
   const renderItem = ({item}) => {
     return (
@@ -45,8 +50,33 @@ const HomeScreen = () => {
     )
   }
 
+  const renderItemFeatured = ({item}) => {
+    return (
+      <TouchableOpacity
+        onPress={() => navigation.navigate('SportFieldDetail', {id: item._id})}
+        className="bg-white mr-3 shadow"
+      >
+        <Image source={{uri: item.image}} className="h-24 w-52 rounded-sm" />
+
+        <View className="px-2 pb-3">
+          <Text className="font-bold text-lg pt-2">{item.name}</Text>
+          <View className="flex-row items-center space-x-1 mt-1">
+            <StarIcon color={'green'} opacity={0.5} size={22} />
+            <Text className="text-xs text-gray-500">
+              <Text className="text-black font-semibold text-sm">{item.totalrating}</Text>
+            </Text>
+          </View>
+          <View className="flex-row items-center mt-2 space-x-1">
+            <MapPinIcon color={'gray'} opacity={0.4} size={22} />
+            <Text className="text-xs text-gray-500">{limit(item.address, 30)}</Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+    )
+  }
+
   return (
-    <SafeAreaView>
+    <SafeAreaView className="flex-1">
       <StatusBar backgroundColor="#000" />
       {/* Header */}
       <View className="bg-black w-full h-44 rounded-b-3xl">
@@ -55,12 +85,12 @@ const HomeScreen = () => {
             <Image source={logo_white} className="h-8 w-8" />
             <Text className="text-white text-[26px] font-bold tracking-widest">TheThaoPlus</Text>
           </View>
-          <TouchableOpacity onPress={() => navigation.navigate('NotificationScreen')}>
+          <TouchableOpacity onPress={() => navigation.navigate('MyBookingScreen')}>
             <BellIcon size={30} color="#fff" />
           </TouchableOpacity>
         </View>
 
-        <View className="z-50 w-[360px] h-[160] mx-8 mt-10 rounded-3xl">
+        <View className="z-50 w-[360px] h-[160] mx-8 mt-8 rounded-3xl">
           <Swiper autoplay loop>
             <Image source={images.soccer} className="rounded-2xl w-80" style={{height: 152}} />
             <Image source={images.tennis} className="rounded-2xl w-80" style={{height: 152}} />
@@ -69,36 +99,38 @@ const HomeScreen = () => {
         </View>
       </View>
 
-      {/* Calendar */}
-      <View className="w-[340px] h-[60px] mx-6 bg-[#e7e8ea] mt-28 rounded-3xl shadow-2xl relative">
-        <View className="w-10 h-10 bg-[#b4e6d7] rounded-lg absolute left-3 bottom-2">
-          <Image source={union} className="w-6 h-6 absolute left-2 bottom-3" />
-        </View>
-        <View className="absolute left-16 top-4">
-          <Text className="font-bold text-[20px]">10 June 2023</Text>
-          <Text className="left-44 bottom-7 font-bold text-black text-[20px]">Saturday</Text>
-          <View className="w-1 h-8 bg-[#00C187] left-36 bottom-14"></View>
-        </View>
-      </View>
-
-      <View className="px-6 mt-6 flex-row justify-between">
-        <ButtonWithIcon
-          icon={term}
-          title={'My bookings'}
-          onPress={() => navigation.navigate('MyBookingScreen')}
-        />
-        <ButtonWithIcon icon={soccer_field} title={'Book a field'} onPress={bookAfield} />
-      </View>
-
       {/* Sport List */}
-      <View className="w-full mt-4 ml-1">
+      <View className="w-full mt-20 ml-1">
         {isLoading ? (
           <ActivityIndicator className="mt-14" size="large" color="#00ff00" />
         ) : (
           <FlatList
-            data={sportsList}
+            data={sports}
             renderItem={renderItem}
             numColumns={3}
+            keyExtractor={(item) => item._id}
+          />
+        )}
+      </View>
+      {/* 
+      <TouchableOpacity
+        onPress={() => navigation.navigate('FilterScreen')}
+        className="left-44  mt-10 bottom-7 font-bold text-black text-[20px]"
+      >
+        <Text>Filter</Text>
+      </TouchableOpacity> */}
+
+      {/* Featured List */}
+      <View className="w-full ml-1 mt-3 mx-3">
+        {loading ? (
+          <ActivityIndicator className="mt-14" size="large" color="#00ff00" />
+        ) : sportCenterFeatured.length <= 0 ? (
+          <Text className="text-lg ">Nothing</Text>
+        ) : (
+          <FlatList
+            data={sportCenterFeatured}
+            horizontal
+            renderItem={renderItemFeatured}
             keyExtractor={(item) => item._id}
           />
         )}

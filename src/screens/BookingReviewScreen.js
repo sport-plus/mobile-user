@@ -8,19 +8,22 @@ import {ButtonCustom, Divide} from '../components'
 
 const BookingReviewScreen = ({route}) => {
   const navigation = useNavigation()
-  const {value, hour, day} = route.params
+  // const {value, hour, day} = route.params
 
   return (
     <SafeAreaView>
       <Image source={background_header} className="w-full" />
       <View className=" flex-row items-center justify-between px-4 -mt-10">
-        <TouchableOpacity onPress={() => navigation.navigate('BookingScreen', {value})}>
+        <TouchableOpacity onPress={() => navigation.navigate('BookingScreen')}>
           <ArrowBackIcon size={22} color="#000" />
         </TouchableOpacity>
         <Text className="text-2xl font-bold">Booking Review</Text>
       </View>
 
-      <Image source={value.imgUrl} className="w-full h-48 mt-2" />
+      {/* <Image source={value.imgUrl} className="w-full h-48 mt-2" />
+      
+      
+      */}
 
       <View className="p-5">
         <View className="flex-row justify-between">
@@ -47,10 +50,10 @@ const BookingReviewScreen = ({route}) => {
         </View>
 
         <View className="flex-row items-center justify-between mt-4 pb-4">
-          <Text className="text-[18px] font-bold tracking-widest">{value.name}</Text>
+          <Text className="text-[18px] font-bold tracking-widest">aaa</Text>
           <View className="flex-row items-center space-x-2">
             <Image source={soccer_field} className="w-7 h-7" />
-            <Text>{value.size}</Text>
+            <Text>aaa</Text>
           </View>
         </View>
 
@@ -68,7 +71,7 @@ const BookingReviewScreen = ({route}) => {
 
         <View className="flex-row justify-end mt-10 items-center space-x-2">
           <Image source={vector} />
-          <Text className="text-lg font-bold">{value.price * parseInt(hour)}.000 VND</Text>
+          <Text className="text-lg font-bold">.000 VND</Text>
         </View>
 
         <Text className="text-center mt-2 mb-3 text-gray-600">

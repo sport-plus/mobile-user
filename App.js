@@ -34,6 +34,7 @@ import EditProfileScreen from './src/screens/EditProfileScreen'
 import {Provider} from 'react-redux'
 import {store} from './src/services/configStore'
 import {registerRootComponent} from 'expo'
+import FilterScreen from './src/screens/FilterScreen'
 
 export default function App() {
   const Tab = createBottomTabNavigator()
@@ -66,10 +67,10 @@ export default function App() {
         />
 
         <Tab.Screen
-          name="OwnerSearch"
-          component={OwnerSearchScreen}
+          name="Filter"
+          component={FilterScreen}
           options={{
-            tabBarLabel: 'Search',
+            tabBarLabel: 'Filter',
             headerShown: false,
             tabBarIcon: ({focused}) => (
               <Ionicons
@@ -105,6 +106,7 @@ export default function App() {
         <NativeBaseProvider>
           <NavigationContainer>
             {/* <Toast /> */}
+            {/* <UserBottomTabs /> */}
             <Stack.Navigator initialRouteName="LoginScreen">
               <Stack.Screen
                 options={{headerShown: false}}
@@ -125,9 +127,10 @@ export default function App() {
 
               <Stack.Screen
                 options={{headerShown: false}}
-                name="OwnerMain"
+                name="HomeRoot"
                 component={UserBottomTabs}
               />
+
               <Stack.Screen
                 options={{headerShown: false}}
                 name="SportCenter"
@@ -228,6 +231,12 @@ export default function App() {
                 options={{headerShown: false}}
                 name="EditProfileScreen"
                 component={EditProfileScreen}
+              />
+
+              <Stack.Screen
+                options={{headerShown: false}}
+                name="FilterScreen"
+                component={FilterScreen}
               />
             </Stack.Navigator>
           </NavigationContainer>

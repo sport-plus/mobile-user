@@ -18,9 +18,9 @@ const listTab = [
   },
 ]
 
-const MyBookingScreen = () => {
+const MyBookingScreen = ({navigation}) => {
   const [status, setStatus] = useState('upcoming')
-  const navigation = useNavigation()
+  // const navigation = useNavigation()
 
   const setStatusFilter = (status) => {
     setStatus(status)
@@ -29,7 +29,7 @@ const MyBookingScreen = () => {
   return (
     <SafeAreaView>
       <View className="flex-row justify-between items-center mx-4 my-4">
-        <TouchableOpacity onPress={() => navigation.navigate('BookingSuccessScreen')}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <ArrowBackIcon size={22} color="#000" />
         </TouchableOpacity>
         <Text className="text-[20px] font-bold">My Booking</Text>

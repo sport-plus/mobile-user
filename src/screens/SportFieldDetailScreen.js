@@ -294,7 +294,7 @@ const SportFieldDetailScreen = ({route}) => {
         title="Book"
         marginVertical={458}
         marginHorizontal={100}
-        onPress={() => navigation.navigate('BookingScreen')}
+        onPress={() => navigation.navigate('BookingScreen', {id: sportCenterDetail._id})}
       />
     </SafeAreaView>
   )

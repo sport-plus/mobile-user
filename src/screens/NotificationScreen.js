@@ -4,8 +4,8 @@ import {useNavigation} from '@react-navigation/native'
 import {ArrowLeftIcon} from 'react-native-heroicons/outline'
 import NotificationItem from '../components/NotificationItem'
 
-const NotificationScreen = () => {
-  const navigation = useNavigation()
+const NotificationScreen = ({navigation}) => {
+  // const navigation = useNavigation()
 
   return (
     <SafeAreaView>
@@ -21,9 +21,9 @@ const NotificationScreen = () => {
       </View>
 
       {/* Body */}
-      <View className='bg-[#ccf3e7] w-full h-full'>
-        <NotificationItem label='Accepted'/>
-        <NotificationItem label='Cancel'/>
+      <View className="bg-[#ccf3e7] w-full h-full">
+        <NotificationItem label="Accepted" />
+        <NotificationItem label="Cancel" />
       </View>
     </SafeAreaView>
   )

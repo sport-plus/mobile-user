@@ -36,9 +36,26 @@ export const getSportFieldDetailThunk = async (sportFieldId, thunkAPI) => {
   const accessToken = AsyncStorage.getItem('accessToken')
 
   if (accessToken) {
-    axiosClient.setHeaderAuth(accessToken)
+    axiosClient.setHeaderAuth(JSON.parse(accessToken))
     try {
       const response = await axiosClient.getByUrl(`/sport-field/${sportFieldId}`)
+      return response
+    } catch (error) {
+      console.log('sport error thunk: ', error)
+      return thunkAPI.rejectWithValue(error)
+    }
+  }
+}
+
+export const getSportFieldTypeThunk = async (id, thunkAPI) => {
+  const accessToken = await AsyncStorage.getItem('accessToken')
+  console.log('id: ', id)
+
+  if (accessToken) {
+    axiosClient.setHeaderAuth(JSON.parse(accessToken))
+    try {
+      const response = await axiosClient.getByUrl(`/sport-field/types?sportCenterId=${id}`)
+      console.log('response: ', response)
       return response
     } catch (error) {
       console.log('sport error thunk: ', error)
