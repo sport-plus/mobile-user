@@ -12,16 +12,17 @@ import {getSportFieldType} from '../services/sportField/sportFieldSlice'
 import {checkBookingsAvailable, validateDayBooking} from '../services/booking/bookingSlice'
 import {images} from '../constants'
 import {Image} from 'react-native'
+import {vector} from '../constants/images'
 
-const sportFieldType = ['5x5', '7x7']
+// const sportFieldType = ['5x5', '7x7']
 
 const BookingUserScreen = ({route, navigation}) => {
   const [day, setDay] = useState('')
   const [slot, setSlot] = useState({})
   const {id} = route.params || ''
   const dispatch = useDispatch()
-  // const {sportFieldType} = useSelector((state) => state.sportField)
-  const {availability} = useSelector((state) => state.booking)
+  const {sportFieldType} = useSelector((state) => state.sportField)
+  const {availability, price} = useSelector((state) => state.booking)
   const [fieldType, setFieldType] = useState('')
 
   useEffect(() => {
@@ -48,6 +49,14 @@ const BookingUserScreen = ({route, navigation}) => {
       <View className="bg-[#fff] w-full flex-1 -mt-20 rounded-tl-3xl rounded-tr-3xl">
         <Calendar
           markingType="custom"
+          markedDates={{
+            [day]: {
+              selected: true,
+              selectedColor: '#00C187',
+              disableTouchEvent: true,
+              selectedTextColor: 'white',
+            },
+          }}
           onDayPress={(day) => {
             checkAvailable()
             setDay(day.dateString)
@@ -69,8 +78,8 @@ const BookingUserScreen = ({route, navigation}) => {
                   selectedValue={fieldType}
                   minWidth="200"
                   borderColor="#00C187"
-                  accessibilityLabel="Choose Slots"
-                  placeholder="Choose Hours"
+                  accessibilityLabel="Choose type"
+                  placeholder="Choose type"
                   fontSize="18px"
                   _selectedItem={{
                     bg: '#00C187',
@@ -93,33 +102,45 @@ const BookingUserScreen = ({route, navigation}) => {
         </View>
 
         {/* Slots */}
-        {availability.length > 0 && (
-          <View className="bg-white px-4 space-x-20 pt-4 flex-row items-center">
-            <View className="bg-white flex-row space-x-2 mr-3 items-center">
-              <ClockIcon size={24} color={'#14c38d'} />
-              <Text className="font-bold text-lg">Slot</Text>
+        {availability.length > 0 ? (
+          <View>
+            <View className="bg-white px-4 space-x-20 pt-4 flex-row items-center">
+              <View className="bg-white flex-row space-x-4 items-center">
+                <ClockIcon size={28} color={'#14c38d'} />
+                <Text className="font-bold text-lg">Slot</Text>
+              </View>
+              <Box maxW="100">
+                <Select
+                  selectedValue={slot}
+                  minWidth="200"
+                  borderColor="#00C187"
+                  accessibilityLabel="Choose Slots"
+                  placeholder="Choose Slots"
+                  fontSize="18px"
+                  _selectedItem={{
+                    bg: '#00C187',
+                    color: '#000',
+                    endIcon: <CheckIcon size="5" color="#fff" />,
+                  }}
+                  mt={1}
+                  onValueChange={(itemValue) => setSlot(itemValue)}
+                >
+                  {availability.map((slot) => (
+                    <Select.Item label={`${slot?.startTime} - ${slot.endTime}`} value={slot} />
+                  ))}
+                </Select>
+              </Box>
             </View>
-            <Box maxW="100">
-              <Select
-                selectedValue={slot}
-                minWidth="200"
-                borderColor="#00C187"
-                accessibilityLabel="Choose Slots"
-                placeholder="Choose Slots"
-                fontSize="18px"
-                _selectedItem={{
-                  bg: '#00C187',
-                  color: '#000',
-                  endIcon: <CheckIcon size="5" color="#fff" />,
-                }}
-                mt={1}
-                onValueChange={(itemValue) => setSlot(itemValue)}
-              >
-                {availability.map((slot) => (
-                  <Select.Item label={`${slot?.startTime} - ${slot.endTime}`} value={slot} />
-                ))}
-              </Select>
-            </Box>
+            {price.map((p, index) => (
+              <View key={index} className="flex-row px-4 mt-4 space-x-4">
+                <Image source={vector} className="h-7 w-7" />
+                <Text className="font-bold text-lg">{p} VND</Text>
+              </View>
+            ))}
+          </View>
+        ) : (
+          <View className="items-center mt-6">
+            <Text className="text-lg"> No slots {`${day ? `for ${day}` : ''}`}</Text>
           </View>
         )}
 
@@ -134,6 +155,7 @@ const BookingUserScreen = ({route, navigation}) => {
                 fieldType: fieldType,
                 slot: slot,
                 id: id,
+                price: price,
               })
             }}
           />

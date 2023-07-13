@@ -8,11 +8,10 @@ import {ButtonCustom, Divide} from '../components'
 import {useDispatch, useSelector} from 'react-redux'
 import {validateDayBooking} from '../services/booking/bookingSlice'
 
-const BookingReviewScreen = ({route}) => {
-  const navigation = useNavigation()
+const BookingReviewScreen = ({route, navigation}) => {
   const dispatch = useDispatch()
   const {sportCenterDetail} = useSelector((state) => state.sportCenter)
-  const {day = null, fieldType = null, slot = null, id = null} = route.params
+  const {day = null, fieldType = null, slot = null, id = null, price = null} = route.params
 
   const createBooking = () => {
     console.log('aaa')
@@ -27,7 +26,7 @@ const BookingReviewScreen = ({route}) => {
     <SafeAreaView>
       <Image source={background_header} className="w-full" />
       <View className=" flex-row items-center justify-between px-4 -mt-10">
-        <TouchableOpacity onPress={() => navigation.navigate('BookingScreen')}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <ArrowBackIcon size={22} color="#000" />
         </TouchableOpacity>
         <Text className="text-2xl font-bold">Booking Review</Text>
@@ -58,7 +57,7 @@ const BookingReviewScreen = ({route}) => {
           </View>
           <View className="flex-row items-center space-x-2">
             <Image source={soccer_field} className="w-7 h-7" />
-            <Text>{fieldType}</Text>
+            <Text className="text-base">{fieldType}</Text>
           </View>
         </View>
 
@@ -76,7 +75,11 @@ const BookingReviewScreen = ({route}) => {
 
         <View className="flex-row justify-end mt-10 items-center space-x-2">
           <Image source={vector} />
-          <Text className="text-lg font-bold">.000 VND</Text>
+          {price.map((p, index) => (
+            <Text key={index} className="text-lg font-bold">
+              {p} VND
+            </Text>
+          ))}
         </View>
 
         <Text className="text-center mt-2 mb-3 text-gray-600">
@@ -88,7 +91,13 @@ const BookingReviewScreen = ({route}) => {
             borderRadius={10}
             onPress={() => {
               createBooking()
-              navigation.navigate('BookingSuccessScreen')
+              navigation.navigate('BookingSuccessScreen', {
+                day: day,
+                fieldType: fieldType,
+                slot: slot,
+                id: id,
+                price: price,
+              })
             }}
           />
         </View>

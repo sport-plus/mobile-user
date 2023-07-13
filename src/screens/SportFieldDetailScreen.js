@@ -129,8 +129,7 @@ const renderScene = SceneMap({
   third: ThirdRoute,
 })
 
-const SportFieldDetailScreen = ({route}) => {
-  const navigation = useNavigation()
+const SportFieldDetailScreen = ({route, navigation}) => {
   const {sportCenterDetail} = useSelector((state) => state.sportCenter)
   const {id} = route.params || ''
   const dispatch = useDispatch()
@@ -216,7 +215,7 @@ const SportFieldDetailScreen = ({route}) => {
               name="arrowleft"
               size={24}
               color="white"
-              onPress={() => navigation.navigate('SportCenter')}
+              onPress={() => navigation.goBack()}
             />
           </View>
           <View className="bg-[#00C187] w-10 h-10 rounded-full flex items-center justify-center opacity-80">
@@ -263,6 +262,7 @@ const SportFieldDetailScreen = ({route}) => {
             renderScene={renderScene}
             renderTabBar={renderTabBar}
             onIndexChange={setIndex}
+            id={index}
             initialLayout={initialLayout}
             style={{
               marginTop: 12,
