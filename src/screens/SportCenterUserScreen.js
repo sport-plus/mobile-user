@@ -24,21 +24,6 @@ const SportCenterUserScreen = ({route}) => {
   const navigation = useNavigation()
   const dispatch = useDispatch()
   const {sportCenters, isLoading} = useSelector((state) => state.sportCenter)
-  const {id} = route.params || ''
-  // const [sportCentersList, setSportCentersList] = useState(sportCenters)
-  useEffect(() => {
-    dispatch(getAllSportCenters())
-  }, [])
-
-  let sportCentersBySport = sportCenters
-  console.log('spoet number:', sportCentersBySport.length)
-  useEffect(() => {
-    if (id !== '') {
-      sportCentersBySport = sportCenters.filter((item) => item.sport._id === id)
-    }
-    // const sportCentersBySport = sportCentersList.filter((item) => item.sport._id === id)
-    // setSportCentersList(sportCentersBySport)
-  }, [id])
 
   const limit = (string, length, end = '...') => {
     return string.length < length ? string : string.substring(0, length) + end
@@ -91,9 +76,9 @@ const SportCenterUserScreen = ({route}) => {
         <View className="flex-1 w-full mt-4">
           {isLoading ? (
             <ActivityIndicator className="mt-14" size="large" color="#00ff00" />
-          ) : sportCentersBySport.length > 0 ? (
+          ) : sportCenters.length > 0 ? (
             <FlatList
-              data={sportCentersBySport}
+              data={sportCenters}
               renderItem={renderItem}
               keyExtractor={(item) => item._id}
             />

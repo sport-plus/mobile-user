@@ -5,10 +5,12 @@ import {ArrowBackIcon, Divider} from 'native-base'
 import {useNavigation} from '@react-navigation/native'
 import {StarIcon, PhoneIcon} from 'react-native-heroicons/outline'
 import {ButtonCustom, Divide} from '../components'
-import {useSelector} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
+import {validateDayBooking} from '../services/booking/bookingSlice'
 
 const BookingReviewScreen = ({route}) => {
   const navigation = useNavigation()
+  const dispatch = useDispatch()
   const {sportCenterDetail} = useSelector((state) => state.sportCenter)
   const {day = null, fieldType = null, slot = null, id = null} = route.params
 
@@ -85,7 +87,7 @@ const BookingReviewScreen = ({route}) => {
             title="Accept"
             borderRadius={10}
             onPress={() => {
-              createBooking
+              createBooking()
               navigation.navigate('BookingSuccessScreen')
             }}
           />

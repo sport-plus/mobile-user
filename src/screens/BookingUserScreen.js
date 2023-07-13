@@ -15,8 +15,7 @@ import {Image} from 'react-native'
 
 const sportFieldType = ['5x5', '7x7']
 
-const BookingUserScreen = ({route}) => {
-  const navigation = useNavigation()
+const BookingUserScreen = ({route, navigation}) => {
   const [day, setDay] = useState('')
   const [slot, setSlot] = useState({})
   const {id} = route.params || ''
@@ -37,7 +36,7 @@ const BookingUserScreen = ({route}) => {
       {/* Appbar */}
       <View className="bg-black w-full h-44 rounded-b-3xl">
         <View className="mt-10 flex-row items-center justify-between px-8">
-          <TouchableOpacity onPress={() => navigation.navigate('SportFieldDetail')}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
             <ArrowLeftIcon size={24} color="#fff" />
           </TouchableOpacity>
           <Text className="text-white font-bold text-lg">Sport Center</Text>

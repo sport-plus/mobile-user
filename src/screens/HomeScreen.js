@@ -1,14 +1,5 @@
-import {
-  View,
-  Text,
-  SafeAreaView,
-  Image,
-  StatusBar,
-  TouchableOpacity,
-  ActivityIndicator,
-} from 'react-native'
+import {View, Text, Image, StatusBar, TouchableOpacity, ActivityIndicator} from 'react-native'
 import React from 'react'
-import ButtonWithIcon from '../components/ButtonWithIcon'
 import images, {logo_white, soccer_field, term, union} from '../constants/images'
 import {BellIcon, MapPinIcon, StarIcon} from 'react-native-heroicons/outline'
 import {useNavigation} from '@react-navigation/native'
@@ -17,9 +8,7 @@ import {useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {getAllSports} from '../services/sport/sportSlice'
 import {FlatList} from 'react-native'
-import {useState} from 'react'
 import {getAllSportCenters} from '../services/sportCenter/sportCenterSlice'
-import {ScrollView} from 'react-native'
 
 const HomeScreen = () => {
   const navigation = useNavigation()
@@ -37,10 +26,17 @@ const HomeScreen = () => {
     return string.length < length ? string : string.substring(0, length) + end
   }
 
+  const getSportCenters = (id) => {
+    dispatch(getAllSportCenters(id))
+  }
+
   const renderItem = ({item}) => {
     return (
       <TouchableOpacity
-        onPress={() => navigation.navigate('SportCenter', {id: item._id})}
+        onPress={() => {
+          getSportCenters(item._id)
+          navigation.navigate('SportCenter')
+        }}
         className="w-28 h-28 my-2 bg-[#e7e8ea] shadow-lg shadow-gray-500 items-center justify-center mx-2 rounded-xl"
       >
         <Image source={{uri: item.image}} className="w-20 h-20" />
@@ -75,7 +71,7 @@ const HomeScreen = () => {
   }
 
   return (
-    <SafeAreaView className="flex-1">
+    <View className="flex-1">
       <StatusBar backgroundColor="#000" />
       {/* Header */}
       <View className="bg-black w-full h-44 rounded-b-3xl">
@@ -134,7 +130,7 @@ const HomeScreen = () => {
           />
         )}
       </View>
-    </SafeAreaView>
+    </View>
   )
 }
 

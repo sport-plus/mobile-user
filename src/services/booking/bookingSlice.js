@@ -7,6 +7,7 @@ const initialState = {
   isSuccess: false,
   message: '',
   availability: [],
+  price: [],
 }
 
 export const checkBookingsAvailable = createAsyncThunk(
@@ -33,6 +34,7 @@ const bookingSlice = createSlice({
         state.isError = false
         state.isSuccess = true
         state.availability = [...action.payload?.availability]
+        state.price = [...action.payload?.price]
       })
       .addCase(checkBookingsAvailable.rejected, (state) => {
         state.isLoading = false

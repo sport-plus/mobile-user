@@ -15,16 +15,11 @@ import {
 import {ArrowLeftIcon, MapPinIcon, PhoneIcon, StarIcon} from 'react-native-heroicons/outline'
 import {ButtonCustom, Divide} from '../components'
 
-const BookingSuccessScreen = () => {
-  const navigation = useNavigation()
-
+const BookingSuccessScreen = ({navigation}) => {
   return (
     <SafeAreaView>
       <Image source={background_success} className="w-full h-full relative" />
-      <TouchableOpacity
-        onPress={() => navigation.navigate('BookingReviewScreen')}
-        className="absolute top-6 left-4"
-      >
+      <TouchableOpacity onPress={() => navigation.goBack()} className="absolute top-6 left-4">
         <ArrowLeftIcon size={22} color="#000" />
       </TouchableOpacity>
 
