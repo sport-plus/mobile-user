@@ -10,17 +10,14 @@ import {ButtonCustom, Divide} from '../components'
 import {useDispatch, useSelector} from 'react-redux'
 import {getSportFieldType} from '../services/sportField/sportFieldSlice'
 import {checkBookingsAvailable, validateDayBooking} from '../services/booking/bookingSlice'
-import {iconSportField, images} from '../constants'
+import {images} from '../constants'
 import {Image} from 'react-native'
 
 const sportFieldType = ['5x5', '7x7']
 
 const BookingUserScreen = ({route}) => {
   const navigation = useNavigation()
-  const [hour, setHour] = React.useState('')
-  const [day, setDay] = React.useState('')
-  const [time, setTime] = React.useState('')
-  const [month, setMonth] = React.useState('')
+  const [day, setDay] = useState('')
   const [slot, setSlot] = useState({})
   const {id} = route.params || ''
   const dispatch = useDispatch()
@@ -33,14 +30,6 @@ const BookingUserScreen = ({route}) => {
   }, [id])
   const checkAvailable = () => {
     if (fieldType !== '' && day !== '') dispatch(checkBookingsAvailable({day, id, fieldType}))
-  }
-
-  const createBooking = () => {
-    if (day !== '' && slot !== {}) {
-      const start = slot.startTime
-      const end = slot.endTime
-      dispatch(validateDayBooking({day, start, end, id}))
-    }
   }
 
   return (
@@ -57,7 +46,7 @@ const BookingUserScreen = ({route}) => {
       </View>
 
       {/* Calendar */}
-      <ScrollView className="bg-[#ECF3FF] w-full h-full -mt-20 rounded-tl-3xl rounded-tr-3xl">
+      <View className="bg-[#fff] w-full flex-1 -mt-20 rounded-tl-3xl rounded-tr-3xl">
         <Calendar
           markingType="custom"
           onDayPress={(day) => {
@@ -68,45 +57,47 @@ const BookingUserScreen = ({route}) => {
         />
 
         {/* Field Type */}
-        <View className="bg-white flex-row space-x-2 px-4 pt-3 items-center">
-          <Image source={images.iconSportField} className="w-8 h-8" />
+        <View className="flex-row bg-white items-center pt-4">
+          <View className="flex-row space-x-2 px-4 items-center">
+            <Image source={images.iconSportField} className="w-8 h-8" />
 
-          <Text className="font-bold text-lg">Field Type</Text>
-        </View>
-        {sportFieldType.length > 0 && (
-          <View className="bg-white px-4 pt-1">
-            <Box maxW="100">
-              <Select
-                selectedValue={fieldType}
-                minWidth="200"
-                borderColor="#00C187"
-                accessibilityLabel="Choose Slots"
-                placeholder="Choose Hours"
-                fontSize="18px"
-                _selectedItem={{
-                  bg: '#00C187',
-                  color: '#000',
-                  endIcon: <CheckIcon size="5" color="#fff" />,
-                }}
-                mt={1}
-                onValueChange={(itemValue) => {
-                  checkAvailable()
-                  setFieldType(itemValue)
-                }}
-              >
-                {sportFieldType.map((type) => (
-                  <Select.Item label={type} value={type} />
-                ))}
-              </Select>
-            </Box>
+            <Text className="font-bold text-lg">Field Type</Text>
           </View>
-        )}
+          {sportFieldType.length > 0 && (
+            <View className="bg-white px-4 pt-1">
+              <Box maxW="100">
+                <Select
+                  selectedValue={fieldType}
+                  minWidth="200"
+                  borderColor="#00C187"
+                  accessibilityLabel="Choose Slots"
+                  placeholder="Choose Hours"
+                  fontSize="18px"
+                  _selectedItem={{
+                    bg: '#00C187',
+                    color: '#000',
+                    endIcon: <CheckIcon size="5" color="#fff" />,
+                  }}
+                  mt={1}
+                  onValueChange={(itemValue) => {
+                    checkAvailable()
+                    setFieldType(itemValue)
+                  }}
+                >
+                  {sportFieldType.map((type) => (
+                    <Select.Item label={type} value={type} />
+                  ))}
+                </Select>
+              </Box>
+            </View>
+          )}
+        </View>
 
         {/* Slots */}
         {availability.length > 0 && (
-          <View className="bg-white px-4 pt-1 flex-row">
-            <View className="bg-white flex-row space-x-2 px-4 pt-3 items-center">
-              <ClockIcon size={24} color={'#000'} />
+          <View className="bg-white px-4 space-x-20 pt-4 flex-row items-center">
+            <View className="bg-white flex-row space-x-2 mr-3 items-center">
+              <ClockIcon size={24} color={'#14c38d'} />
               <Text className="font-bold text-lg">Slot</Text>
             </View>
             <Box maxW="100">
@@ -136,16 +127,19 @@ const BookingUserScreen = ({route}) => {
         <View className="px-10 bg-white py-4">
           <ButtonCustom
             title="Book"
-            borderRadius={14}
+            borderRadius={10}
+            marginVertical={10}
             onPress={() => {
-              createBooking()
-              navigation.navigate('BookingReviewScreen')
+              navigation.navigate('BookingReviewScreen', {
+                day: day,
+                fieldType: fieldType,
+                slot: slot,
+                id: id,
+              })
             }}
           />
         </View>
-
-        <Divide />
-      </ScrollView>
+      </View>
     </SafeAreaView>
   )
 }

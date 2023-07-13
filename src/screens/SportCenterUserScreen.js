@@ -25,17 +25,19 @@ const SportCenterUserScreen = ({route}) => {
   const dispatch = useDispatch()
   const {sportCenters, isLoading} = useSelector((state) => state.sportCenter)
   const {id} = route.params || ''
-  const [sportCentersList, setSportCentersList] = useState(sportCenters)
-
+  // const [sportCentersList, setSportCentersList] = useState(sportCenters)
   useEffect(() => {
     dispatch(getAllSportCenters())
-  }, [dispatch])
+  }, [])
 
+  let sportCentersBySport = sportCenters
+  console.log('spoet number:', sportCentersBySport.length)
   useEffect(() => {
-    if (id) {
-      const sportCentersBySport = sportCentersList.filter((item) => item.sport._id === id)
-      setSportCentersList(sportCentersBySport)
+    if (id !== '') {
+      sportCentersBySport = sportCenters.filter((item) => item.sport._id === id)
     }
+    // const sportCentersBySport = sportCentersList.filter((item) => item.sport._id === id)
+    // setSportCentersList(sportCentersBySport)
   }, [id])
 
   const limit = (string, length, end = '...') => {
@@ -71,7 +73,7 @@ const SportCenterUserScreen = ({route}) => {
       {/* Appbar */}
       <View className="bg-black w-full h-44 rounded-b-3xl">
         <View className="mt-10 flex-row items-center justify-between px-8">
-          <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
             <ArrowLeftIcon size={24} color="#fff" />
           </TouchableOpacity>
           <Text className="text-white font-bold text-lg">Sport Center</Text>
@@ -89,9 +91,9 @@ const SportCenterUserScreen = ({route}) => {
         <View className="flex-1 w-full mt-4">
           {isLoading ? (
             <ActivityIndicator className="mt-14" size="large" color="#00ff00" />
-          ) : sportCentersList.length > 0 ? (
+          ) : sportCentersBySport.length > 0 ? (
             <FlatList
-              data={sportCentersList}
+              data={sportCentersBySport}
               renderItem={renderItem}
               keyExtractor={(item) => item._id}
             />

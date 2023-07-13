@@ -20,7 +20,7 @@ import {ButtonCustom, Divide} from '../components'
 const {width, height} = Dimensions.get('window')
 
 import {TabView, SceneMap} from 'react-native-tab-view'
-import {Box, Center, NativeBaseProvider, useColorModeValue} from 'native-base'
+import {Box, NativeBaseProvider, useColorModeValue} from 'native-base'
 import {camera, car, house, sanBong1, shirt, shop} from '../constants/images'
 import {ClockIcon, StarIcon, UserCircleIcon} from 'react-native-heroicons/outline'
 import {useDispatch, useSelector} from 'react-redux'
@@ -131,8 +131,7 @@ const renderScene = SceneMap({
 
 const SportFieldDetailScreen = ({route}) => {
   const navigation = useNavigation()
-  const {sportCenterDetail: detail} = useSelector((state) => state.sportCenter)
-  const [sportCenterDetail, setSportCenterDetail] = useState(detail)
+  const {sportCenterDetail} = useSelector((state) => state.sportCenter)
   const {id} = route.params || ''
   const dispatch = useDispatch()
 
@@ -169,8 +168,7 @@ const SportFieldDetailScreen = ({route}) => {
           })
           const color =
             index === i
-              ? // ? useColorModeValue('#000', '#e5e5e5')
-                useColorModeValue('#00C187', '#00C187')
+              ? useColorModeValue('#00C187', '#00C187')
               : useColorModeValue('#1f2937', '#a1a1aa')
           const borderColor =
             index === i ? '#00C187' : useColorModeValue('coolGray.200', 'gray.400')
@@ -242,20 +240,6 @@ const SportFieldDetailScreen = ({route}) => {
             <Text className="text-[16px]">{sportCenterDetail.totalrating}</Text>
           </View>
         </View>
-        {/* <View className="flex-row items-center justify-between mb-2">
-          <View className="flex-row items-center space-x-2">
-            <Image source={images.iconSportField} className="w-8 h-8" />
-            <Text className="text-[16px]">'aaaa'</Text>
-          </View>
-          <Text
-            className="text-[18px] text-right font-bold"
-            style={{
-              color: '#000',
-            }}
-          >
-            aaaaVND<Text className="text-gray-400">/hour</Text>
-          </Text>
-        </View> */}
         <Divide backgroundColor="grey" height={2} />
         <View className="flex-row gap-2 mb-4 mt-2 space-x-4">
           <View className="w-20 h-20">
@@ -266,7 +250,6 @@ const SportFieldDetailScreen = ({route}) => {
             <Text className="text-[16px] text-gray-500 font-bold tracking-wide">
               {sportCenterDetail.address}
             </Text>
-            {/* <Text className="text-[14px] text-blue-400 font-bold tracking-wide">Open on map</Text> */}
           </View>
         </View>
         <Divide backgroundColor="grey" height={2} />

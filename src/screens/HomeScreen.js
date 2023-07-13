@@ -32,7 +32,6 @@ const HomeScreen = () => {
     dispatch(getAllSports())
     dispatch(getAllSportCenters())
   }, [])
-  console.log(sports)
 
   const limit = (string, length, end = '...') => {
     return string.length < length ? string : string.substring(0, length) + end
@@ -112,13 +111,13 @@ const HomeScreen = () => {
           />
         )}
       </View>
-      {/* 
+
       <TouchableOpacity
         onPress={() => navigation.navigate('FilterScreen')}
         className="left-44  mt-10 bottom-7 font-bold text-black text-[20px]"
       >
         <Text>Filter</Text>
-      </TouchableOpacity> */}
+      </TouchableOpacity>
 
       {/* Featured List */}
       <View className="w-full ml-1 mt-3 mx-3">

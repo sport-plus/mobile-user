@@ -1,5 +1,9 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
-import {getAllSportCentersDetailThunk, getAllSportCentersThunk} from './sportCenterThunk'
+import {
+  getAllSportCentersDetailThunk,
+  getAllSportCentersThunk,
+  getSportCentersByFilterThunk,
+} from './sportCenterThunk'
 
 const initialState = {
   isLoading: false,
@@ -18,6 +22,11 @@ export const getAllSportCenters = createAsyncThunk(
 export const getSportCenterDetail = createAsyncThunk(
   'sport/get-sports-center-detail',
   getAllSportCentersDetailThunk
+)
+
+export const getSportCentersByFilter = createAsyncThunk(
+  'sport/get-sports-center-by-filter',
+  getSportCentersByFilterThunk
 )
 
 const sportCenterSlice = createSlice({
@@ -50,6 +59,21 @@ const sportCenterSlice = createSlice({
         state.sportCenterDetail = {...action.payload?.getSportCenter}
       })
       .addCase(getSportCenterDetail.rejected, (state) => {
+        state.isLoading = false
+        state.isError = true
+        state.isSuccess = false
+      })
+      .addCase(getSportCentersByFilter.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(getSportCentersByFilter.fulfilled, (state, action) => {
+        console.log('cccc: ', action.payload.listSportCenter)
+        state.isLoading = false
+        state.isError = false
+        state.isSuccess = true
+        state.sportCenters = [...action.payload?.listSportCenter]
+      })
+      .addCase(getSportCentersByFilter.rejected, (state) => {
         state.isLoading = false
         state.isError = true
         state.isSuccess = false

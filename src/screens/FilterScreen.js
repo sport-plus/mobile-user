@@ -4,10 +4,11 @@ import {SafeAreaView} from 'react-native'
 import {Image} from 'react-native'
 import {logo_white} from '../constants/images'
 import {ArrowLeftIcon} from 'react-native-heroicons/outline'
-import {useSelector} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import {Box, CheckIcon, Select} from 'native-base'
 import {useState} from 'react'
 import {ButtonCustom} from '../components'
+import {getSportCentersByFilter} from '../services/sportCenter/sportCenterSlice'
 
 const districts = [
   'Quận 1',
@@ -38,6 +39,16 @@ const FilterScreen = ({navigation}) => {
   const [sport, setSport] = useState('')
   const [district, setDistrict] = useState('')
   const [fieldType, setFieldType] = useState('')
+  const dispatch = useDispatch()
+
+  const filterSportCenters = () => {
+    const options = {
+      sportId: sport,
+      district: district,
+      fieldType: fieldType,
+    }
+    dispatch(getSportCentersByFilter(options))
+  }
 
   return (
     <SafeAreaView>
@@ -131,7 +142,15 @@ const FilterScreen = ({navigation}) => {
         </View>
 
         <View>
-          <ButtonCustom title="Filter" marginVertical={40} borderRadius={10} />
+          <ButtonCustom
+            title="Filter"
+            marginVertical={40}
+            borderRadius={10}
+            onPress={() => {
+              filterSportCenters()
+              navigation.navigate('SportCenter')
+            }}
+          />
         </View>
       </View>
     </SafeAreaView>
