@@ -11,17 +11,16 @@ import {validateDayBooking} from '../services/booking/bookingSlice'
 const BookingReviewScreen = ({route, navigation}) => {
   const dispatch = useDispatch()
   const {sportCenterDetail} = useSelector((state) => state.sportCenter)
+  const {message} = useSelector((state) => state.booking)
   const {day = null, fieldType = null, slot = null, id = null, price = null} = route.params
 
   const createBooking = () => {
-    console.log('aaa')
     if (day !== null && slot !== {} && id !== null) {
       const start = slot.startTime
       const end = slot.endTime
       dispatch(validateDayBooking({day, start, end, id}))
     }
   }
-
   return (
     <SafeAreaView>
       <Image source={background_header} className="w-full" />

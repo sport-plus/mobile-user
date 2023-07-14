@@ -1,5 +1,10 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
-import {checkBookingsAvailableThunk, vaidateDateBooking} from './bookingThunk'
+import {
+  checkBookingsAvailableThunk,
+  getAllBookingThunk,
+  getBookingDetailThunk,
+  vaidateDateBooking,
+} from './bookingThunk'
 
 const initialState = {
   isLoading: false,
@@ -8,15 +13,25 @@ const initialState = {
   message: '',
   availability: [],
   price: [],
+  bookingHistory: [],
+  bookingDetails: {},
 }
 
 export const checkBookingsAvailable = createAsyncThunk(
   'booking/check-bookings-available',
   checkBookingsAvailableThunk
 )
+
 export const validateDayBooking = createAsyncThunk(
   'booking/validate-day-booking',
   vaidateDateBooking
+)
+
+export const getAllBooking = createAsyncThunk('booking/get-all-booking', getAllBookingThunk)
+
+export const getBookingDetails = createAsyncThunk(
+  'booking/get-booking-details',
+  getBookingDetailThunk
 )
 
 const bookingSlice = createSlice({
@@ -45,13 +60,41 @@ const bookingSlice = createSlice({
         state.isLoading = true
       })
       .addCase(validateDayBooking.fulfilled, (state, action) => {
-        console.log(action.payload?.message)
         state.isLoading = false
         state.isError = false
         state.isSuccess = true
         state.message = action.payload?.message
       })
       .addCase(validateDayBooking.rejected, (state) => {
+        state.isLoading = false
+        state.isError = true
+        state.isSuccess = false
+      })
+      .addCase(getAllBooking.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(getAllBooking.fulfilled, (state, action) => {
+        console.log(action.payload?.bookingHistory)
+        state.isLoading = false
+        state.isError = false
+        state.isSuccess = true
+        state.bookingHistory = [...action.payload?.bookingHistory]
+      })
+      .addCase(getAllBooking.rejected, (state) => {
+        state.isLoading = false
+        state.isError = true
+        state.isSuccess = false
+      })
+      .addCase(getBookingDetails.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(getBookingDetails.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isError = false
+        state.isSuccess = true
+        state.bookingDetails = {...action.payload?.getBooking}
+      })
+      .addCase(getBookingDetails.rejected, (state) => {
         state.isLoading = false
         state.isError = true
         state.isSuccess = false

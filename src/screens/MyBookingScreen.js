@@ -4,6 +4,9 @@ import {COLORS, images} from '../constants'
 import {ArrowBackIcon} from 'native-base'
 import BookingItem from '../components/BookingItem'
 import {useNavigation} from '@react-navigation/native'
+import {useEffect} from 'react'
+import {useDispatch, useSelector} from 'react-redux'
+import {getAllBooking} from '../services/booking/bookingSlice'
 
 const {width, height} = Dimensions.get('window')
 
@@ -20,11 +23,17 @@ const listTab = [
 
 const MyBookingScreen = ({navigation}) => {
   const [status, setStatus] = useState('upcoming')
-  // const navigation = useNavigation()
+  const dispatch = useDispatch()
+  const {bookingHistory} = useSelector((state) => state.booking)
+  const {sportCenterDetail} = useSelector((state) => state.sportCenter)
 
   const setStatusFilter = (status) => {
     setStatus(status)
   }
+
+  useEffect(() => {
+    dispatch(getAllBooking())
+  }, [])
 
   return (
     <SafeAreaView>
@@ -57,7 +66,23 @@ const MyBookingScreen = ({navigation}) => {
         <View>
           {status === 'upcoming' && (
             <View className=" mx-4">
-              <BookingItem />
+              {bookingHistory.length > 0 ? (
+                bookingHistory.map((item, index) => (
+                  <BookingItem
+                    key={index}
+                    day={item.date}
+                    start={item.start}
+                    end={item.end}
+                    tracking={item.tracking}
+                    sportCenter={sportCenterDetail.name}
+                    address={sportCenterDetail.address}
+                  />
+                ))
+              ) : (
+                <View className="items-center mt-4">
+                  <Text className="text-base">You don't have any booking</Text>
+                </View>
+              )}
             </View>
           )}
         </View>

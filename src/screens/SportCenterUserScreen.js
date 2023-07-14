@@ -29,10 +29,7 @@ const SportCenterUserScreen = ({route}) => {
     return string.length < length ? string : string.substring(0, length) + end
   }
 
-  console.log('sport center: ', sportCenters)
-
   const renderItem = ({item}) => {
-    console.log('item', item)
     return (
       item.status === true && (
         <TouchableOpacity onPress={() => navigation.navigate('SportFieldDetail', {id: item._id})}>
@@ -86,7 +83,10 @@ const SportCenterUserScreen = ({route}) => {
               keyExtractor={(item) => item._id}
             />
           ) : (
-            <Text>Nothing</Text>
+            <View className="items-center mt-4">
+              <Text className="text-base">Sorry, this sport doesn't have any sport center!</Text>
+              <Text className="text-base">Please try another one!</Text>
+            </View>
           )}
         </View>
       </View>

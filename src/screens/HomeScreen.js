@@ -115,6 +115,13 @@ const HomeScreen = () => {
         <Text>Filter</Text>
       </TouchableOpacity>
 
+      <TouchableOpacity
+        onPress={() => navigation.navigate('MyBookingScreen')}
+        className="left-44  mt-10 bottom-7 font-bold text-black text-[20px]"
+      >
+        <Text>My Booking</Text>
+      </TouchableOpacity>
+
       {/* Featured List */}
       <View className="w-full ml-1 mt-3 mx-3">
         {loading ? (

@@ -20,16 +20,14 @@ const BookingSuccessScreen = ({navigation, route}) => {
   const {sportCenterDetail} = useSelector((state) => state.sportCenter)
   const {message} = useSelector((state) => state.booking)
   const {day = null, fieldType = null, slot = null, id = null, price = null} = route.params
-
   return (
     <SafeAreaView>
       <Image source={background_success} className="w-full h-full relative" />
       <TouchableOpacity onPress={() => navigation.goBack()} className="absolute top-6 left-4">
         <ArrowLeftIcon size={22} color="#000" />
       </TouchableOpacity>
-
       {message === 'Ok' ? (
-        <View>
+        <>
           <View className="absolute top-12 left-40">
             <Image source={success_icon} />
           </View>
@@ -108,7 +106,7 @@ const BookingSuccessScreen = ({navigation, route}) => {
           </TouchableOpacity> */}
             </View>
           </ScrollView>
-        </View>
+        </>
       ) : (
         <View className="absolute top-36 items-center left-20">
           <Text className="text-[24px] font-bold">Your booking was failed!</Text>
