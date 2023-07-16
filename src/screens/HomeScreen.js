@@ -107,27 +107,22 @@ const HomeScreen = () => {
           />
         )}
       </View>
-
+      {/* 
       <TouchableOpacity
         onPress={() => navigation.navigate('FilterScreen')}
         className="left-44  mt-10 bottom-7 font-bold text-black text-[20px]"
       >
         <Text>Filter</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        onPress={() => navigation.navigate('MyBookingScreen')}
-        className="left-44  mt-10 bottom-7 font-bold text-black text-[20px]"
-      >
-        <Text>My Booking</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
       {/* Featured List */}
       <View className="w-full ml-1 mt-3 mx-3">
         {loading ? (
           <ActivityIndicator className="mt-14" size="large" color="#00ff00" />
         ) : sportCenterFeatured.length <= 0 ? (
-          <Text className="text-lg ">Nothing</Text>
+          <View className="items-center mt-4">
+            <Text className="text-base ">This sport doesn't have any featured sport center</Text>
+          </View>
         ) : (
           <FlatList
             data={sportCenterFeatured}

@@ -40,3 +40,13 @@ export const loginUserThunk = async (params, thunkAPI) => {
     return thunkAPI.rejectWithValue(message)
   }
 }
+
+export const getTokenThunk = async (email, thunkAPI) => {
+  try {
+    const response = await axiosClient.post(`/user/forgot-password-token`, email)
+    return response
+  } catch (error) {
+    console.log('get booking detail error thunk: ', error)
+    return thunkAPI.rejectWithValue(error)
+  }
+}

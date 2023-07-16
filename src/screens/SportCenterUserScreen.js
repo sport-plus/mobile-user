@@ -62,7 +62,8 @@ const SportCenterUserScreen = ({route}) => {
             <ArrowLeftIcon size={24} color="#fff" />
           </TouchableOpacity>
           <Text className="text-white font-bold text-lg">Sport Center</Text>
-          <BellIcon size={24} color="#fff" />
+          {/* <BellIcon size={24} color="#fff" /> */}
+          <Text></Text>
         </View>
       </View>
 

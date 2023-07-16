@@ -41,7 +41,8 @@ const BookingUserScreen = ({route, navigation}) => {
             <ArrowLeftIcon size={24} color="#fff" />
           </TouchableOpacity>
           <Text className="text-white font-bold text-lg">Sport Center</Text>
-          <BellIcon size={24} color="#fff" />
+          {/* <BellIcon size={24} color="#fff" /> */}
+          <Text></Text>
         </View>
       </View>
 
@@ -65,13 +66,13 @@ const BookingUserScreen = ({route, navigation}) => {
         />
 
         {/* Field Type */}
-        <View className="flex-row bg-white items-center pt-4">
-          <View className="flex-row space-x-2 px-4 items-center">
-            <Image source={images.iconSportField} className="w-8 h-8" />
+        {sportFieldType.length > 0 && (
+          <View className="flex-row bg-white items-center pt-6">
+            <View className="flex-row space-x-2 px-4 items-center">
+              <Image source={images.iconSportField} className="w-8 h-8 mt-1" />
 
-            <Text className="font-bold text-lg">Field Type</Text>
-          </View>
-          {sportFieldType.length > 0 && (
+              <Text className="font-bold text-lg mt-1">Field Type</Text>
+            </View>
             <View className="bg-white px-4 pt-1">
               <Box maxW="100">
                 <Select
@@ -98,8 +99,8 @@ const BookingUserScreen = ({route, navigation}) => {
                 </Select>
               </Box>
             </View>
-          )}
-        </View>
+          </View>
+        )}
 
         {/* Slots */}
         {availability.length > 0 ? (

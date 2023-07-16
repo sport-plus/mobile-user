@@ -26,6 +26,9 @@ import {ClockIcon, StarIcon, UserCircleIcon} from 'react-native-heroicons/outlin
 import {useDispatch, useSelector} from 'react-redux'
 import {getSportCenterDetail} from '../services/sportCenter/sportCenterSlice'
 
+var openTime = ''
+var closeTime = ''
+
 const FirstRoute = () => {
   return (
     <View className="mt-2">
@@ -101,22 +104,24 @@ const SecondRoute = () => (
 )
 
 const ThirdRoute = () => (
-  <View>
+  <View className="mt-10">
     <View className="flex-row space-x-2 px-3 py-4">
       <ClockIcon size={48} color={'#00C187'} />
       <View className="space-y-1">
-        <Text className="text-sm text-gray-500">Mon - Fri</Text>
-        <Text className="text-base font-bold">09:00 - 22: 00</Text>
+        <Text className="text-sm text-gray-500">Mon - Sun</Text>
+        <Text className="text-base font-bold">
+          {openTime} - {closeTime}
+        </Text>
       </View>
     </View>
 
-    <View className="flex-row space-x-2 px-3 py-2">
+    {/* <View className="flex-row space-x-2 px-3 py-2">
       <ClockIcon size={48} color={'#00C187'} />
       <View className="space-y-1">
         <Text className="text-sm text-gray-500">Sat - Sun</Text>
         <Text className="text-base font-bold">09:00 - 23: 00</Text>
       </View>
-    </View>
+    </View> */}
   </View>
 )
 
@@ -133,6 +138,8 @@ const SportFieldDetailScreen = ({route, navigation}) => {
   const {sportCenterDetail} = useSelector((state) => state.sportCenter)
   const {id} = route.params || ''
   const dispatch = useDispatch()
+  openTime = sportCenterDetail.openTime
+  closeTime = sportCenterDetail.closeTime
 
   useEffect(() => {
     if (id) {
@@ -218,9 +225,9 @@ const SportFieldDetailScreen = ({route, navigation}) => {
               onPress={() => navigation.goBack()}
             />
           </View>
-          <View className="bg-[#00C187] w-10 h-10 rounded-full flex items-center justify-center opacity-80">
+          {/* <View className="bg-[#00C187] w-10 h-10 rounded-full flex items-center justify-center opacity-80">
             <Ionicons name="notifications-outline" size={24} color="white" />
-          </View>
+          </View> */}
         </View>
       </View>
 

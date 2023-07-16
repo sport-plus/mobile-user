@@ -40,6 +40,162 @@ export default function App() {
   const Tab = createBottomTabNavigator()
   const Stack = createNativeStackNavigator()
 
+  const HomeStack = () => (
+    <Stack.Navigator
+      initialRouteName="LoginScreen"
+      screenOptions={{
+        headerShown: 'false',
+      }}
+    >
+      <Stack.Screen options={{headerShown: false}} name="HomeScreen" component={HomeScreen} />
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="SportCenter"
+        component={SportCenterUserScreen}
+      />
+
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="SportFieldDetail"
+        component={SportFieldDetailScreen}
+      />
+
+      <Stack.Screen options={{headerShown: false}} name="FieldScreen" component={FieldScreen} />
+
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="BookingScreen"
+        component={BookingUserScreen}
+      />
+
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="BookingReviewScreen"
+        component={BookingReviewScreen}
+      />
+
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="MyBookingScreen"
+        component={MyBookingScreen}
+      />
+
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="BookingSuccessScreen"
+        component={BookingSuccessScreen}
+      />
+
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="BookingDetailScreen"
+        component={BookingDetailScreen}
+      />
+
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="ForgotPasswordScreen"
+        component={ForgotPasswordScreen}
+      />
+
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="ResetPasswordScreen"
+        component={ResetPasswordScreen}
+      />
+
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="ChangePasswordScreen"
+        component={ChangePasswordScreen}
+      />
+    </Stack.Navigator>
+  )
+
+  const ProfileStack = () => (
+    <Stack.Navigator
+      initialRouteName="LoginScreen"
+      screenOptions={{
+        headerShown: 'false',
+      }}
+    >
+      <Stack.Screen options={{headerShown: false}} name="ProfileScreen" component={ProfileScreen} />
+
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="EditProfileScreen"
+        component={EditProfileScreen}
+      />
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="ChangeLanguageScreen"
+        component={ChangeLanguageScreen}
+      />
+
+      <Stack.Screen options={{headerShown: false}} name="GetHelpScreen" component={GetHelpScreen} />
+
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="NotificationProfileScreen"
+        component={NotificationProfileScreen}
+      />
+    </Stack.Navigator>
+  )
+
+  const FilterStack = () => (
+    <Stack.Navigator
+      initialRouteName="LoginScreen"
+      screenOptions={{
+        headerShown: 'false',
+      }}
+    >
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="SportCenter"
+        component={SportCenterUserScreen}
+      />
+
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="SportFieldDetail"
+        component={SportFieldDetailScreen}
+      />
+
+      <Stack.Screen options={{headerShown: false}} name="FieldScreen" component={FieldScreen} />
+
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="BookingScreen"
+        component={BookingUserScreen}
+      />
+
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="BookingReviewScreen"
+        component={BookingReviewScreen}
+      />
+
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="MyBookingScreen"
+        component={MyBookingScreen}
+      />
+
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="BookingSuccessScreen"
+        component={BookingSuccessScreen}
+      />
+
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="BookingDetailScreen"
+        component={BookingDetailScreen}
+      />
+      <Stack.Screen options={{headerShown: false}} name="FilterScreen" component={FilterScreen} />
+    </Stack.Navigator>
+  )
+
   function UserBottomTabs() {
     return (
       <Tab.Navigator
@@ -55,8 +211,8 @@ export default function App() {
       >
         {/* User home */}
         <Tab.Screen
-          name="UserHome"
-          component={HomeScreen}
+          name="HomeStack"
+          component={HomeStack}
           options={{
             tabBarLabel: 'Home',
             headerShown: false,
@@ -67,8 +223,8 @@ export default function App() {
         />
 
         <Tab.Screen
-          name="Filter"
-          component={FilterScreen}
+          name="FilterStack"
+          component={FilterStack}
           options={{
             tabBarLabel: 'Filter',
             headerShown: false,
@@ -82,8 +238,8 @@ export default function App() {
           }}
         />
         <Tab.Screen
-          name="Profile"
-          component={ProfileScreen}
+          name="ProfileStack"
+          component={ProfileStack}
           options={{
             tabBarLabel: 'Profile',
             headerShown: false,
@@ -105,6 +261,7 @@ export default function App() {
       <Provider store={store}>
         <NativeBaseProvider>
           <NavigationContainer>
+            {/* <UserBottomTabs />
             {/* <Toast /> */}
             {/* <UserBottomTabs /> */}
             <Stack.Navigator initialRouteName="LoginScreen">
@@ -123,12 +280,6 @@ export default function App() {
                 options={{headerShown: false}}
                 name="HomeScreen"
                 component={HomeScreen}
-              />
-
-              <Stack.Screen
-                options={{headerShown: false}}
-                name="HomeRoot"
-                component={UserBottomTabs}
               />
 
               <Stack.Screen
