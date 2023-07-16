@@ -44,7 +44,6 @@ const bookingSlice = createSlice({
         state.isLoading = true
       })
       .addCase(checkBookingsAvailable.fulfilled, (state, action) => {
-        console.log(action.payload)
         state.isLoading = false
         state.isError = false
         state.isSuccess = true
@@ -74,7 +73,6 @@ const bookingSlice = createSlice({
         state.isLoading = true
       })
       .addCase(getAllBooking.fulfilled, (state, action) => {
-        console.log(action.payload?.bookingHistory)
         state.isLoading = false
         state.isError = false
         state.isSuccess = true

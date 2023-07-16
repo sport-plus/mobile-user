@@ -54,7 +54,6 @@ const sportFieldSlice = createSlice({
         state.isLoading = true
       })
       .addCase(getSportFieldDetail.fulfilled, (state, action) => {
-        console.log(action.payload)
         state.isLoading = false
         state.isError = false
         state.isSuccess = true

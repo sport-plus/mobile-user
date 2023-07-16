@@ -13,9 +13,11 @@ import {
 } from 'react-native-heroicons/outline'
 import {auth} from '../firebase/firebase-config'
 import {signOut} from '@firebase/auth'
+import {useSelector} from 'react-redux'
 
 const ProfileScreen = () => {
   const navigation = useNavigation()
+  const {user} = useSelector((state) => state.auth)
 
   const handleSignOut = () => {
     signOut(auth)
@@ -29,7 +31,9 @@ const ProfileScreen = () => {
       </View>
 
       <View className="self-center mt-2 justify-center items-center">
-        <Text className="text-base font-bold">{auth?.currentUser?.displayName}</Text>
+        <Text className="text-base font-bold">
+          {user?.firstname} {user?.lastname}
+        </Text>
         <TouchableOpacity onPress={() => navigation.navigate('EditProfileScreen')}>
           <Text className="text-[#00C187] font-bold mt-1">Edit profilee</Text>
         </TouchableOpacity>

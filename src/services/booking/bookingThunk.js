@@ -25,6 +25,7 @@ export const vaidateDateBooking = async (options, thunkAPI) => {
       const response = await axiosClient.getByUrl(
         `/booking/validate-date-booking?date=${options.day}&start=${options.startDay}&end=${options.endDay}&sportFieldId=${options.id}`
       )
+      console.log(response)
       return response
     } catch (error) {
       console.log('Check booking error thunk: ', error)

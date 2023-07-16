@@ -31,7 +31,7 @@ export const loginUserThunk = async (params, thunkAPI) => {
     //   YOB: res.user.YOB,
     //   role: res.user?.role.name,
     // }
-    params.navigation.navigate('HomeScreen', {replace: true})
+    params.navigation.navigate('HomeRoot', {replace: true})
     // AsyncStorage.setItem('userInfo', JSON.stringify(userAsyncStorage))
     return res
   } catch (error) {

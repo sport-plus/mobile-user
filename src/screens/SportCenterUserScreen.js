@@ -69,10 +69,10 @@ const SportCenterUserScreen = ({route}) => {
 
       {/* Body */}
       <View className="bg-[#ECF3FF] w-full h-full -mt-20 rounded-tl-3xl rounded-tr-3xl">
-        <View className="flex-row p-3 space-x-2 items-center border-2 border-[#00C187] mt-4 mx-4 rounded-lg">
+        {/* <View className="flex-row p-3 space-x-2 items-center border-2 border-[#00C187] mt-4 mx-4 rounded-lg">
           <MagnifyingGlassIcon size={24} color="#000" />
           <TextInput placeholder="Enter something" keyboardType="default" />
-        </View>
+        </View> */}
 
         <View className="flex-1 w-full mt-4">
           {isLoading ? (

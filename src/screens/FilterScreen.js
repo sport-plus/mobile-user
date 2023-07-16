@@ -116,30 +116,32 @@ const FilterScreen = ({navigation}) => {
         </View>
 
         {/* Field type */}
-        <View className="mt-6">
-          <Text className="text-lg mb-1 font-medium">Choose field type:</Text>
-          <Box>
-            <Select
-              selectedValue={fieldType}
-              minWidth="200"
-              borderColor="#00C187"
-              accessibilityLabel="Choose field type"
-              placeholder="Choose field type"
-              fontSize="18px"
-              _selectedItem={{
-                bg: '#00C187',
-                color: '#000',
-                endIcon: <CheckIcon size="5" color="#fff" />,
-              }}
-              mt={1}
-              onValueChange={(itemValue) => setFieldType(itemValue)}
-            >
-              {fieldTypes.map((fieldType) => (
-                <Select.Item id={fieldType} label={fieldType} value={fieldType} />
-              ))}
-            </Select>
-          </Box>
-        </View>
+        {sport === '64af782058ec2364626fbeef' && (
+          <View className="mt-6">
+            <Text className="text-lg mb-1 font-medium">Choose field type:</Text>
+            <Box>
+              <Select
+                selectedValue={fieldType}
+                minWidth="200"
+                borderColor="#00C187"
+                accessibilityLabel="Choose field type"
+                placeholder="Choose field type"
+                fontSize="18px"
+                _selectedItem={{
+                  bg: '#00C187',
+                  color: '#000',
+                  endIcon: <CheckIcon size="5" color="#fff" />,
+                }}
+                mt={1}
+                onValueChange={(itemValue) => setFieldType(itemValue)}
+              >
+                {fieldTypes.map((fieldType) => (
+                  <Select.Item id={fieldType} label={fieldType} value={fieldType} />
+                ))}
+              </Select>
+            </Box>
+          </View>
+        )}
 
         <View>
           <ButtonCustom

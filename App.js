@@ -42,7 +42,7 @@ export default function App() {
 
   const HomeStack = () => (
     <Stack.Navigator
-      initialRouteName="LoginScreen"
+      initialRouteName="HomeScreen"
       screenOptions={{
         headerShown: 'false',
       }}
@@ -114,7 +114,7 @@ export default function App() {
 
   const ProfileStack = () => (
     <Stack.Navigator
-      initialRouteName="LoginScreen"
+      initialRouteName="ProfileScreen"
       screenOptions={{
         headerShown: 'false',
       }}
@@ -144,7 +144,7 @@ export default function App() {
 
   const FilterStack = () => (
     <Stack.Navigator
-      initialRouteName="LoginScreen"
+      initialRouteName="FilterScreen"
       screenOptions={{
         headerShown: 'false',
       }}
@@ -270,13 +270,20 @@ export default function App() {
                 name="LoginScreen"
                 component={LoginScreen}
               />
+
+              <Stack.Screen
+                name="HomeRoot"
+                options={{headerShown: false}}
+                component={UserBottomTabs}
+              />
+
               <Stack.Screen
                 options={{headerShown: false}}
                 name="RegistrationScreen"
                 component={RegistrationScreen}
               />
 
-              <Stack.Screen
+              {/* <Stack.Screen
                 options={{headerShown: false}}
                 name="HomeScreen"
                 component={HomeScreen}
@@ -388,7 +395,7 @@ export default function App() {
                 options={{headerShown: false}}
                 name="FilterScreen"
                 component={FilterScreen}
-              />
+              /> */}
             </Stack.Navigator>
           </NavigationContainer>
         </NativeBaseProvider>

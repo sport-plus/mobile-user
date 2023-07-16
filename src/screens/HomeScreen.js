@@ -1,5 +1,5 @@
 import {View, Text, Image, StatusBar, TouchableOpacity, ActivityIndicator} from 'react-native'
-import React from 'react'
+import React, {useRef} from 'react'
 import images, {logo_white, soccer_field, term, union} from '../constants/images'
 import {BellIcon, MapPinIcon, StarIcon} from 'react-native-heroicons/outline'
 import {useNavigation} from '@react-navigation/native'
@@ -15,12 +15,14 @@ const HomeScreen = () => {
   const dispatch = useDispatch()
   const {sports, isLoading} = useSelector((state) => state.sport)
   const {sportCenters, isLoading: loading} = useSelector((state) => state.sportCenter)
-  const sportCenterFeatured = sportCenters.filter((sport) => sport.totalrating >= '4')
+  // const sportCenterFeatured = sportCenters.filter((sport) => sport.totalrating >= '5')
 
   useEffect(() => {
     dispatch(getAllSports())
     dispatch(getAllSportCenters())
   }, [])
+
+  const sportCenterFeatured = useRef(sportCenters.filter((sport) => sport.totalrating >= '5'))
 
   const limit = (string, length, end = '...') => {
     return string.length < length ? string : string.substring(0, length) + end
@@ -119,13 +121,13 @@ const HomeScreen = () => {
       <View className="w-full ml-1 mt-3 mx-3">
         {loading ? (
           <ActivityIndicator className="mt-14" size="large" color="#00ff00" />
-        ) : sportCenterFeatured.length <= 0 ? (
+        ) : sportCenterFeatured.current.length <= 0 ? (
           <View className="items-center mt-4">
             <Text className="text-base ">This sport doesn't have any featured sport center</Text>
           </View>
         ) : (
           <FlatList
-            data={sportCenterFeatured}
+            data={sportCenterFeatured.current}
             horizontal
             renderItem={renderItemFeatured}
             keyExtractor={(item) => item._id}

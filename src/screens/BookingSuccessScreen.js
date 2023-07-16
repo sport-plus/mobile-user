@@ -18,7 +18,7 @@ import {useSelector} from 'react-redux'
 
 const BookingSuccessScreen = ({navigation, route}) => {
   const {sportCenterDetail} = useSelector((state) => state.sportCenter)
-  const {message} = useSelector((state) => state.booking)
+  const {message, loading} = useSelector((state) => state.booking)
   const {day = null, fieldType = null, slot = null, id = null, price = null} = route.params
   return (
     <SafeAreaView>
@@ -26,7 +26,7 @@ const BookingSuccessScreen = ({navigation, route}) => {
       <TouchableOpacity onPress={() => navigation.goBack()} className="absolute top-6 left-4">
         <ArrowLeftIcon size={22} color="#000" />
       </TouchableOpacity>
-      {message === 'Ok' ? (
+      {loading && message === 'Ok' ? (
         <>
           <View className="absolute top-12 left-40">
             <Image source={success_icon} />

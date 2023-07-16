@@ -39,7 +39,6 @@ const sportCenterSlice = createSlice({
         state.isLoading = true
       })
       .addCase(getAllSportCenters.fulfilled, (state, action) => {
-        console.log(action.payload?.listSportCenter.length)
         state.isLoading = false
         state.isError = false
         state.isSuccess = true
@@ -68,7 +67,6 @@ const sportCenterSlice = createSlice({
         state.isLoading = true
       })
       .addCase(getSportCentersByFilter.fulfilled, (state, action) => {
-        console.log('cccc: ', action.payload.listSportCenter)
         state.isLoading = false
         state.isError = false
         state.isSuccess = true

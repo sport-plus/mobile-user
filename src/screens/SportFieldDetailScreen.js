@@ -282,7 +282,7 @@ const SportFieldDetailScreen = ({route, navigation}) => {
         width={200}
         borderRadius={12}
         title="Book"
-        marginVertical={458}
+        marginVertical={400}
         marginHorizontal={100}
         onPress={() => navigation.navigate('BookingScreen', {id: sportCenterDetail._id})}
       />
