@@ -135,7 +135,7 @@ const renderScene = SceneMap({
 })
 
 const SportFieldDetailScreen = ({route, navigation}) => {
-  const {sportCenterDetail} = useSelector((state) => state.sportCenter)
+  const {sportCenterDetail, isLoading} = useSelector((state) => state.sportCenter)
   const {id} = route.params || ''
   const dispatch = useDispatch()
   openTime = sportCenterDetail.openTime
@@ -212,7 +212,10 @@ const SportFieldDetailScreen = ({route, navigation}) => {
       <View>
         <View className="h-60">
           <Swiper loop autoplay activeDotColor={COLORS.black}>
-            <Image source={{uri: sportCenterDetail.image}} className="w-full h-full" />
+            {isLoading &&
+              sportCenterDetail.image.map((image, index) => (
+                <Image source={{uri: image}} className="w-full h-full" />
+              ))}
           </Swiper>
         </View>
 
@@ -235,7 +238,7 @@ const SportFieldDetailScreen = ({route, navigation}) => {
         className="flex-1 bg-[#ECF3FF] absolute w-full h-full rounded-t-3xl p-5"
         style={{top: 220}}
       >
-        <Text className="text-[20px] font-bold tracking-wide">{sportCenterDetail.name}</Text>
+        <Text className="text-[20px] font-bold tracking-wide">{sportCenterDetail?.name}</Text>
         <View className="flex-row items-center justify-between">
           <View className="flex-row items-center mb-2 mt-2 space-x-2">
             <Feather name="phone" size={22} color={COLORS.primary} />
@@ -243,18 +246,21 @@ const SportFieldDetailScreen = ({route, navigation}) => {
           </View>
           <View className="flex-row items-center space-x-1 mb-2">
             <FontAwesome name="star" size={22} color={COLORS.yellow} />
-            <Text className="text-[16px]">{sportCenterDetail.totalrating}</Text>
+            <Text className="text-[16px]">{sportCenterDetail?.totalrating}</Text>
           </View>
         </View>
         <Divide backgroundColor="grey" height={2} />
         <View className="flex-row gap-2 mb-4 mt-2 space-x-4">
           <View className="w-20 h-20">
-            <Image source={{uri: sportCenterDetail.image}} className="rounded-lg w-full h-full" />
+            <Image
+              source={{uri: sportCenterDetail?.image[0]}}
+              className="rounded-lg w-full h-full"
+            />
           </View>
 
           <View className="space-y-3" style={{width: width - 120}}>
             <Text className="text-[16px] text-gray-500 font-bold tracking-wide">
-              {sportCenterDetail.address}
+              {sportCenterDetail?.address}
             </Text>
           </View>
         </View>

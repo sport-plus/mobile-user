@@ -35,7 +35,7 @@ const SportCenterUserScreen = ({route}) => {
         <TouchableOpacity onPress={() => navigation.navigate('SportFieldDetail', {id: item._id})}>
           <View className="p-3 mx-4 my-2 flex-row bg-white rounded-xl space-x-4">
             <View className="w-28 h-28 items-center justify-center">
-              <Image source={{uri: item.image}} resizeMethod="scale" className="w-28 h-28" />
+              <Image source={{uri: item.image[0]}} resizeMethod="scale" className="w-28 h-28" />
             </View>
             <View className="w-full">
               <Text className="text-[18px] w-52 font-bold tracking-widest">{item.name}</Text>

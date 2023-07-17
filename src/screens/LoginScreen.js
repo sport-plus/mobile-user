@@ -81,14 +81,14 @@ const LoginScreen = () => {
             </View>
           </View>
           <View className="my-10">
-            <View className="flex-row justify-between mb-5">
+            {/* <View className="flex-row justify-between mb-5">
               <View style={styles.social}>
                 <Image className="w-8 h-8" source={images.Google} />
               </View>
               <View style={styles.social}>
                 <Image className="w-8 h-8" source={images.Facebook} />
               </View>
-            </View>
+            </View> */}
             <Input
               onChangeText={(text) => handleOnchange(text, 'email')}
               onFocus={() => handleError(null, 'email')}

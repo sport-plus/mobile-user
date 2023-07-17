@@ -1,7 +1,10 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
 import {getTokenThunk, loginUserThunk, registerUserThunk} from './authThunk'
+// import Toast from 'react-native-toast-message'
 import {ToastAndroid} from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import {Alert} from 'react-native'
+import {Toast} from 'react-native-toast-message/lib/src/Toast'
 // import Toast from 'react-native-toast-message'
 // const userfromAsyncStorage = AsyncStorage.getItem('userInfo')
 //   ? AsyncStorage.getItem('userInfo')
@@ -23,7 +26,14 @@ export const getToken = createAsyncThunk('auth/getToken', getTokenThunk)
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    setError: (state, action) => {
+      Alert.alert(action.payload)
+    },
+    setMessageSuccess: (state, action) => {
+      Alert.alert(action.payload)
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(RegisterUser.pending, (state) => {
@@ -39,12 +49,12 @@ const authSlice = createSlice({
         state.isLoading = false
         state.isError = true
         state.isSuccess = false
-        ToastAndroid.show(action.payload?.data.message)
       })
       .addCase(LoginUser.pending, (state) => {
         state.isLoading = true
       })
       .addCase(LoginUser.fulfilled, (state, action) => {
+        console.log(action.payload.user)
         state.isLoading = false
         state.isError = false
         state.isSuccess = true
@@ -53,11 +63,11 @@ const authSlice = createSlice({
         state.message = 'success'
       })
       .addCase(LoginUser.rejected, (state, action) => {
+        console.log('rejected', action)
         state.isLoading = false
         state.isError = true
         state.isSuccess = false
         state.message = action.payload
-        ToastAndroid.show(action.payload)
       })
       .addCase(getToken.pending, (state) => {
         state.isLoading = true
@@ -73,9 +83,9 @@ const authSlice = createSlice({
         state.isError = true
         state.isSuccess = false
         state.message = action.payload
-        ToastAndroid.show(action.payload)
       })
   },
 })
 
+export const {setError, setMessageSuccess} = authSlice.actions
 export default authSlice.reducer

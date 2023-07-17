@@ -53,6 +53,7 @@ const sportCenterSlice = createSlice({
         state.isLoading = true
       })
       .addCase(getSportCenterDetail.fulfilled, (state, action) => {
+        console.log('payload:', action.payload?.getSportCenter)
         state.isLoading = false
         state.isError = false
         state.isSuccess = true

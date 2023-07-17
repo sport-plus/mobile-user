@@ -12,7 +12,6 @@ import {
   ProfileScreen,
   RegistrationScreen,
 } from './src/screens'
-// import Toast from 'react-native-toast-message'
 
 import {ModalPortal} from 'react-native-modals'
 import SportFieldDetailScreen from './src/screens/SportFieldDetailScreen'

@@ -14,6 +14,7 @@ import {
 import {auth} from '../firebase/firebase-config'
 import {signOut} from '@firebase/auth'
 import {useSelector} from 'react-redux'
+import {Image} from 'react-native'
 
 const ProfileScreen = () => {
   const navigation = useNavigation()
@@ -23,11 +24,13 @@ const ProfileScreen = () => {
     signOut(auth)
     navigation.navigate('LoginScreen')
   }
+  console.log(user)
 
   return (
     <SafeAreaView>
       <View className="w-14 h-14 rounded-full bg-[#00C187] self-center mt-16 items-center justify-center">
-        <UserCircleIcon size={40} color="#fff" />
+        {/* <UserCircleIcon size={40} color="#fff" /> */}
+        <Image source={{uri: user?.image}} className="w-14 h-14 rounded-full" />
       </View>
 
       <View className="self-center mt-2 justify-center items-center">

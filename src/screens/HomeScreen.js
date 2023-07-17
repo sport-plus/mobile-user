@@ -9,6 +9,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import {getAllSports} from '../services/sport/sportSlice'
 import {FlatList} from 'react-native'
 import {getAllSportCenters} from '../services/sportCenter/sportCenterSlice'
+import Toast from 'react-native-toast-message'
 
 const HomeScreen = () => {
   const navigation = useNavigation()
@@ -53,7 +54,7 @@ const HomeScreen = () => {
         onPress={() => navigation.navigate('SportFieldDetail', {id: item._id})}
         className="bg-white mr-3 shadow"
       >
-        <Image source={{uri: item.image}} className="h-24 w-52 rounded-sm" />
+        <Image source={{uri: item.image[0]}} className="h-24 w-52 rounded-sm" />
 
         <View className="px-2 pb-3">
           <Text className="font-bold text-lg pt-2">{item.name}</Text>
@@ -110,12 +111,8 @@ const HomeScreen = () => {
         )}
       </View>
       {/* 
-      <TouchableOpacity
-        onPress={() => navigation.navigate('FilterScreen')}
-        className="left-44  mt-10 bottom-7 font-bold text-black text-[20px]"
-      >
-        <Text>Filter</Text>
-      </TouchableOpacity> */}
+  
+          
 
       {/* Featured List */}
       <View className="w-full ml-1 mt-3 mx-3">

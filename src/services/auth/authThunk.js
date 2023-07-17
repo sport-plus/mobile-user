@@ -1,12 +1,15 @@
 import {axiosClient} from '../../api/axiosClient'
 import Cookie from 'js-cookie'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import {ToastAndroid} from 'react-native'
+import {useDispatch} from 'react-redux'
+import {setError, setMessageSuccess} from './authSlice'
 
 export const registerUserThunk = async (params, thunkAPI) => {
   try {
     const res = await axiosClient.post(`/user/register-user`, params.newUserOptions)
     if (res) {
-      //   thunkAPI.dispatch(setMessageSuccess('Create user account successfully'))
+      thunkAPI.dispatch(setMessageSuccess('Create user account successfully'))
       params.navigation.navigate('LoginScreen', {replace: true})
     }
     return res
@@ -37,7 +40,9 @@ export const loginUserThunk = async (params, thunkAPI) => {
   } catch (error) {
     console.log('login error thunk: ', error)
     const message = await error.data.message
-    return thunkAPI.rejectWithValue(message)
+    thunkAPI.dispatch(setError(message))
+    // return thunkAPI.rejectWithValue(message)
+    // return ToastAndroid.show('Login Failed')
   }
 }
 

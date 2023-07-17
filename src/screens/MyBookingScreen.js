@@ -24,7 +24,7 @@ const listTab = [
 const MyBookingScreen = ({navigation}) => {
   const [status, setStatus] = useState('upcoming')
   const dispatch = useDispatch()
-  const {bookingHistory} = useSelector((state) => state.booking)
+  const {bookingHistory, isLoading} = useSelector((state) => state.booking)
   const {sportCenterDetail} = useSelector((state) => state.sportCenter)
 
   const setStatusFilter = (status) => {
@@ -66,21 +66,25 @@ const MyBookingScreen = ({navigation}) => {
         <View>
           {status === 'upcoming' && (
             <View className=" mx-4">
-              {bookingHistory.length > 0 ? (
-                bookingHistory.map((item, index) => (
-                  <BookingItem
-                    key={index}
-                    day={item.date}
-                    start={item.start}
-                    end={item.end}
-                    tracking={item.tracking}
-                    sportCenter={sportCenterDetail.name}
-                    address={sportCenterDetail.address}
-                  />
-                ))
+              {isLoading && bookingHistory.length > 0 ? (
+                bookingHistory.map((item, index) => {
+                  if (item.tracking === ' pending') {
+                    return (
+                      <BookingItem
+                        key={index}
+                        day={item.date}
+                        start={item.start}
+                        end={item.end}
+                        tracking={item.tracking}
+                        sportCenter={sportCenterDetail.name}
+                        address={sportCenterDetail.address}
+                      />
+                    )
+                  }
+                })
               ) : (
                 <View className="items-center mt-4">
-                  <Text className="text-base">You don't have any booking</Text>
+                  <Text className="text-base">You don't have any upcoming booking</Text>
                 </View>
               )}
             </View>
@@ -89,9 +93,27 @@ const MyBookingScreen = ({navigation}) => {
         <View>
           {status === 'history' && (
             <View className=" mx-4">
-              <BookingItem />
-              <BookingItem />
-              <BookingItem />
+              {isLoading && bookingHistory.length > 0 ? (
+                bookingHistory.map((item, index) => {
+                  if (item.tracking === 'accepted' || item.tracking === 'cancel') {
+                    return (
+                      <BookingItem
+                        key={index}
+                        day={item.date}
+                        start={item.start}
+                        end={item.end}
+                        tracking={item.tracking}
+                        sportCenter={sportCenterDetail.name}
+                        address={sportCenterDetail.address}
+                      />
+                    )
+                  }
+                })
+              ) : (
+                <View className="items-center mt-4">
+                  <Text className="text-base">You doesn't have any history booking</Text>
+                </View>
+              )}
             </View>
           )}
         </View>
