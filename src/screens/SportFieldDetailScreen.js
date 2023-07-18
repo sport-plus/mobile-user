@@ -211,12 +211,12 @@ const SportFieldDetailScreen = ({route, navigation}) => {
     <SafeAreaView className="bg-white flex-1">
       <View>
         <View className="h-60">
-          <Swiper loop autoplay activeDotColor={COLORS.black}>
+          {/* <Swiper loop autoplay activeDotColor={COLORS.black}>
             {isLoading &&
               sportCenterDetail.image.map((image, index) => (
                 <Image source={{uri: image}} className="w-full h-full" />
               ))}
-          </Swiper>
+          </Swiper> */}
         </View>
 
         <View className="flex-row items-center justify-between p-4 absolute w-full">
@@ -252,10 +252,10 @@ const SportFieldDetailScreen = ({route, navigation}) => {
         <Divide backgroundColor="grey" height={2} />
         <View className="flex-row gap-2 mb-4 mt-2 space-x-4">
           <View className="w-20 h-20">
-            <Image
+            {/* <Image
               source={{uri: sportCenterDetail?.image[0]}}
               className="rounded-lg w-full h-full"
-            />
+            /> */}
           </View>
 
           <View className="space-y-3" style={{width: width - 120}}>

@@ -1,6 +1,7 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
 import {
   checkBookingsAvailableThunk,
+  createBookingThunk,
   getAllBookingThunk,
   getBookingDetailThunk,
   vaidateDateBooking,
@@ -15,6 +16,7 @@ const initialState = {
   price: [],
   bookingHistory: [],
   bookingDetails: {},
+  sportFieldId: '',
 }
 
 export const checkBookingsAvailable = createAsyncThunk(
@@ -34,6 +36,8 @@ export const getBookingDetails = createAsyncThunk(
   getBookingDetailThunk
 )
 
+export const createBooking = createAsyncThunk('booking/create-booking', createBookingThunk)
+
 const bookingSlice = createSlice({
   name: 'booking',
   initialState,
@@ -49,6 +53,7 @@ const bookingSlice = createSlice({
         state.isSuccess = true
         state.availability = [...action.payload?.availability]
         state.price = [...action.payload?.price]
+        state.sportFieldId = action.payload?.sportFieldId
       })
       .addCase(checkBookingsAvailable.rejected, (state) => {
         state.isLoading = false
@@ -93,6 +98,23 @@ const bookingSlice = createSlice({
         state.bookingDetails = {...action.payload?.getBooking}
       })
       .addCase(getBookingDetails.rejected, (state) => {
+        state.isLoading = false
+        state.isError = true
+        state.isSuccess = false
+      })
+
+      .addCase(createBooking.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(createBooking.fulfilled, (state, action) => {
+        console.log('fulfilled', action.payload?.message)
+        state.isLoading = false
+        state.isError = false
+        state.isSuccess = true
+        state.message = action.payload?.message
+      })
+      .addCase(createBooking.rejected, (state) => {
+        console.log('rejected')
         state.isLoading = false
         state.isError = true
         state.isSuccess = false

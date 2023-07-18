@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import {axiosClient} from '../../api/axiosClient'
+import {Alert} from 'react-native'
 
 export const checkBookingsAvailableThunk = async (options, thunkAPI) => {
   const accessToken = await AsyncStorage.getItem('accessToken')
@@ -35,7 +36,6 @@ export const vaidateDateBooking = async (options, thunkAPI) => {
 }
 
 export const getAllBookingThunk = async (_, thunkAPI) => {
-  console.log('bbbb')
   const accessToken = await AsyncStorage.getItem('accessToken')
   if (accessToken) {
     axiosClient.setHeaderAuth(JSON.parse(accessToken))
@@ -58,6 +58,26 @@ export const getBookingDetailThunk = async (id, thunkAPI) => {
       return response
     } catch (error) {
       console.log('get booking detail error thunk: ', error)
+      return thunkAPI.rejectWithValue(error)
+    }
+  }
+}
+
+export const createBookingThunk = async (params, thunkAPI) => {
+  console.log('create booking: ', params.options)
+  const accessToken = await AsyncStorage.getItem('accessToken')
+  if (accessToken) {
+    axiosClient.setHeaderAuth(JSON.parse(accessToken))
+    try {
+      const res = await axiosClient.post('/booking/create-booking-for-user', params.options)
+      if (res.message === 'Sport Field created successfully.' && res.newBooking !== {}) {
+        params.navigation.navigate('BookingSuccessScreen', {replace: true})
+      } else {
+        Alert.alert(res.message)
+      }
+      return res
+    } catch (error) {
+      console.log('create booking error thunk: ', error)
       return thunkAPI.rejectWithValue(error)
     }
   }

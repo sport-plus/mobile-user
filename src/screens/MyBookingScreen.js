@@ -7,6 +7,7 @@ import {useNavigation} from '@react-navigation/native'
 import {useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {getAllBooking} from '../services/booking/bookingSlice'
+import {ScrollView} from 'react-native'
 
 const {width, height} = Dimensions.get('window')
 
@@ -66,19 +67,21 @@ const MyBookingScreen = ({navigation}) => {
         <View>
           {status === 'upcoming' && (
             <View className=" mx-4">
-              {isLoading && bookingHistory.length > 0 ? (
+              {bookingHistory.length > 0 ? (
                 bookingHistory.map((item, index) => {
-                  if (item.tracking === ' pending') {
+                  if (item.tracking === 'Pending') {
                     return (
-                      <BookingItem
-                        key={index}
-                        day={item.date}
-                        start={item.start}
-                        end={item.end}
-                        tracking={item.tracking}
-                        sportCenter={sportCenterDetail.name}
-                        address={sportCenterDetail.address}
-                      />
+                      <ScrollView className="h-full">
+                        <BookingItem
+                          key={index}
+                          day={item.date}
+                          start={item.start}
+                          end={item.end}
+                          tracking={item.tracking}
+                          sportCenter={sportCenterDetail.name}
+                          address={sportCenterDetail.address}
+                        />
+                      </ScrollView>
                     )
                   }
                 })
@@ -93,7 +96,7 @@ const MyBookingScreen = ({navigation}) => {
         <View>
           {status === 'history' && (
             <View className=" mx-4">
-              {isLoading && bookingHistory.length > 0 ? (
+              {bookingHistory.length > 0 ? (
                 bookingHistory.map((item, index) => {
                   if (item.tracking === 'accepted' || item.tracking === 'cancel') {
                     return (

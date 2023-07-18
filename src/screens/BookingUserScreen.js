@@ -1,4 +1,4 @@
-import {View, Text, SafeAreaView, TouchableOpacity, ScrollView} from 'react-native'
+import {View, Text, SafeAreaView, TouchableOpacity, ScrollView, Alert} from 'react-native'
 import React, {useEffect, useState} from 'react'
 import {ArrowLeftIcon, BellIcon} from 'react-native-heroicons/outline'
 import {useNavigation} from '@react-navigation/native'
@@ -23,14 +23,29 @@ const BookingUserScreen = ({route, navigation}) => {
   const dispatch = useDispatch()
   const {sportFieldType} = useSelector((state) => state.sportField)
   const {availability, price} = useSelector((state) => state.booking)
+  const {message} = useSelector((state) => state.booking)
+
   const [fieldType, setFieldType] = useState('')
 
   useEffect(() => {
     dispatch(getSportFieldType(id))
   }, [id])
+
   const checkAvailable = () => {
     if (fieldType !== '' && day !== '') dispatch(checkBookingsAvailable({day, id, fieldType}))
   }
+
+  const createBooking = () => {
+    if (day !== '' && slot !== {} && id !== '') {
+      const start = slot.startTime
+      const end = slot.endTime
+      dispatch(validateDayBooking({day, start, end, id}))
+    } else {
+      Alert.alert('Something went wrong. Please try again!')
+    }
+  }
+
+  console.log('Message: ', message)
 
   return (
     <SafeAreaView className="flex-1">
@@ -151,10 +166,11 @@ const BookingUserScreen = ({route, navigation}) => {
             borderRadius={10}
             marginVertical={10}
             onPress={() => {
+              createBooking()
               navigation.navigate('BookingReviewScreen', {
                 day: day,
-                fieldType: fieldType,
                 slot: slot,
+                fieldType: fieldType,
                 id: id,
                 price: price,
               })

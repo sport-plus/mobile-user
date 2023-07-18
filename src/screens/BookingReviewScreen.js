@@ -6,21 +6,35 @@ import {useNavigation} from '@react-navigation/native'
 import {StarIcon, PhoneIcon} from 'react-native-heroicons/outline'
 import {ButtonCustom, Divide} from '../components'
 import {useDispatch, useSelector} from 'react-redux'
-import {validateDayBooking} from '../services/booking/bookingSlice'
+import {createBooking, validateDayBooking} from '../services/booking/bookingSlice'
 
 const BookingReviewScreen = ({route, navigation}) => {
   const dispatch = useDispatch()
   const {sportCenterDetail} = useSelector((state) => state.sportCenter)
   const {message} = useSelector((state) => state.booking)
   const {day = null, fieldType = null, slot = null, id = null, price = null} = route.params
+  const {sportFieldId} = useSelector((state) => state.booking)
 
-  const createBooking = () => {
-    if (day !== null && slot !== {} && id !== null) {
-      const start = slot.startTime
-      const end = slot.endTime
-      dispatch(validateDayBooking({day, start, end, id}))
-    }
+  const options = {
+    ownerCenterId: sportCenterDetail.owner._id,
+    sportCenterId: id,
+    sportFieldId: sportFieldId,
+    totalPrice: price[0],
+    deposit: '000',
+    start: slot.startTime,
+    end: slot.endTime,
+    date: day,
   }
+
+  const bookingOptions = () => {
+    const params = {
+      navigation,
+      options: options,
+    }
+
+    dispatch(createBooking(params))
+  }
+
   return (
     <SafeAreaView>
       <Image source={background_header} className="w-full" />
@@ -31,7 +45,7 @@ const BookingReviewScreen = ({route, navigation}) => {
         <Text className="text-2xl font-bold">Booking Review</Text>
       </View>
 
-      <Image source={{uri: sportCenterDetail.image}} className="w-full h-48 mt-2" />
+      {/* <Image source={{uri: sportCenterDetail.image}} className="w-full h-48 mt-2" /> */}
 
       <View className="p-5">
         <View className="flex-row justify-between">
@@ -89,7 +103,7 @@ const BookingReviewScreen = ({route, navigation}) => {
             title="Accept"
             borderRadius={10}
             onPress={() => {
-              createBooking()
+              bookingOptions()
               navigation.navigate('BookingSuccessScreen', {
                 day: day,
                 fieldType: fieldType,
